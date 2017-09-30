@@ -3,6 +3,14 @@
 Firefox extension to automatically open websites in a container
 
 
+
+# Installation
+Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-US/firefox/addon/containerise/)
+
+
+
+# Development
+
 ## Available Scripts
 In the project directory, you can run:
 
