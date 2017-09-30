@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack --config ./webpack.config --watch",
-    "prebuild": "rm -rf build && jest",
-    "build": "webpack --config ./webpack.config",
+    "prebuild": "rm -rf build",
+    "build": "yarn test && webpack --config ./webpack.config",
     "postbuild": "cp -a static/ build/",
     "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin",
     "lint": "eslint --ignore-path .gitignore ./",
