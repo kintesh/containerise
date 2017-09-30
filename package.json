@@ -7,9 +7,9 @@
   "author": "Kintesh <i.am@kinte.sh>",
   "license": "MIT",
   "scripts": {
-    "webpack": "webpack --config ./webpack.config --watch",
+    "webpack": "webpack --config ./webpack.dev --watch",
     "prebuild": "rm -rf build",
-    "build": "yarn test && webpack --config ./webpack.config",
+    "build": "yarn test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/",
     "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin",
     "lint": "eslint --ignore-path .gitignore ./",
@@ -33,6 +33,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "web-ext": "^2.0.0",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "webpack-merge": "^4.1.0"
   }
 }

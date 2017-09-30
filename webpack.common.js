@@ -16,8 +16,6 @@ module.exports = {
     publicPath: '/static/',
   },
 
-  devtool: 'cheap-source-map',
-
   module: {
     rules: [
       {
@@ -74,11 +72,6 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
     new ExtractTextPlugin({
       filename: 'style.css',
       disable: false,
