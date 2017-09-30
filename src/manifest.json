@@ -29,6 +29,12 @@
 
   "background": {
     "scripts": ["index.js"]
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "containerise@kinte.sh"
+    }
   }
 
 }
