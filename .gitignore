@@ -1,0 +1,11 @@
+# IntelliJ project files
+.idea
+
+# dependencies
+/node_modules
+
+# misc
+.DS_Store
+
+# build
+build
