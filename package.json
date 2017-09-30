@@ -13,7 +13,8 @@
     "postbuild": "cp -a static/ build/",
     "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin",
     "lint": "eslint --ignore-path .gitignore ./",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
