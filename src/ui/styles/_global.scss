@@ -1,0 +1,13 @@
+@import "variables";
+
+html, body {
+  width: 300px;
+  margin: 0;
+  font-family: $font-family;
+  box-sizing: border-box;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}

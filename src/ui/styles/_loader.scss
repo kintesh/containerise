@@ -1,0 +1,28 @@
+.loader {
+  height: 4px;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  transform: translate3d(0,0,0);
+
+  &.hide {
+    display: none;
+  }
+
+  &:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -50%;
+    width: 50%;
+    height: 4px;
+    background-color: #5e5e5e;
+    transform: translate3d(0,0,0);
+    animation: loading 2.5s linear infinite;
+
+    @keyframes loading {
+      from {left: -50%;}
+      to {left: 150%;}
+    }
+  }
+}

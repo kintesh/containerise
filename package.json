@@ -1,0 +1,37 @@
+{
+  "name": "Containerise",
+  "version": "1.0.0",
+  "description": "Firefox extension to automatically open websites in a container",
+  "main": "index.js",
+  "author": "Kintesh <i.am@kinte.sh>",
+  "license": "MIT",
+  "scripts": {
+    "webpack": "webpack --config ./webpack.config --watch",
+    "prebuild": "rm -rf build && jest",
+    "build": "webpack --config ./webpack.config",
+    "postbuild": "cp -a static/ build/",
+    "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin",
+    "lint": "eslint --ignore-path .gitignore ./",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.8.0",
+    "extract-loader": "^1.0.1",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.3",
+    "html-loader": "^0.5.1",
+    "jest": "^21.2.1",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "web-ext": "^2.0.0",
+    "webpack": "^3.6.0"
+  }
+}
