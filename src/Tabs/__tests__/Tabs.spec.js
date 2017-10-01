@@ -55,27 +55,4 @@ describe('Tabs', () => {
     });
   });
 
-  // it('should get all identities', () => {
-  //   expect.assertions(1);
-  //   return Tabs.getAll().then(data => {
-  //     expect(data).toEqual([{
-  //       name: 'Mock 1',
-  //       cookieStoreId: 'cookie store 1',
-  //     }, {
-  //       name: 'Mock 2',
-  //       cookieStoreId: 'cookie store 2',
-  //     }]);
-  //   });
-  // });
-  //
-  // it('should get single identity', () => {
-  //   expect.assertions(1);
-  //   return Tabs.get('MOCK').then(data => {
-  //     expect(data).toEqual([{
-  //       name: 'Mock',
-  //       cookieStoreId: 'cookie store',
-  //     }]);
-  //   });
-  // });
-
 });
