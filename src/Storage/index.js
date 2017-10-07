@@ -33,9 +33,18 @@ class Storage {
     return this.storage.set(`${this.mapPrefix}${obj.host}`, obj);
   }
 
+  remove(key) {
+    return this.storage.remove(`${this.mapPrefix}${key}`);
+  }
+
   clear() {
     return this.storage.clear();
   }
+
+  addOnChangedListener(fn) {
+    browser.storage.onChanged.addListener(fn);
+  }
+
 }
 
 export default new Storage();

@@ -24,8 +24,14 @@ describe('Storage', () => {
 
           set: jest.fn((key, value) => new Promise((resolve) => resolve({key, value}))),
 
+          remove: jest.fn((key) => new Promise((resolve) => resolve({key}))),
+
           clear: jest.fn(() => new Promise((resolve) => resolve())),
 
+        },
+
+        onChanged: {
+          addListener: jest.fn(() => {}),
         },
       },
     };
@@ -111,11 +117,24 @@ describe('Storage', () => {
     });
   });
 
+  it('should remove one entry', () => {
+    expect.assertions(1);
+    return Storage.remove('example.com').then(({key}) => {
+      expect(key).toEqual('map=example.com');
+    });
+  });
+
   it('should clear the storage', () => {
     expect.assertions(1);
     return Storage.clear().then((result) => {
       expect(result).toBeUndefined();
     });
+  });
+
+  it('should add onChanged listener', () => {
+    const MOCK_FN = jest.fn();
+    Storage.addOnChangedListener(MOCK_FN);
+    expect(global.browser.storage.onChanged.addListener).toBeCalledWith(MOCK_FN);
   });
 
 });
