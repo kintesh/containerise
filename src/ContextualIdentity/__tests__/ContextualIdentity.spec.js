@@ -23,6 +23,10 @@ describe('ContextualIdentities', () => {
           }}),
         ),
 
+        onUpdated: {
+          addListener: jest.fn(() => {}),
+        },
+
       },
     };
 
@@ -50,6 +54,12 @@ describe('ContextualIdentities', () => {
         cookieStoreId: 'cookie store',
       }]);
     });
+  });
+
+  it('should add onChanged listener', () => {
+    const MOCK_FN = jest.fn();
+    ContextualIdentities.addOnUpdateListener(MOCK_FN);
+    expect(global.browser.contextualIdentities.onUpdated.addListener).toBeCalledWith(MOCK_FN);
   });
 
 });

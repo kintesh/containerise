@@ -11,6 +11,11 @@ class ContextualIdentities {
   get(name) {
     return this.contextualIdentities.query({name});
   }
+
+  addOnUpdateListener(fn) {
+    browser.contextualIdentities.onUpdated.addListener(fn);
+  }
+
 }
 
 export default new ContextualIdentities();
