@@ -11,7 +11,7 @@
     "prebuild": "rm -rf build",
     "build": "yarn test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/",
-    "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin",
+    "web-ext": "web-ext run -s build/ --firefox=/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin --start-url=about:debugging#addons",
     "lint": "eslint --ignore-path .gitignore ./",
     "test": "jest",
     "test:watch": "jest --watchAll"
