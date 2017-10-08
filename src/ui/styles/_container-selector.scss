@@ -21,6 +21,11 @@
     margin-right: 12px;
   }
 
+  .no-container-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
   &:hover {
     background-color: $button-color;
   }
@@ -46,7 +51,7 @@
 .container-selector-list {
   overflow: scroll;
   max-height: 300px;
-  transition: all 0.25s ease-out;
+  transition: max-height 0.25s ease;
   border: 1px solid $border-color;
   background-color: $white;
   top: 3.4rem;

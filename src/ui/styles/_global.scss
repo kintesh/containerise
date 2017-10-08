@@ -32,7 +32,7 @@ button {
   font-family: $font-family;
   font-size: 1rem;
   border: none;
-  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  transition: background-color 0.25s ease, color 0.25s ease;
   background-color: $button-color;
 
   &:hover {

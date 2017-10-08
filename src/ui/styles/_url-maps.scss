@@ -28,5 +28,13 @@
     height: 21px;
     padding: 0;
     margin: 0;
+    transition: opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
   }
 }

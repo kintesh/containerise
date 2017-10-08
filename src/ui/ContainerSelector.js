@@ -1,4 +1,5 @@
 import State from '../State';
+import {NO_CONTAINER} from '../ContextualIdentity/index';
 import {qs} from '../utils';
 
 const csSelected = qs('.container-selector-selected');
@@ -28,14 +29,9 @@ class ContainerSelector {
 
     csList.innerHTML = '';
     this.state.identities.forEach((identity) => {
-      const item = csItem.cloneNode(true);
-      item.classList.remove('template');
+      const item = this.createItem(identity);
       item.setAttribute('data-id', identity.cookieStoreId);
       item.addEventListener('click', this.selectOption.bind(this, identity));
-      const icon = qs('.icon', item);
-      icon.style.maskImage = `url(${identity.iconUrl})`;
-      icon.style.background = identity.colorCode;
-      qs('.name', item).innerHTML = identity.name;
       csList.appendChild(item);
 
       if (this.state.selectedIdentity && identity.cookieStoreId === this.state.selectedIdentity.cookieStoreId) {
@@ -45,14 +41,25 @@ class ContainerSelector {
 
     if (selectedIdentity) {
       csSelected.innerHTML = '';
-      const item = csItem.cloneNode(true);
-      item.classList.remove('template');
-      const icon = qs('.icon', item);
-      icon.style.maskImage = `url(${selectedIdentity.iconUrl})`;
-      icon.style.background = selectedIdentity.colorCode;
-      qs('.name', item).innerHTML = selectedIdentity.name;
+      const item = this.createItem(selectedIdentity);
       csSelected.appendChild(item);
     }
+  }
+
+  createItem(identity) {
+    const item = csItem.cloneNode(true);
+    item.classList.remove('template');
+    const icon = qs('.icon', item);
+    if (identity.cookieStoreId === NO_CONTAINER.cookieStoreId) {
+      icon.innerHTML = '<span class="no-container-icon">&otimes;</span>';
+      icon.style.color = identity.colorCode;
+    } else {
+      icon.style.maskImage = `url(${identity.iconUrl})`;
+      icon.style.background = identity.colorCode;
+    }
+    qs('.name', item).innerHTML = identity.name;
+
+    return item;
   }
 
   toggleOptions() {
