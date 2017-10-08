@@ -1,0 +1,32 @@
+.url-maps {
+  margin: 1rem;
+
+  button {
+    margin-bottom: 1rem;
+  }
+}
+
+.url-map-item {
+  position: relative;
+  padding-bottom: 0.2rem;
+
+  > * {
+    font-size: 1rem;
+  }
+
+  input {
+    width: 100%;
+    padding-left: 6px;
+    padding-right: 24px;
+  }
+
+  button {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 22px;
+    height: 21px;
+    padding: 0;
+    margin: 0;
+  }
+}

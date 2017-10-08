@@ -9,10 +9,42 @@
 
 <body>
 
-<div class="loader hide"></div>
+<div class="loader"></div>
 
-<textarea class="host-maps-textarea"></textarea>
-<button class="save-button saved">Save</button>
+
+<div class="container-selector">
+  <div class="container-selector-selected"></div>
+  <div class="container-selector-list collapsed"></div>
+  <div class="container-selector-item template">
+    <span class="icon"></span>
+    <span class="name"></span>
+  </div>
+</div>
+
+
+<div class="url-maps">
+  <button class="add-button">Add</button>
+  <button class="save-button">Save</button>
+  <button class="ce-open-button">&#8672;</button>
+  <div class="url-maps-list">
+  </div>
+  <div class="url-map-item template">
+    <input class="url-input" />
+    <button class="remove-button">&times;</button>
+  </div>
+</div>
+
+
+<div class="csv-editor hide">
+  <p>Use this add/remove/backup multiple entries.</p>
+  <code>
+    e.g. host , container name
+  </code>
+  <textarea class="ce-hosts-textarea"></textarea>
+  <button class="ce-close-button">Close</button>
+  <button class="ce-save-button">Save</button>
+</div>
+
 
 <script src="ui.js"></script>
 </body>

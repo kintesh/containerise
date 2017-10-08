@@ -1,13 +1,41 @@
 @import "variables";
 
-html, body {
-  width: 300px;
-  margin: 0;
-  font-family: $font-family;
+*, *:before, *:after {
   box-sizing: border-box;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
+html, body {
+  width: 300px;
+  font-family: $font-family;
+  color: $black;
+  box-sizing: border-box;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 370px;
+  background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
+}
+
+html {
+  font-size: 87.5%;
+}
+
+body {
+  font-size: 1rem;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+  text-align: center;
+  padding: 0.2rem 0.8rem;
+  font-family: $font-family;
+  font-size: 1rem;
+  border: none;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  background-color: $button-color;
+
+  &:hover {
+    background-color: $button-hover-color;
+  }
 }

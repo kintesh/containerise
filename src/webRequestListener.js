@@ -21,7 +21,7 @@ export const webRequestListener = (requestDetails) => {
       return {};
     }
 
-    const identity = identities.find((identity) => identity.name.toLowerCase() === hostMap.container);
+    const identity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
 
     if (!identity || currentTab.cookieStoreId === identity.cookieStoreId) {
       return {};

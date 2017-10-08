@@ -1,0 +1,44 @@
+@import "variables";
+
+.csv-editor {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  left: 1rem;
+  bottom: 1rem;
+  background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
+  z-index: 1;
+  transition: transform 0.25s ease;
+
+  &.hide {
+    transform: translateX(110%);
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  code {
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  button {
+    margin: 1rem 0;
+  }
+}
+
+.ce-open-button {
+  float: right;
+}
+
+.ce-hosts-textarea {
+  background: transparent;
+  width: 100%;
+  min-height: 200px;
+  max-height: 400px;
+  resize: vertical;
+  padding: 6px;
+  font-family: monospace;
+  border: 1px solid $border-color;
+}

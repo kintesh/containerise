@@ -1,50 +1,10 @@
 @import "variables";
 @import "global";
 @import "loader";
+@import "container-selector";
+@import "url-maps";
+@import "csv-editor";
 
-textarea {
-  width: 100%;
-  min-height: 150px;
-  max-height: 400px;
-  resize: vertical;
-  padding: 6px;
-  font-family: $font-family;
-  font-size: $font-size;
-  line-height: 16px;
-  border: none;
-}
-
-button {
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  padding: 4px;
-  font-family: $font-family;
-  font-size: $font-size;
-  border: none;
-  transition: background-color 0.25s ease-out, color 0.25s ease-out;
-}
-
-.save-button {
-  &.disabled {
-    background-color: $grey-light;
-    color: $white;
-    &:hover {
-      background-color: $grey-dark;
-    }
-  }
-  &.saved {
-    background-color: $green-light;
-    color: $black;
-    &:hover {
-      background-color: $green-dark;
-    }
-  }
-  &.unsaved {
-    background-color: $yellow-light;
-    color: #0a0a0a;
-    &:hover {
-      background-color: $yellow-dark;
-    }
-  }
+.template {
+  display: none;
 }

@@ -1,6 +1,9 @@
+@import "variables";
+
 .loader {
   height: 4px;
   width: 100%;
+  top: 0;
   position: absolute;
   overflow: hidden;
   transform: translate3d(0,0,0);
@@ -16,7 +19,7 @@
     left: -50%;
     width: 50%;
     height: 4px;
-    background-color: #5e5e5e;
+    background-color: $loader-color;
     transform: translate3d(0,0,0);
     animation: loading 2.5s linear infinite;
 

@@ -1,0 +1,64 @@
+@import "variables";
+
+.container-selector {
+  margin: 0.6rem 1rem 0 1rem;
+  position: relative;
+}
+
+.container-selector-item {
+  padding: 0.6rem;
+  cursor: pointer;
+
+  > span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+    mask-size: contain;
+    margin-right: 12px;
+  }
+
+  &:hover {
+    background-color: $button-color;
+  }
+}
+
+.container-selector-selected {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28221,221,221%29'></polygon></svg>");
+  background-origin: content-box;
+  background-position: right 0.6rem center;
+  background-repeat: no-repeat;
+  background-size: 9px 6px;
+  cursor: pointer;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 0.6rem;
+
+  .container-selector-item {
+    &:hover {
+      background: transparent;
+    }
+  }
+}
+
+.container-selector-list {
+  overflow: scroll;
+  max-height: 300px;
+  transition: all 0.25s ease-out;
+  border: 1px solid $border-color;
+  background-color: $white;
+  top: 3.4rem;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 2px 2px 12px $border-color;
+
+  &.collapsed {
+    max-height: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
