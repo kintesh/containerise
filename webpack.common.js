@@ -45,12 +45,6 @@ module.exports = {
               name: '[name].[ext]',
             },
           },
-          {
-            loader: 'extract-loader',
-          },
-          {
-            loader: 'html-loader',
-          },
         ],
       },
       {
