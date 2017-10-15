@@ -1,3 +1,5 @@
+import {domainMatch, pathMatch, sortMaps} from '../utils';
+
 class Storage {
 
   constructor() {
@@ -18,8 +20,18 @@ class Storage {
   }
 
   get(key) {
-    return this.storage.get(`${this.mapPrefix}${key}`).then((result) => result[`${this.mapPrefix}${key}`]);
-  }
+    return this.getAll().then(maps => {
+      const sorted = sortMaps(Object.keys(maps).map(key => maps[key]));
+      // Sorts by domain length, then by path length
+      for (var i = 0; i < sorted.length; ++i) {
+        const map = sorted[i];
+        if (domainMatch(key, map))
+          if (pathMatch(key, map))
+            return map;
+      }
+      return {};
+    });
+ }
 
   setAll(obj = {}) {
     const prefixedObj = {};

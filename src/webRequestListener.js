@@ -23,7 +23,7 @@ export const webRequestListener = (requestDetails) => {
   }
 
   const url = new window.URL(requestDetails.url);
-  const hostname = url.hostname.replace('www.', '');
+  const hostname = url.hostname.replace('www.', '') + url.pathname;
 
   return Promise.all([
     Storage.get(hostname),
