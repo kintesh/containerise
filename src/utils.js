@@ -11,18 +11,18 @@ const domainLength = (map) => getDomain(map).replace('*.', '').split('.').length
 const pathLength = (map) => getPath(map).replace('/*', '').split('/').length;
 
 export const sortMaps = (maps) => maps.sort((map1, map2) => {
-  const d1 = domainLength(map1);
-  const d2 = domainLength(map2);
-  const p1 = pathLength(map1);
-  const p2 = pathLength(map2);
+  const d1 = domainLength(map1.host);
+  const d2 = domainLength(map2.host);
+  const p1 = pathLength(map1.host);
+  const p2 = pathLength(map2.host);
   if (d1==d2 && p1==p2) return 0;
   return ((d1==d2) ? (p1<p2) : (d1<d2)) ? 1 : -1;
 });
 
 export const domainMatch = (url, map) => {
   const url_host = getDomain(url);
-  const map_host = getDomain(map);
-  if (map.slice(0,2) != '*.') return url_host == map_host;
+  const map_host = getDomain(map.host);
+  if (map_host.slice(0,2) != '*.') return url_host == map_host;
   // Check wildcard matches in reverse order (com.example.*)
   const wild_url = url_host.split('.').reverse();
   const wild_map = map_host.slice(2).split('.').reverse();
@@ -35,8 +35,9 @@ export const domainMatch = (url, map) => {
 
 export const pathMatch = (url, map) => {
   const url_path = getPath(url);
-  const map_path = getPath(map);
-  if (map.slice(-2) != '/*') return url_path == map_path;
+  const map_path = getPath(map.host);
+  if (map_path == '*' || map_path == '') return true;
+  if (map_path.slice(-2) != '/*') return url_path == map_path;
 
   const wild_url = url_path.split('/');
   const wild_map = map_path.slice(0,-2).split('/');
