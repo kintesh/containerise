@@ -9,13 +9,33 @@ describe('Storage', () => {
 
           get: jest.fn(() => new Promise((resolve) =>
             resolve({
-              'map=example.com': {
-                host: 'example.com',
+              'map=example.com/': {
+                host: 'example.com/',
                 container: 'example',
                 enabled: true,
               },
-              'map=kinte.sh': {
-                host: 'kinte.sh',
+              'map=kinte.sh/*': {
+                host: 'kinte.sh/*',
+                container: 'personal',
+                enabled: true,
+              },
+              'map=*.example.com/': {
+                host: '*.example.com/',
+                container: 'example',
+                enabled: true,
+              },
+              'map=*.kinte.sh/*': {
+                host: '*.kinte.sh/*',
+                container: 'personal',
+                enabled: true,
+              },
+              'map=test.example.com/here': {
+                host: 'test.example.com/here',
+                container: 'example',
+                enabled: true,
+              },
+              'map=test.kinte.sh/here': {
+                host: 'test.kinte.sh/here',
                 container: 'personal',
                 enabled: true,
               },
@@ -43,13 +63,33 @@ describe('Storage', () => {
     expect.assertions(1);
     return Storage.getAll().then((results) => {
       expect(results).toEqual({
-        'example.com': {
-          host: 'example.com',
+        'example.com/': {
+          host: 'example.com/',
           container: 'example',
           enabled: true,
         },
-        'kinte.sh': {
-          host: 'kinte.sh',
+        'kinte.sh/*': {
+          host: 'kinte.sh/*',
+          container: 'personal',
+          enabled: true,
+        },
+        '*.example.com/': {
+          host: '*.example.com/',
+          container: 'example',
+          enabled: true,
+        },
+        '*.kinte.sh/*': {
+          host: '*.kinte.sh/*',
+          container: 'personal',
+          enabled: true,
+        },
+        'test.example.com/here': {
+          host: 'test.example.com/here',
+          container: 'example',
+          enabled: true,
+        },
+        'test.kinte.sh/here': {
+          host: 'test.kinte.sh/here',
           container: 'personal',
           enabled: true,
         },
@@ -58,11 +98,60 @@ describe('Storage', () => {
   });
 
   it('should get by key', () => {
-    expect.assertions(1);
-    return Storage.get('example.com').then((result) => {
+    expect.assertions(8);
+    Storage.get('example.com/').then((result) => {
       expect(result).toEqual({
-        host: 'example.com',
+        host: 'example.com/',
         container: 'example',
+        enabled: true,
+      });
+    });
+    Storage.get('kinte.sh/').then((result) => {
+      expect(result).toEqual({
+        host: 'kinte.sh/*',
+        container: 'personal',
+        enabled: true,
+      });
+    });
+    Storage.get('test.example.com/').then((result) => {
+      expect(result).toEqual({
+        host: '*.example.com/',
+        container: 'example',
+        enabled: true,
+      });
+    });
+    Storage.get('test.kinte.sh/').then((result) => {
+      expect(result).toEqual({
+        host: '*.kinte.sh/*',
+        container: 'personal',
+        enabled: true,
+      });
+    });
+    Storage.get('test.example.com/test').then((result) => {
+      expect(result).toEqual({
+        host: '*.example.com/',
+        container: 'example',
+        enabled: true,
+      });
+    });
+    Storage.get('test.kinte.sh/test').then((result) => {
+      expect(result).toEqual({
+        host: '*.kinte.sh/*',
+        container: 'personal',
+        enabled: true,
+      });
+    });
+    Storage.get('test.example.com/here').then((result) => {
+      expect(result).toEqual({
+        host: 'test.example.com/here',
+        container: 'example',
+        enabled: true,
+      });
+    });
+    return Storage.get('test.kinte.sh/here/there').then((result) => {
+      expect(result).toEqual({
+        host: 'test.kinte.sh/here',
+        container: 'personal',
         enabled: true,
       });
     });
@@ -70,13 +159,13 @@ describe('Storage', () => {
 
   it('should set all', () => {
     const hostMaps = {
-      'example.com': {
-        host: 'example.com',
+      'example.com/': {
+        host: 'example.com/',
         container: 'example',
         enabled: true,
       },
-      'kinte.sh': {
-        host: 'kinte.sh',
+      'kinte.sh/': {
+        host: 'kinte.sh/',
         container: 'personal',
         enabled: true,
       },
@@ -85,13 +174,13 @@ describe('Storage', () => {
     expect.assertions(1);
     return Storage.setAll(hostMaps).then(({key}) => {
       expect(key).toEqual({
-        'map=example.com': {
-          host: 'example.com',
+        'map=example.com/': {
+          host: 'example.com/',
           container: 'example',
           enabled: true,
         },
-        'map=kinte.sh': {
-          host: 'kinte.sh',
+        'map=kinte.sh/': {
+          host: 'kinte.sh/',
           container: 'personal',
           enabled: true,
         },
@@ -101,16 +190,16 @@ describe('Storage', () => {
 
   it('should set one entry', () => {
     const hostMap = {
-      host: 'example.com',
+      host: 'example.com/',
       container: 'example',
       enabled: true,
     };
 
     expect.assertions(2);
     return Storage.set(hostMap).then(({key, value}) => {
-      expect(key).toEqual('map=example.com');
+      expect(key).toEqual('map=example.com/');
       expect(value).toEqual({
-        host: 'example.com',
+        host: 'example.com/',
         container: 'example',
         enabled: true,
       });
@@ -119,8 +208,8 @@ describe('Storage', () => {
 
   it('should remove one entry', () => {
     expect.assertions(1);
-    return Storage.remove('example.com').then(({key}) => {
-      expect(key).toEqual('map=example.com');
+    return Storage.remove('example.com/').then(({key}) => {
+      expect(key).toEqual('map=example.com/');
     });
   });
 

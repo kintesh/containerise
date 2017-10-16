@@ -22,6 +22,7 @@ export const sortMaps = (maps) => maps.sort((map1, map2) => {
 export const domainMatch = (url, map) => {
   const url_host = getDomain(url);
   const map_host = getDomain(map.host);
+  if (map.host == "test.kinte.sh/here/") {console.log(url_host); console.log(map_host);}
   if (map_host.slice(0,2) != '*.') return url_host == map_host;
   // Check wildcard matches in reverse order (com.example.*)
   const wild_url = url_host.split('.').reverse();
@@ -37,10 +38,9 @@ export const pathMatch = (url, map) => {
   const url_path = getPath(url);
   const map_path = getPath(map.host);
   if (map_path == '*' || map_path == '') return true;
-  if (map_path.slice(-2) != '/*') return url_path == map_path;
-
+  // Paths are always wild
   const wild_url = url_path.split('/');
-  const wild_map = map_path.slice(0,-2).split('/');
+  const wild_map = map_path.replace('/*', '').split('/');
   if (wild_url.length < wild_map.length) return false;
 
   for (var i = 0; i < wild_map.length ; ++i)
