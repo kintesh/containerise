@@ -22,7 +22,6 @@ export const sortMaps = (maps) => maps.sort((map1, map2) => {
 export const domainMatch = (url, map) => {
   const url_host = getDomain(url);
   const map_host = getDomain(map.host);
-  if (map.host == "test.kinte.sh/here/") {console.log(url_host); console.log(map_host);}
   if (map_host.slice(0,2) != '*.') return url_host == map_host;
   // Check wildcard matches in reverse order (com.example.*)
   const wild_url = url_host.split('.').reverse();
