@@ -39,6 +39,11 @@ describe('Storage', () => {
                 container: 'personal',
                 enabled: true,
               },
+              'map=this.com': {  // Old-style map, no '/' at the end.
+                host: 'this.com',  // Will convert to new style any get() call
+                container: 'work',
+                enabled: true,
+              },
             }),
           )),
 
@@ -93,16 +98,28 @@ describe('Storage', () => {
           container: 'personal',
           enabled: true,
         },
+        'this.com': {
+          host: 'this.com',
+          container: 'work',
+          enabled: true,
+        },
       });
     });
   });
 
   it('should get by key', () => {
-    expect.assertions(8);
+    expect.assertions(9);
     Storage.get('example.com/').then((result) => {
       expect(result).toEqual({
         host: 'example.com/',
         container: 'example',
+        enabled: true,
+      });
+    });
+    Storage.get('this.com/').then((result) => {  // Old maps convert?
+      expect(result).toEqual({
+        host: 'this.com/',
+        container: 'work',
         enabled: true,
       });
     });
