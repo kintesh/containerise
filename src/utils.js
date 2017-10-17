@@ -11,6 +11,9 @@ const domainLength = (map) => getDomain(map).replace('*.', '').split('.').length
 const pathLength = (map) => getPath(map).replace('/*', '').split('/').length;
 
 export const sortMaps = (maps) => maps.sort((map1, map2) => {
+  // Fix for old style rules with no path
+  if (map1.host.indexOf('/') == -1) map1.host = map1.host.concat('/');
+  if (map2.host.indexOf('/') == -1) map2.host = map2.host.concat('/');
   const d1 = domainLength(map1.host);
   const d2 = domainLength(map2.host);
   const p1 = pathLength(map1.host);
