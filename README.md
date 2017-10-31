@@ -2,6 +2,7 @@
 
 Firefox extension to automatically open websites in a container
 
+![alt text](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/1.png "Logo Title Text 1")
 
 
 # Installation
@@ -31,5 +32,5 @@ Use `test:watch` to watch for edits and re-run the tests.
 Lint using eslint.
 
 #### `yarn web-ext`
-Runs web-ext process to debug the extension on Firefox.<br/>
+Runs web-ext process to debug the extension on Firefox. See [web-ext docs](https://github.com/mozilla/web-ext) <br/>
 To live reload the extension, start this process in a new tab after starting `yarn webpack` process.
