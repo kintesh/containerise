@@ -69,10 +69,8 @@ class URLMaps {
       const host = cleanHostInput(urlInput && urlInput.value);
 
       if (host) {
-        const map_host = (host.indexOf('/') == -1) ? host + '/' : host;
-        // append a '/' to the end of the rule, this makes sure there is a path
-        maps[map_host] = {
-          host: map_host,
+        maps[host] = {
+          host: host,
           containerName: this.state.selectedIdentity.name,
           cookieStoreId: this.state.selectedIdentity.cookieStoreId,
           enabled: true,

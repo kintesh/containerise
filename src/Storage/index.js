@@ -3,7 +3,6 @@ import {domainMatch, pathMatch, sortMaps} from '../utils';
 class Storage {
 
   constructor() {
-    this.splitKey = ',';
     this.mapPrefix = 'map=';
     this.storage = browser.storage.local;
   }
@@ -23,11 +22,12 @@ class Storage {
     return this.getAll().then(maps => {
       const sorted = sortMaps(Object.keys(maps).map(key => maps[key]));
       // Sorts by domain length, then by path length
-      for (var i = 0; i < sorted.length; ++i) {
-        const map = sorted[i];
-        if (domainMatch(key, map))
-          if (pathMatch(key, map))
-            return map;
+      for (const map of sorted) {
+        const url = (key.indexOf('/') === -1) ? key.concat('/') : key;
+        const mapHost = (map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host;
+        if (domainMatch(url, mapHost) && pathMatch(url, mapHost)) {
+          return map;
+        }
       }
       return {};
     });
