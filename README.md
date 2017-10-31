@@ -2,7 +2,11 @@
 
 Firefox extension to automatically open websites in a container
 
-![alt text](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/1.png "Logo Title Text 1")
+| | | | |
+| --- | --- | --- | --- |
+|![](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/1.png)  |  ![](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/2.png)  |  ![](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/3.png)  |  ![](https://raw.githubusercontent.com/kintesh/containerise/master/static/screenshots/4.png)|
+| | | | |
+| | | | |
 
 
 # Installation
