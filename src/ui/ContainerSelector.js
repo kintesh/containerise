@@ -57,7 +57,8 @@ class ContainerSelector {
       icon.style.maskImage = `url(${identity.iconUrl})`;
       icon.style.background = identity.colorCode;
     }
-    qs('.name', item).innerHTML = identity.name;
+    const name = qs('.name', item);
+    name.innerHTML = identity.name;
 
     return item;
   }
