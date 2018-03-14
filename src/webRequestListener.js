@@ -1,6 +1,7 @@
 import Storage from './Storage/index';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
+import {hostnameFromUrl} from './utils';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
   Tabs.create({
@@ -22,8 +23,7 @@ export const webRequestListener = (requestDetails) => {
     return {};
   }
 
-  const url = new window.URL(requestDetails.url);
-  const hostname = url.hostname.replace('www.', '');
+  const hostname = hostnameFromUrl(requestDetails.url);
 
   return Promise.all([
     Storage.get(hostname),

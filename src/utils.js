@@ -46,3 +46,10 @@ export const pathMatch = (url, map) => {
     if (wild_url[i] !== wild_map[i]) return false;
   return true;
 };
+
+export const hostnameFromUrl = (url) => {
+  const parsedUrl = new window.URL(url);
+  const hostname = parsedUrl.hostname.replace('www.', '');
+
+  return hostname;
+};
