@@ -44,28 +44,56 @@ class CSVEditor {
     hideLoader();
   }
 
-  saveUrlMaps() {
+  addIdentity(identity, host, maps) {
+    maps[host] = {
+      host,
+      cookieStoreId: identity.cookieStoreId,
+      containerName: identity.name,
+      enabled: true,
+    };
+  }
+
+  async createMissingContainers(missingContainers, maps) {
+    for (const containerName of missingContainers.keys()) {
+      const identity = await browser.contextualIdentities.create({
+        name: containerName,
+        color: 'blue',
+        icon: 'circle',
+      });
+      for (const host of missingContainers.get(containerName)) {
+        this.addIdentity(identity, host, maps);
+      }
+    }
+  }
+
+  async saveUrlMaps() {
     showLoader();
     const items = hostTextarea.value.trim().split('\n');
     const maps = {};
+    const missingContainers = new Map();
 
-    items.map((item) => {
+    Promise.all(items.map((item) => {
       const hostMapParts = item.split(HOST_MAPS_SPLIT_KEY);
       const host = cleanHostInput(hostMapParts[0]);
       const containerName = hostMapParts[1];
+      let identity;
 
       if (host && containerName) {
-        const identity = this.state.identities.find((identity) => cleanHostInput(identity.name) === cleanHostInput(containerName));
-        if (identity) {
-          maps[host] = {
-            host,
-            cookieStoreId: identity.cookieStoreId,
-            containerName: identity.name,
-            enabled: true,
-          };
+        identity = this.state.identities.find((identity) => cleanHostInput(identity.name) === cleanHostInput(containerName));
+        if (!identity) {
+          const trimmedContainer = containerName.trim();
+          if (!missingContainers.has(trimmedContainer)) {
+            missingContainers.set(trimmedContainer, [host]);
+          } else {
+            missingContainers.get(trimmedContainer).push(host);
+          }
+        } else {
+          this.addIdentity(identity, host, maps);
         }
       }
-    });
+    }));
+
+    await this.createMissingContainers(missingContainers, maps);
 
     Promise.all([
       Storage.clear(),

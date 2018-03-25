@@ -6,7 +6,7 @@ module.exports = {
 
   entry: {
     index: './src/index.js',
-    ui: './src/ui/index.js',
+    ui: ['babel-polyfill', './src/ui/index.js'],
   },
 
   output: {
