@@ -1,5 +1,5 @@
 import Storage from './Storage/index';
-import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
+import ContextualIdentity from './ContextualIdentity';
 import Tabs from './Tabs';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
@@ -29,28 +29,25 @@ export const webRequestListener = (requestDetails) => {
     Storage.get(hostname),
     ContextualIdentity.getAll(),
     Tabs.get(requestDetails.tabId),
-  ]).then(([hostMap, identities, currentTab]) => {
+    Storage.get('default'),
+  ]).then(([hostMap, identities, currentTab, defaultContainer]) => {
 
     if (currentTab.incognito || !hostMap) {
       return {};
     }
 
     const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
-    const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
+    const defaultIdentity = identities.find((identity) => identity.cookieStoreId === defaultContainer.cookieStoreId);
 
-    if (!hostIdentity) {
-      return {};
+    let newContainer;
+
+    if (!hostIdentity && defaultIdentity && currentTab.cookieStoreId !== defaultContainer.cookieStoreId) {
+      newContainer = defaultContainer.cookieStoreId;
+    } else if (hostIdentity && hostIdentity.cookieStoreId !== currentTab.cookieStoreId) {
+      newContainer = hostIdentity.cookieStoreId;
     }
 
-    if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id);
-    }
-
-    if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId);
-    }
-
-    return {};
+    return !newContainer ? {} : createTab(requestDetails.url, currentTab.index + 1, currentTab.id, newContainer);
   });
 
 };
