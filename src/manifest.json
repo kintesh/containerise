@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Containerise",
-  "version": "2.1.0",
+  "version": "2.2.0",
 
   "description": "Firefox extension to automatically open websites in a container",
   "icons": {
