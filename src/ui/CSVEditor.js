@@ -5,6 +5,7 @@ import {showLoader, hideLoader} from './loader';
 import {cleanHostInput} from '../utils';
 
 const HOST_MAPS_SPLIT_KEY = ',';
+const COLORS = ['blue', 'turquoise', 'green', 'yellow', 'orange', 'red', 'pink', 'purple'];
 const csvEditor = qs('.csv-editor');
 const openButton = qs('.ce-open-button');
 const closeButton = qs('.ce-close-button');
@@ -57,7 +58,7 @@ class CSVEditor {
     for (const containerName of missingContainers.keys()) {
       const identity = await browser.contextualIdentities.create({
         name: containerName,
-        color: 'blue',
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
         icon: 'circle',
       });
       for (const host of missingContainers.get(containerName)) {
