@@ -1,13 +1,9 @@
 {
   "presets": [
-    ["es2015", {"modules": false}],
-    "stage-2"
-  ],
-  "env": {
-    "test": {
-      "presets": [
-        ["es2015"]
-      ]
-    }
-  }
+    ["env", {
+      "targets": {
+        "browsers": ["firefox >= 57"]
+      }
+    }]
+  ]
 }
