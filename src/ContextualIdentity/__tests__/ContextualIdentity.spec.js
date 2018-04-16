@@ -23,10 +23,17 @@ describe('ContextualIdentities', () => {
           }}),
         ),
 
-        onUpdated: {
+        onCreated: {
           addListener: jest.fn(() => {}),
         },
 
+        onRemoved: {
+          addListener: jest.fn(() => {}),
+        },
+
+        onUpdated: {
+          addListener: jest.fn(() => {}),
+        },
       },
     };
 
@@ -63,9 +70,29 @@ describe('ContextualIdentities', () => {
     });
   });
 
+  it('should add onCreated listener', () => {
+    const MOCK_FN = jest.fn();
+    ContextualIdentities.addOnCreateListener(MOCK_FN);
+    expect(global.browser.contextualIdentities.onCreated.addListener).toBeCalledWith(MOCK_FN);
+  });
+
+  it('should add onRemoved listener', () => {
+    const MOCK_FN = jest.fn();
+    ContextualIdentities.addOnRemoveListener(MOCK_FN);
+    expect(global.browser.contextualIdentities.onRemoved.addListener).toBeCalledWith(MOCK_FN);
+  });
+
   it('should add onChanged listener', () => {
     const MOCK_FN = jest.fn();
     ContextualIdentities.addOnUpdateListener(MOCK_FN);
+    expect(global.browser.contextualIdentities.onUpdated.addListener).toBeCalledWith(MOCK_FN);
+  });
+
+  it('should add all three (onCreated, onRemoved and onChanged) listeners', () => {
+    const MOCK_FN = jest.fn();
+    ContextualIdentities.addOnChangedListener(MOCK_FN);
+    expect(global.browser.contextualIdentities.onCreated.addListener).toBeCalledWith(MOCK_FN);
+    expect(global.browser.contextualIdentities.onRemoved.addListener).toBeCalledWith(MOCK_FN);
     expect(global.browser.contextualIdentities.onUpdated.addListener).toBeCalledWith(MOCK_FN);
   });
 

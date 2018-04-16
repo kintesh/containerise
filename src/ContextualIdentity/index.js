@@ -24,10 +24,23 @@ class ContextualIdentities {
     return this.contextualIdentities.query({name});
   }
 
+  addOnCreateListener(fn) {
+    browser.contextualIdentities.onCreated.addListener(fn);
+  }
+
+  addOnRemoveListener(fn) {
+    browser.contextualIdentities.onRemoved.addListener(fn);
+  }
+
   addOnUpdateListener(fn) {
     browser.contextualIdentities.onUpdated.addListener(fn);
   }
 
+  addOnChangedListener(fn) {
+    this.addOnCreateListener(fn);
+    this.addOnRemoveListener(fn);
+    this.addOnUpdateListener(fn);
+  }
 }
 
 export default new ContextualIdentities();

@@ -29,7 +29,7 @@ const getUrlMaps = () => {
 getIdentities();
 getUrlMaps();
 
-ContextualIdentity.addOnUpdateListener(() => {
+ContextualIdentity.addOnChangedListener(() => {
   getIdentities();
 });
 
