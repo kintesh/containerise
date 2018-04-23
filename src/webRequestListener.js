@@ -4,14 +4,15 @@ import Tabs from './Tabs';
 import {hostnameFromUrl} from './utils';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
-  browser.tabs.get(currentTabId).then( foundTab => {
+
+  Tabs.get(currentTabId).then((currentTab) => {
     Tabs.create({
-      active: foundTab.active,
       url,
       index: newTabIndex,
       cookieStoreId,
+      active: currentTab.active,
     });
-  
+
     Tabs.remove(currentTabId);
   });
 
