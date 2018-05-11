@@ -2,6 +2,7 @@ import State from '../State';
 import Storage from '../Storage';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
+import {showToast, hideToast} from './toast';
 import {cleanHostInput} from '../utils';
 
 const addButton = qs('.add-button');
@@ -82,8 +83,8 @@ class URLMaps {
       Storage.setAll(maps),
     ]).then(() => {
       hideLoader();
-      saveButton.innerHTML = 'Saved!';
-      setTimeout(() => saveButton.innerHTML = 'Save', 3000);
+      showToast('Saved!');
+      setTimeout(() => hideToast(), 3000);
     });
   }
 

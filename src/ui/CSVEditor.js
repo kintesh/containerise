@@ -2,6 +2,7 @@ import State from '../State';
 import Storage from '../Storage';
 import {qs} from '../utils';
 import {showLoader, hideLoader} from './loader';
+import {showToast, hideToast} from './toast';
 import {cleanHostInput} from '../utils';
 
 const HOST_MAPS_SPLIT_KEY = ',';
@@ -101,8 +102,8 @@ class CSVEditor {
       Storage.setAll(maps),
     ]).then(() => {
       hideLoader();
-      saveButton.innerHTML = 'Saved!';
-      setTimeout(() => saveButton.innerHTML = 'Save', 3000);
+      showToast('Saved!');
+      setTimeout(() => hideToast(), 3000);
     });
   }
 
