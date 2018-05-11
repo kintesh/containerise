@@ -7,7 +7,7 @@
 }
 
 html, body {
-  width: 300px;
+  min-width: 300px;
   font-family: $font-family;
   color: $black;
   box-sizing: border-box;

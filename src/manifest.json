@@ -33,7 +33,8 @@
 
   "applications": {
     "gecko": {
-      "id": "containerise@kinte.sh"
+      "id": "containerise@kinte.sh",
+      "strict_min_version": "57"
     }
   }
 
