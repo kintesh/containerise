@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] - 22 May 2018
+### Changed
+- Various visual changes.
+
 
 ## [2.3.0] - 23 Apr 2018
 ### Added
@@ -43,6 +47,7 @@ Various changes to build system.
 
 
 
+[2.3.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/kintesh/containerise/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/kintesh/containerise/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/kintesh/containerise/compare/2.0.0...2.1.0
