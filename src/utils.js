@@ -47,9 +47,7 @@ export const pathMatch = (url, map) => {
   return true;
 };
 
-export const hostnameFromUrl = (url) => {
+export const urlKeyFromUrl = (url) => {
   const parsedUrl = new window.URL(url);
-  const hostname = parsedUrl.hostname.replace('www.', '');
-
-  return hostname;
+  return parsedUrl.hostname.replace('www.', '') + parsedUrl.pathname;
 };
