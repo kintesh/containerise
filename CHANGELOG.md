@@ -47,7 +47,7 @@ Various changes to build system.
 
 
 
-[2.3.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
+[2.4.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/kintesh/containerise/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/kintesh/containerise/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/kintesh/containerise/compare/2.0.0...2.1.0
