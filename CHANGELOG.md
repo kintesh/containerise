@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.0] - 20 Aug 2018
+### Added
+- Selects container based on current tab when opening the extension ui.
+
+### Changed
+- Opening in container based on Path should work.
+
+
 ## [2.4.0] - 22 May 2018
 ### Changed
 - Various visual changes.
@@ -47,6 +55,7 @@ Various changes to build system.
 
 
 
+[2.4.0]: https://github.com/kintesh/containerise/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/kintesh/containerise/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/kintesh/containerise/compare/2.1.0...2.2.0

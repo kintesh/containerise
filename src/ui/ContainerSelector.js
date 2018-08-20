@@ -1,5 +1,5 @@
 import State from '../State';
-import {NO_CONTAINER} from '../ContextualIdentity/index';
+import {NO_CONTAINER} from '../ContextualIdentity';
 import {qs} from '../utils';
 
 const csSelected = qs('.container-selector-selected');

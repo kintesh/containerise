@@ -16,6 +16,9 @@ class Tabs {
     return this.tabs.remove(tabId);
   }
 
+  query(queryInfo = {}) {
+    return this.tabs.query(queryInfo);
+  }
 }
 
 export default new Tabs();

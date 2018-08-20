@@ -20,6 +20,12 @@ describe('Tabs', () => {
         )),
 
         remove: jest.fn(() => new Promise((resolve) => resolve())),
+
+        query: jest.fn((queryInfo) => new Promise((resolve) =>
+          resolve({
+            ...queryInfo,
+          })
+        )),
       },
     };
 
@@ -52,6 +58,16 @@ describe('Tabs', () => {
     expect.assertions(1);
     return Tabs.remove(42).then((tab) => {
       expect(tab).toBeUndefined();
+    });
+  });
+
+  it('should query tabs', () => {
+    const queryInfo = {
+      active: true,
+    };
+    expect.assertions(1);
+    return Tabs.query(queryInfo).then((tab) => {
+      expect(tab).toEqual(queryInfo);
     });
   });
 
