@@ -23,8 +23,8 @@ class Storage {
       const sorted = sortMaps(Object.keys(maps).map(key => maps[key]));
       // Sorts by domain length, then by path length
       for (const map of sorted) {
-        const url = (key.indexOf('/') === -1) ? key.concat('/') : key;
-        const mapHost = (map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host;
+        const url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
+        const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
         if (domainMatch(url, mapHost) && pathMatch(url, mapHost)) {
           return map;
         }
