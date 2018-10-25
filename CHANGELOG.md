@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.5.1] - 20 Aug 2018
+## [2.5.1] - 25 Oct 2018
 ### Changed
 - Case insensitive matching.
 - Changed strict_min_version fro 57 to 53. (Some functionality may not work).
@@ -28,7 +28,7 @@ All notable changes to this project will be documented in this file.
 - Persist active tabs when visiting a mapped domain with Command+Click (OS X), Ctrl+Click (Windows and Linux).
 
 
-## [2.2.0] - 25 Oct 2018
+## [2.2.0] - 6 Apr 2018
 ### Added
 - Allow specific extensions to ask for hostmap (resolves #17)
 
