@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Containerise",
-  "version": "2.5.0",
+  "version": "2.5.1",
 
   "description": "Firefox extension to automatically open websites in a container",
   "icons": {
@@ -34,7 +34,7 @@
   "applications": {
     "gecko": {
       "id": "containerise@kinte.sh",
-      "strict_min_version": "57.0"
+      "strict_min_version": "53.0"
     }
   }
 

@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.1] - 20 Aug 2018
+### Changed
+- Case insensitive matching.
+- Changed strict_min_version fro 57 to 53. (Some functionality may not work).
+
 ## [2.5.0] - 20 Aug 2018
 ### Added
 - Selects container based on current tab when opening the extension ui.
@@ -55,7 +60,8 @@ Various changes to build system.
 
 
 
-[2.4.0]: https://github.com/kintesh/containerise/compare/2.4.0...2.5.0
+[2.5.1]: https://github.com/kintesh/containerise/compare/2.5.0...2.5.1
+[2.5.0]: https://github.com/kintesh/containerise/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/kintesh/containerise/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/kintesh/containerise/compare/2.1.0...2.2.0
