@@ -1,7 +1,6 @@
 import Storage from './Storage/index';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
-import {urlKeyFromUrl} from './utils';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
 
@@ -27,10 +26,8 @@ export const webRequestListener = (requestDetails) => {
     return {};
   }
 
-  const key = urlKeyFromUrl(requestDetails.url);
-
   return Promise.all([
-    Storage.get(key),
+    Storage.get(requestDetails.url),
     ContextualIdentity.getAll(),
     Tabs.get(requestDetails.tabId),
   ]).then(([hostMap, identities, currentTab]) => {
