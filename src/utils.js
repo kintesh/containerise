@@ -1,3 +1,5 @@
+import punycode from 'punycode';
+
 export const qs = (selector, node) => (node || document).querySelector(selector);
 export const qsAll = (selector, node) => (node || document).querySelectorAll(selector);
 export const ce = (tagName) => document.createElement(tagName);
@@ -49,5 +51,5 @@ export const pathMatch = (url, map) => {
 
 export const urlKeyFromUrl = (url) => {
   const parsedUrl = new window.URL(url);
-  return parsedUrl.hostname.replace('www.', '') + parsedUrl.pathname;
+  return punycode.toUnicode(parsedUrl.hostname.replace('www.', '')) + parsedUrl.pathname;
 };
