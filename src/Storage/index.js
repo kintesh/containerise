@@ -1,4 +1,4 @@
-import {domainMatch, pathMatch, sortMaps} from '../utils';
+import {matchesSavedMap, sortMaps} from '../utils';
 
 class Storage {
 
@@ -18,18 +18,11 @@ class Storage {
       });
   }
 
-  get(key) {
+  get(url) {
     return this.getAll().then(maps => {
       const sorted = sortMaps(Object.keys(maps).map(key => maps[key]));
       // Sorts by domain length, then by path length
-      for (const map of sorted) {
-        const url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
-        const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
-        if (domainMatch(url, mapHost) && pathMatch(url, mapHost)) {
-          return map;
-        }
-      }
-      return {};
+      return sorted.find(matchesSavedMap.bind(null, url)) || {};
     });
  }
 
