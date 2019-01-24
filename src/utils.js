@@ -1,5 +1,8 @@
 import punycode from 'punycode';
 
+export const PREFIX_REGEX = '@';
+export const PREFIX_GLOB = '!';
+
 export const qs = (selector, node) => (node || document).querySelector(selector);
 export const qsAll = (selector, node) => (node || document).querySelectorAll(selector);
 export const ce = (tagName) => document.createElement(tagName);
@@ -52,4 +55,29 @@ export const pathMatch = (url, map) => {
 export const urlKeyFromUrl = (url) => {
   const parsedUrl = new window.URL(url);
   return punycode.toUnicode(parsedUrl.hostname.replace('www.', '')) + parsedUrl.pathname;
+};
+
+/**
+ * Checks if the URL matches a given hostmap
+ *
+ * Depending on the prefix in the hostmap it'll choose a match method:
+ *  - regex
+ *  - TODO: glob
+ *  - standard
+ *
+ * @param url {URL}
+ * @param map
+ * @return {*}
+ */
+export const matchesSavedMap = (url, map) => {
+    const savedHost = map.host;
+    if (savedHost[0] === PREFIX_REGEX) {
+        return new RegExp(savedHost.substr(1)).test(url);
+    } else {
+        const key = urlKeyFromUrl(url);
+        const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
+        const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
+        return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
+
+    }
 };
