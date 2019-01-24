@@ -99,56 +99,56 @@ describe('Storage', () => {
 
   it('should get by key', () => {
     expect.assertions(8);
-    Storage.get('example.com').then((result) => {
+    Storage.get('http://example.com').then((result) => {
       expect(result).toEqual({
         host: 'example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('kinte.sh').then((result) => {
+    Storage.get('http://kinte.sh').then((result) => {
       expect(result).toEqual({
         host: 'kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('test.example.com').then((result) => {
+    Storage.get('http://test.example.com').then((result) => {
       expect(result).toEqual({
         host: '*.example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('test.kinte.sh').then((result) => {
+    Storage.get('http://test.kinte.sh').then((result) => {
       expect(result).toEqual({
         host: '*.kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('test.example.com/test').then((result) => {
+    Storage.get('http://test.example.com/test').then((result) => {
       expect(result).toEqual({
         host: '*.example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('test.kinte.sh/test').then((result) => {
+    Storage.get('http://test.kinte.sh/test').then((result) => {
       expect(result).toEqual({
         host: '*.kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('test.example.com/here').then((result) => {
+    Storage.get('http://test.example.com/here').then((result) => {
       expect(result).toEqual({
         host: 'test.example.com/here',
         container: 'example',
         enabled: true,
       });
     });
-    return Storage.get('test.kinte.sh/here/there').then((result) => {
+    return Storage.get('http://test.kinte.sh/here/there').then((result) => {
       expect(result).toEqual({
         host: 'test.kinte.sh/here',
         container: 'personal',
