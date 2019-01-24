@@ -1,3 +1,5 @@
+import punycode from 'punycode';
+
 export const PREFIX_REGEX = '@';
 export const PREFIX_GLOB = '!';
 
@@ -52,7 +54,7 @@ export const pathMatch = (url, map) => {
 
 export const urlKeyFromUrl = (url) => {
   const parsedUrl = new window.URL(url);
-  return parsedUrl.hostname.replace('www.', '') + parsedUrl.pathname;
+  return punycode.toUnicode(parsedUrl.hostname.replace('www.', '')) + parsedUrl.pathname;
 };
 
 /**
