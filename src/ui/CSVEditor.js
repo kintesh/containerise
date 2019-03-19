@@ -70,7 +70,7 @@ class CSVEditor {
 
   async saveUrlMaps() {
     showLoader();
-    const items = hostTextarea.value.trim().split('\n');
+    const items = hostTextarea.value.trim().split('\n').filter(s => s.charAt(0) !== '#');
     const maps = {};
     const missingContainers = new Map();
 
