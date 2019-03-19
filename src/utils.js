@@ -73,6 +73,11 @@ export const matchesSavedMap = (url, map) => {
     const savedHost = map.host;
     if (savedHost[0] === PREFIX_REGEX) {
         return new RegExp(savedHost.substr(1)).test(url);
+    } else if (savedHost[0] === PREFIX_GLOB) {
+        // turning glob into regex isn't the worst thing:
+        // 1. * becomes .*
+        // 2. ? becomes .?
+        return new RegExp(savedHost.substr(1).replace(/\*/g, '.*').replace(/\?/g, '.?')).test(url);
     } else {
         const key = urlKeyFromUrl(url);
         const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
