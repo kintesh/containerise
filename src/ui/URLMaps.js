@@ -80,7 +80,6 @@ class URLMaps {
     }
 
     Promise.all([
-      Storage.clear(),
       Storage.setAll(maps),
     ]).then(() => {
       hideLoader();
