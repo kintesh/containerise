@@ -54,7 +54,7 @@ class ContainerSelector {
       icon.innerHTML = '<span class="no-container-icon">&otimes;</span>';
       icon.style.color = identity.colorCode;
     } else {
-      icon.style.maskImage = `url(${identity.iconUrl})`;
+      // icon.style.maskImage = `url(${identity.iconUrl})`;
       icon.style.background = identity.colorCode;
     }
     const name = qs('.name', item);
