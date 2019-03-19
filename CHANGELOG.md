@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 19 Mar 2019
+### Added
+- Support internationalized domain names with punycode.
+- Support for Regex patterns (`@.+\.google\.com$` --> `.+\.google\.com$`)
+- Support for Glob patterns (`!*.google.com` --> `*.google.com`)
+- Ignore lines starting with `#` during CSV import.
+ 
+### Changed
+- Container icons are no longer accessible, fallback to simple indicators.
+
+
 ## [2.5.1] - 25 Oct 2018
 ### Changed
 - Case insensitive matching.
@@ -20,7 +31,7 @@ All notable changes to this project will be documented in this file.
 
 
 ## [2.3.0] - 23 Apr 2018
-### Added
+### AddedPREFIX_GLOB
 - Automatically create containers that don't match any exist container when adding a rule in CSV editor.
 - Update the list of available container when a is created, removed or updated.
 

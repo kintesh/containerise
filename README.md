@@ -12,6 +12,21 @@ Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-
 
 
 
+# Usage
+
+## Basic mapping
+\
+`amazon.co.uk, Shopping` will open all amazon.co.uk (not subdomains) links in Shopping container.
+
+## Glob
+`!*.amazon.co.uk, Shopping`  will be treated as `*.amazon.co.uk` glob pattern. (suitable to subdomains)
+
+## Regex
+
+`@.+\.amazon\.co\.uk$, Shopping` will be treat as `.+\.amazon\.co\.uk$` regex. (suitable to subdomains and complex paths)
+
+
+
 # Development
 
 ## Available Scripts
