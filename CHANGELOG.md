@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.0.1] - 8 Apr 2019
+### Changed
+- Fix a bug that prevented the user of `,` (comma) in regex.
+
+
 ## [3.0.0] - 19 Mar 2019
 ### Added
 - Support internationalized domain names with punycode.
@@ -70,7 +75,8 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
-
+[3.0.1]: https://github.com/kintesh/containerise/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/kintesh/containerise/compare/2.5.1...3.0.0
 [2.5.1]: https://github.com/kintesh/containerise/compare/2.5.0...2.5.1
 [2.5.0]: https://github.com/kintesh/containerise/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/kintesh/containerise/compare/2.3.0...2.4.0
