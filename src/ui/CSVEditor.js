@@ -76,8 +76,8 @@ class CSVEditor {
 
     Promise.all(items.map((item) => {
       const hostMapParts = item.split(HOST_MAPS_SPLIT_KEY);
-      const host = cleanHostInput(hostMapParts[0]);
-      const containerName = hostMapParts[1];
+      const host = cleanHostInput(hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY));
+      const containerName = hostMapParts[hostMapParts.length - 1];
       let identity;
 
       if (host && containerName) {
