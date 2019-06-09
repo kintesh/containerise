@@ -46,8 +46,8 @@ class URLMaps {
     }
 
     let isDefaultContainer = this.state.selectedIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId;
-    addButton.style.display = isDefaultContainer ? "none" : "initial";
-    saveButton.style.display = isDefaultContainer ? "none" : "initial";
+    addButton.style.display = isDefaultContainer ? 'none' : 'initial';
+    saveButton.style.display = isDefaultContainer ? 'none' : 'initial';
 
     hideLoader();
   }
