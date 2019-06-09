@@ -1,5 +1,6 @@
 import State from '../State';
 import Storage from '../Storage';
+import {NO_CONTAINER} from '../ContextualIdentity';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
 import {showToast, hideToast} from './toast';
@@ -37,10 +38,16 @@ class URLMaps {
 
     for (const key in this.state.urlMaps) {
       const urlMap = this.state.urlMaps[key];
-      if (this.state.selectedIdentity.cookieStoreId === urlMap.cookieStoreId) {
-        this.addItem(urlMap.host);
+      if (urlMap.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
+        if (this.state.selectedIdentity.cookieStoreId === urlMap.cookieStoreId) {
+          this.addItem(urlMap.host);
+        }
       }
     }
+
+    let isDefaultContainer = this.state.selectedIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId;
+    addButton.style.display = isDefaultContainer ? "none" : "initial";
+    saveButton.style.display = isDefaultContainer ? "none" : "initial";
 
     hideLoader();
   }
