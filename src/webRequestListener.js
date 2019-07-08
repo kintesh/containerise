@@ -39,6 +39,11 @@ export const webRequestListener = (requestDetails) => {
     const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
     const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
 
+    if (!hostIdentity && currentTab.cookieStoreId !== NO_CONTAINER.cookieStoreId && tabIdentity) {
+      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id);
+    }
+
+
     if (!hostIdentity) {
       return {};
     }
