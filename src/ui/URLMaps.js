@@ -1,6 +1,7 @@
 import State from '../State';
 import Storage from '../Storage';
 import {NO_CONTAINER} from '../ContextualIdentity';
+import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
 import {showToast, hideToast} from './toast';
@@ -52,10 +53,22 @@ class URLMaps {
     hideLoader();
   }
 
-  addItem(host) {
+  async addItem(host) {
     const item = umItem.cloneNode(true);
     item.setAttribute('data-id', String(this.itemsCount));
     item.classList.remove('template');
+    if(!host){
+      // Fallback to hostname of current tab
+      try {
+        let currentTab = (await Tabs.query({
+          active: true,
+          windowId: browser.windows.WINDOW_ID_CURRENT,
+        }))[0];
+        host = new URL(currentTab.url).hostname;
+      } catch (e) {
+        // console.warn("Error while guessing hostname of active tab", e);
+      }
+    }
     qs('.url-input', item).value = host;
     qs('.remove-button', item).addEventListener('click', this.removeUrlMap.bind(this, this.itemsCount, host));
     umMaps.appendChild(item);
