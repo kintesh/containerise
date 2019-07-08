@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [3.1.0] - 8 Jul 2019
 ### Changed
-- All unmapped urls now open outside of any container. Existing tab will not be closed.
+- All unmapped urls now open outside of any container.
+- Tabs will not be closed when entering existing a container.
 
 
 ## [3.0.1] - 8 Apr 2019
