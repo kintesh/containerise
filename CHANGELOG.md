@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 8 Jul 2019
+### Changed
+- All unmapped urls now open outside of any container. Existing tab will not be closed.
+
+
 ## [3.0.1] - 8 Apr 2019
 ### Changed
 - Fix a bug that prevented the user of `,` (comma) in regex.
@@ -75,6 +80,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.1.0]: https://github.com/kintesh/containerise/compare/3.0.1...3.1.0
 [3.0.1]: https://github.com/kintesh/containerise/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/kintesh/containerise/compare/2.5.1...3.0.0
 [2.5.1]: https://github.com/kintesh/containerise/compare/2.5.0...2.5.1
