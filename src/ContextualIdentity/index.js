@@ -1,12 +1,3 @@
-export const NO_CONTAINER = {
-  name: 'No Container',
-  icon: 'circle',
-  iconUrl: 'resource://usercontext-content/circle.svg',
-  color: 'grey',
-  colorCode: '#999',
-  cookieStoreId: 'no-container',
-};
-
 class ContextualIdentities {
 
   constructor() {
@@ -14,13 +5,10 @@ class ContextualIdentities {
   }
 
   getAll(details = {}) {
-    return this.contextualIdentities.query(details).then((identities) => [...identities, NO_CONTAINER]);
+    return this.contextualIdentities.query(details).then((identities) => [...identities]);
   }
 
   get(name) {
-    if (name === NO_CONTAINER.name) {
-      return Promise.resolve(NO_CONTAINER);
-    }
     return this.contextualIdentities.query({name});
   }
 
