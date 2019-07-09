@@ -18,6 +18,17 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
   };
 };
 
+const isTmpContainer = async(cookieStoreId) => {
+  try {
+    return await browser.runtime.sendMessage('{c607c8df-14a7-4f28-894f-29e8722976af}', {
+      method: 'isTempContainer',
+      cookieStoreId,
+    });
+  } catch (error) {
+    return false;
+  }
+};
+
 export const webRequestListener = (requestDetails) => {
 
   if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
@@ -28,7 +39,7 @@ export const webRequestListener = (requestDetails) => {
     Storage.get(requestDetails.url),
     ContextualIdentity.getAll(),
     Tabs.get(requestDetails.tabId),
-  ]).then(([hostMap, identities, currentTab]) => {
+  ]).then(async ([hostMap, identities, currentTab]) => {
 
     if (currentTab.incognito || !hostMap) {
       return {};
@@ -38,10 +49,10 @@ export const webRequestListener = (requestDetails) => {
     const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
 
     if (hostIdentity && hostIdentity.cookieStoreId !== currentTab.cookieStoreId) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId); 
+      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId);
     }
 
-    if (!hostIdentity && tabIdentity) {
+    if (!hostIdentity && tabIdentity && !await isTmpContainer(currentTab.cookieStoreId)) {
       return createTab(requestDetails.url, currentTab.index + 1, currentTab.id);
     }
 
