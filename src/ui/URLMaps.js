@@ -1,5 +1,6 @@
 import State from '../State';
 import Storage from '../Storage';
+import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
 import {showToast, hideToast} from './toast';
@@ -39,17 +40,30 @@ class URLMaps {
       const urlMap = this.state.urlMaps[key];
       if (this.state.selectedIdentity.cookieStoreId === urlMap.cookieStoreId) {
         this.addItem(urlMap.host);
+        console.log(urlMap.host);
       }
     }
 
     hideLoader();
   }
 
-  addItem(host) {
+  async addItem(host) {
     const item = umItem.cloneNode(true);
     item.setAttribute('data-id', String(this.itemsCount));
     item.classList.remove('template');
     let urlInput = qs('.url-input', item);
+    if(!host){
+      // Fallback to hostname of current tab
+      try {
+        let currentTab = (await Tabs.query({
+          active: true,
+          windowId: browser.windows.WINDOW_ID_CURRENT,
+        }))[0];
+        host = new URL(currentTab.url).hostname;
+      } catch (e) {
+        // console.warn("Error while guessing hostname of active tab", e);
+      }
+    }
     urlInput.setAttribute('old-host', host);
     urlInput.value = host;
     qs('.remove-button', item).addEventListener('click', this.removeUrlMap.bind(this, this.itemsCount, host));
@@ -64,13 +78,17 @@ class URLMaps {
 
   saveUrlMaps() {
     showLoader();
-    const items = qsAll('.url-map-item');
+    const items = qsAll('.url-map-item:not(.template)');
     const maps = {};
     let hostsToRemove = [];
+
+    console.log(items.length);
 
     for (const item of items) {
       const urlInput = qs('.url-input', item);
       const host = cleanHostInput(urlInput && urlInput.value);
+
+      console.log(host, '|' ,urlInput.value);
 
       if (host) {
         // Get rid of old hosts

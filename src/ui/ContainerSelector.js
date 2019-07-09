@@ -1,5 +1,4 @@
 import State from '../State';
-import {NO_CONTAINER} from '../ContextualIdentity';
 import {qs} from '../utils';
 
 const csSelected = qs('.container-selector-selected');
@@ -50,13 +49,7 @@ class ContainerSelector {
     const item = csItem.cloneNode(true);
     item.classList.remove('template');
     const icon = qs('.icon', item);
-    if (identity.cookieStoreId === NO_CONTAINER.cookieStoreId) {
-      icon.innerHTML = '<span class="no-container-icon">&otimes;</span>';
-      icon.style.color = identity.colorCode;
-    } else {
-      // icon.style.maskImage = `url(${identity.iconUrl})`;
-      icon.style.background = identity.colorCode;
-    }
+    icon.style.background = identity.colorCode;
     const name = qs('.name', item);
     name.innerHTML = identity.name;
 
