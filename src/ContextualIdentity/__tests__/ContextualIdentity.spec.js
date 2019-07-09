@@ -49,6 +49,13 @@ describe('ContextualIdentities', () => {
       }, {
         name: 'Mock 2',
         cookieStoreId: 'cookie store 2',
+      }, {
+        name: 'No Container',
+        icon: 'circle',
+        iconUrl: 'resource://usercontext-content/circle.svg',
+        color: 'grey',
+        colorCode: '#999',
+        cookieStoreId: 'no-container',
       }]);
     });
   });

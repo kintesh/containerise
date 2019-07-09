@@ -1,7 +1,7 @@
 import './styles/style.scss';
 import './index.html';
 import State from '../State';
-import ContextualIdentity from '../ContextualIdentity';
+import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity';
 import Storage from '../Storage';
 import Tabs from '../Tabs';
 import './ContainerSelector';
@@ -40,6 +40,11 @@ Storage.addOnChangedListener(() => {
 
 Tabs.query({active: true}).then(tabs => {
   const activeTab = tabs[0];
+
+  if (activeTab.cookieStoreId === 'firefox-default') {
+    State.set('selectedIdentity', NO_CONTAINER);
+    return;
+  }
 
   ContextualIdentity.getAll().then((identities) => {
     for(const identity of identities) {
