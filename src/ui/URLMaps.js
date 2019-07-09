@@ -49,7 +49,9 @@ class URLMaps {
     const item = umItem.cloneNode(true);
     item.setAttribute('data-id', String(this.itemsCount));
     item.classList.remove('template');
-    qs('.url-input', item).value = host;
+    let urlInput = qs('.url-input', item);
+    urlInput.setAttribute('old-host', host);
+    urlInput.value = host;
     qs('.remove-button', item).addEventListener('click', this.removeUrlMap.bind(this, this.itemsCount, host));
     umMaps.appendChild(item);
     this.itemsCount++;
@@ -64,12 +66,18 @@ class URLMaps {
     showLoader();
     const items = qsAll('.url-map-item');
     const maps = {};
+    let hostsToRemove = [];
 
     for (const item of items) {
       const urlInput = qs('.url-input', item);
       const host = cleanHostInput(urlInput && urlInput.value);
 
       if (host) {
+        // Get rid of old hosts
+        const oldHost = urlInput.getAttribute('old-host');
+        if (oldHost !== host) {
+          hostsToRemove.push(oldHost);
+        }
         maps[host] = {
           host: host,
           containerName: this.state.selectedIdentity.name,
@@ -79,9 +87,13 @@ class URLMaps {
       }
     }
 
-    Promise.all([
-      Storage.setAll(maps),
-    ]).then(() => {
+    const promises = hostsToRemove
+        .map(oldHost => Storage.remove(oldHost))
+        .concat([
+          Storage.setAll(maps),
+        ]);
+
+    Promise.all(promises).then(() => {
       hideLoader();
       showToast('Saved!');
       setTimeout(() => hideToast(), 3000);
