@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 9 Jul 2019
+### Revert
+- All unmapped urls now open outside of any container.
+- Tabs will not be closed when entering existing a container.
+
+
 ## [3.1.0] - 8 Jul 2019
 ### Changed
 - All unmapped urls now open outside of any container.
@@ -81,6 +87,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.2.0]: https://github.com/kintesh/containerise/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/kintesh/containerise/compare/3.0.1...3.1.0
 [3.0.1]: https://github.com/kintesh/containerise/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/kintesh/containerise/compare/2.5.1...3.0.0
