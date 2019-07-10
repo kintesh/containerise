@@ -1,5 +1,5 @@
 import State from '../State';
-import Storage from '../Storage';
+import Storage from '../Storage/HostStorage';
 import {qs} from '../utils';
 import {showLoader, hideLoader} from './loader';
 import {showToast, hideToast} from './toast';

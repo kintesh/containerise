@@ -1,4 +1,4 @@
-import Storage from './Storage/index';
+import Storage from './Storage/HostStorage';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
 
