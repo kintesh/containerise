@@ -60,10 +60,9 @@ export default class PrefixStorage {
   /**
    * Removes all keys with our prefix
    */
-  clear(){
-    return this.getAll().then((results) => {
-      return this.remove(Object.keys(results));
-    });
+  async clear() {
+    const results = await this.getAll();
+    await this.remove(Object.keys(results));
   }
 
   /**
