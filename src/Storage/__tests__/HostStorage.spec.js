@@ -220,10 +220,4 @@ describe('HostStorage', () => {
     });
   });
 
-  it('should add onChanged listener', () => {
-    const MOCK_FN = jest.fn();
-    HostStorage.addOnChangedListener(MOCK_FN);
-    expect(global.browser.storage.onChanged.addListener).toBeCalledWith(MOCK_FN);
-  });
-
 });
