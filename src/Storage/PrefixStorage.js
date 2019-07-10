@@ -26,9 +26,10 @@ export default class PrefixStorage {
           .keys(prefixedObject)
           .filter((key) => key.startsWith(this.PREFIX))
           .reduce((newObject, key) => {
-            return newObject[
+            newObject[
                 key.replace(this.PREFIX, '')
                 ] = prefixedObject[key];
+            return newObject;
           }, {});
   }
 
