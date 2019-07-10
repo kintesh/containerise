@@ -1,7 +1,7 @@
 import {matchesSavedMap, sortMaps} from '../utils';
 import PrefixStorage from './PrefixStorage';
 
-class Storage extends PrefixStorage{
+class HostStorage extends PrefixStorage{
   PREFIX = 'map='
 
   get(url) {
@@ -14,4 +14,4 @@ class Storage extends PrefixStorage{
 
 }
 
-export default new Storage();
+export default new HostStorage();
