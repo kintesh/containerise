@@ -209,7 +209,7 @@ describe('HostStorage', () => {
   it('should remove one entry', () => {
     expect.assertions(1);
     return HostStorage.remove('example.com').then(({key}) => {
-      expect(key).toEqual('map=example.com');
+      expect(key).toEqual(['map=example.com']);
     });
   });
 
