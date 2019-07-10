@@ -5,5 +5,8 @@
         "browsers": ["firefox >= 57"]
       }
     }]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties"
   ]
 }
