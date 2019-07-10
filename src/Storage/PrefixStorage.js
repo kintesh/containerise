@@ -1,8 +1,7 @@
 export default class PrefixStorage {
 
-  PREFIX = ''
-
   constructor() {
+    this.PREFIX = '';
     this.storage = browser.storage.local;
     this.listeners = new Map();
   }

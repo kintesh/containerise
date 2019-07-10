@@ -1,8 +1,11 @@
 import {matchesSavedMap, sortMaps} from '../utils';
 import PrefixStorage from './PrefixStorage';
 
-class HostStorage extends PrefixStorage{
-  PREFIX = 'map='
+class HostStorage extends PrefixStorage {
+  constructor() {
+    super();
+    this.PREFIX = 'map=';
+  }
 
   get(url) {
     return super.getAll().then(maps => {
@@ -10,7 +13,7 @@ class HostStorage extends PrefixStorage{
       // Sorts by domain length, then by path length
       return sorted.find(matchesSavedMap.bind(null, url)) || {};
     });
- }
+  }
 
 }
 
