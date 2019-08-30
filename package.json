@@ -1,5 +1,5 @@
 {
-  "name": "Containerise",
+  "name": "containerise",
   "version": "3.2.0",
   "description": "Firefox extension to automatically open websites in a container",
   "main": "index.js",
@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "webpack": "webpack --config ./webpack.dev --watch",
-    "prebuild": "rm -rf build && rm -rf web-ext-artifacts",
-    "build": "yarn lint && yarn test && webpack --config ./webpack.prod",
+    "prebuild": "rimraf build && rimraf web-ext-artifacts",
+    "build": "npm audit && npm run lint && npm run test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/ && web-ext build -s build/",
     "web-ext": "web-ext run -s build/ --start-url=about:debugging#addons",
     "lint": "eslint --ignore-path .gitignore ./",
@@ -17,24 +17,26 @@
     "test:watch": "jest --watchAll"
   },
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-eslint": "8.2.3",
-    "babel-jest": "22.4.4",
-    "babel-loader": "7.1.4",
-    "babel-preset-env": "1.7.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
     "css-loader": "^3.0.0",
     "eslint": "^6.0.1",
-    "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "^4.0.0",
     "jest": "^24.8.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "0.21.0",
+    "rimraf": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
     "web-ext": "^3.1.0",
-    "webpack": "3.12.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "punycode": "2.1.1"
+    "punycode": "^2.1.1"
   }
 }

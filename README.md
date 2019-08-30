@@ -32,22 +32,22 @@ Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-
 ## Available Scripts
 In the project directory, you can run:
 
-#### `yarn install`
+#### `npm ci`
 Installs required dependencies. 
 
-#### `yarn webpack`
+#### `npm run webpack`
 Starts webpack with `--watch` option and outputs to `./build` directory.
  
-#### `yarn build`
+#### `npm run build`
 Builds the extension for production use.<br>
 
-#### `yarn test`
+#### `npm run test`
 Runs test specs using jest.
 Use `test:watch` to watch for edits and re-run the tests.
 
-#### `yarn lint`
+#### `npm run lint`
 Lint using eslint.
 
-#### `yarn web-ext`
+#### `npm run web-ext`
 Runs web-ext process to debug the extension on Firefox. See [web-ext docs](https://github.com/mozilla/web-ext) <br/>
-To live reload the extension, start this process in a new tab after starting `yarn webpack` process.
+To live reload the extension, start this process in a new tab after starting `npm run webpack` process.
