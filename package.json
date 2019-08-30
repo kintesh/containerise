@@ -11,7 +11,7 @@
     "prebuild": "rm -rf build && rm -rf web-ext-artifacts",
     "build": "yarn lint && yarn test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/ && web-ext build -s build/",
-    "web-ext": "web-ext run -s build/ --firefox=/Applications/Firefox.app/Contents/MacOS/firefox-bin --start-url=about:debugging#addons",
+    "web-ext": "web-ext run -s build/ --start-url=about:debugging#addons",
     "lint": "eslint --ignore-path .gitignore ./",
     "test": "jest",
     "test:watch": "jest --watchAll"
