@@ -15,7 +15,7 @@ Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-
 # Usage
 
 ## Basic mapping
-\
+
 `amazon.co.uk, Shopping` will open all amazon.co.uk (not subdomains) links in Shopping container.
 
 ## Glob
