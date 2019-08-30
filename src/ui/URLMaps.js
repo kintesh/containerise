@@ -1,5 +1,5 @@
 import State from '../State';
-import Storage from '../Storage';
+import HostStorage from '../Storage/HostStorage';
 import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
@@ -70,7 +70,7 @@ class URLMaps {
 
   removeUrlMap(rowId, host) {
     umMaps.removeChild(qs(`[data-id='${String(rowId)}']`));
-    Storage.remove(host);
+    HostStorage.remove(host);
   }
 
   saveUrlMaps() {
@@ -93,7 +93,7 @@ class URLMaps {
     }
 
     Promise.all([
-      Storage.setAll(maps),
+      HostStorage.setAll(maps),
     ]).then(() => {
       hideLoader();
       showToast('Saved!');

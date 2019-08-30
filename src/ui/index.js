@@ -2,7 +2,7 @@ import './styles/style.scss';
 import './index.html';
 import State from '../State';
 import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity';
-import Storage from '../Storage';
+import HostStorage from '../Storage/HostStorage';
 import Tabs from '../Tabs';
 import './ContainerSelector';
 import './URLMaps';
@@ -22,7 +22,7 @@ const getIdentities = () => {
 };
 
 const getUrlMaps = () => {
-  Storage.getAll().then((urlMaps) => {
+  HostStorage.getAll().then((urlMaps) => {
     State.set('urlMaps', urlMaps);
   });
 };
@@ -34,7 +34,7 @@ ContextualIdentity.addOnChangedListener(() => {
   getIdentities();
 });
 
-Storage.addOnChangedListener(() => {
+HostStorage.addOnChangedListener(() => {
   getUrlMaps();
 });
 
