@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.3.0] - 30 Aug 2019
+### Changed
+- Generalise the prefix key storage method.
+- Move from yarn to npm.
+
+
 ## [3.2.0] - 9 Jul 2019
 ### Revert
 - All unmapped urls now open outside of any container.
@@ -87,6 +93,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.3.0]: https://github.com/kintesh/containerise/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/kintesh/containerise/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/kintesh/containerise/compare/3.0.1...3.1.0
 [3.0.1]: https://github.com/kintesh/containerise/compare/3.0.0...3.0.1

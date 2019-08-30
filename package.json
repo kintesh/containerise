@@ -1,6 +1,6 @@
 {
   "name": "containerise",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Firefox extension to automatically open websites in a container",
   "main": "index.js",
   "repository": "https://kintesh@github.com/kintesh/containerise.git",
