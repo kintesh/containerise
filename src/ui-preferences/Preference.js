@@ -56,7 +56,7 @@ export default class Preference {
    */
   update() {
     return PreferenceStorage.set({
-      host: this.name,
+      key: this.name,
       value: this.get(),
     });
   }

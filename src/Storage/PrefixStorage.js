@@ -2,6 +2,8 @@ export default class PrefixStorage {
 
   constructor() {
     this.PREFIX = '';
+    // The key to use to get the name of the object when calling set()
+    this.SET_KEY = 'key';
     this.storage = browser.storage.local;
     this.listeners = new Map();
   }
@@ -45,7 +47,11 @@ export default class PrefixStorage {
   }
 
   set(obj = {}) {
-    return this.storage.set({[`${this.PREFIX}${obj.host}`]: obj});
+    const key = obj[this.SET_KEY];
+    if (key === undefined) {
+      throw `Key ${this.SET_KEY} not found in object`;
+    }
+    return this.storage.set({[`${this.PREFIX}${key}`]: obj});
   }
 
   /**
