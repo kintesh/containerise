@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>containerise preferences</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script type="module" src="index.js"></script>
+</head>
+<body>
+
+<div class="preferences-container">
+
+</div>
+
+<button id="save-button">Save</button>
+
+<template id="preference-template">
+    <div class="pref-container">
+        <div class="pref-container__label"></div>
+
+        <div class="pref-type-container">
+            <!-- Put the preference-type in here -->
+        </div>
+
+        <div class="pref-container__description"></div>
+    </div>
+</template>
+
+<template id="preference-t-bool">
+    <input class="pref-t-el" type="checkbox">
+</template>
+
+</body>
+</html>
