@@ -32,8 +32,8 @@ export default class PrefixStorage {
           }, {});
   }
 
-  get(key) {
-    return this.storage.get(this.PREFIX + key);
+  async get(key) {
+    return this._getNonPrefixedObject(await this.storage.get(this.PREFIX + key))[key];
   }
 
   setAll(obj = {}) {
@@ -45,7 +45,7 @@ export default class PrefixStorage {
   }
 
   set(obj = {}) {
-    return this.storage.set(`${this.PREFIX}${obj.host}`, obj);
+    return this.storage.set({[`${this.PREFIX}${obj.host}`]: obj});
   }
 
   /**

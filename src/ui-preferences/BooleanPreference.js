@@ -6,8 +6,8 @@ export default class BooleanPreference extends Preference {
     return this.el.checked;
   }
 
-  set(value) {
-    this.el.checked = value;
+  set({value}) {
+    this.el.checked = !!value;
   }
 }
 
