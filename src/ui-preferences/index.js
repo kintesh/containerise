@@ -8,9 +8,9 @@ function qs(selector, el = document) {
 
 // Build the preferences
 const preferences = [
-  new BooleanPreference('closeOldTabs',
-      'Close old tabs',
-      'After a contained tab has been created, the old will be closed'),
+  new BooleanPreference('keepOldTabs',
+      'Keep old tabs',
+      'After a contained tab has been created, the old won\'t be closed'),
 ];
 
 const preferencesContainer = qs('.preferences-container');
