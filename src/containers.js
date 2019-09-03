@@ -27,16 +27,11 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
   };
 };
 
-export const webRequestListener = (requestDetails) => {
-
-  if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
-    return {};
-  }
-
+function handle(url, tabId) {
   return Promise.all([
-    Storage.get(requestDetails.url),
+    Storage.get(url),
     ContextualIdentity.getAll(),
-    Tabs.get(requestDetails.tabId),
+    Tabs.get(tabId),
   ]).then(([hostMap, identities, currentTab]) => {
 
     if (currentTab.incognito || !hostMap) {
@@ -61,5 +56,20 @@ export const webRequestListener = (requestDetails) => {
 
     return {};
   });
+}
 
+export const webRequestListener = (requestDetails) => {
+
+  if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
+    return {};
+  }
+
+  return handle(requestDetails.url, requestDetails.tabId);
+};
+
+export const tabUpdatedListener = (tabId, changeInfo) => {
+  if (!changeInfo.url) {
+    return;
+  }
+  return handle(changeInfo.url, tabId);
 };
