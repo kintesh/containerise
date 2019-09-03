@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.4.0] - 3 Sep 2019
+### Added
+- Introduce preference to leave tabs behind instead of closing them.
+- Listen to tab updates to catch events that slip by webrequests.
+
+### Changed
+- Fix CSV editor issue where old entries were cleared after saving new ones.
+
+
 ## [3.3.0] - 30 Aug 2019
 ### Changed
 - Generalise the prefix key storage method.
@@ -93,6 +102,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.4.0]: https://github.com/kintesh/containerise/compare/3.3.0...3.4.0
 [3.3.0]: https://github.com/kintesh/containerise/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/kintesh/containerise/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/kintesh/containerise/compare/3.0.1...3.1.0
