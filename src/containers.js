@@ -3,13 +3,14 @@ import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
 import PreferenceStorage from './Storage/PreferenceStorage';
 
-const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
+const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
   Tabs.get(currentTabId).then((currentTab) => {
     Tabs.create({
       url,
       index: newTabIndex,
       cookieStoreId,
       active: currentTab.active,
+      openerTabId: openerTabId,
     });
     PreferenceStorage.get('keepOldTabs').then(({value}) => {
       if(!value){
@@ -44,12 +45,13 @@ function handle(url, tabId) {
       return {};
     }
 
+    const openerTabId = currentTab.openerTabId;
     if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(url, currentTab.index + 1, currentTab.id);
+      return createTab(url, currentTab.index + 1, currentTab.id, undefined , openerTabId);
     }
 
     if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId);
+      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
     }
 
     return {};
