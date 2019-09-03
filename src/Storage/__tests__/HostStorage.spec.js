@@ -42,7 +42,7 @@ describe('HostStorage', () => {
             }),
           )),
 
-          set: jest.fn((key, value) => new Promise((resolve) => resolve({key, value}))),
+          set: jest.fn((keys) => new Promise((resolve) => resolve(keys))),
 
           remove: jest.fn((key) => new Promise((resolve) => resolve({key}))),
 
@@ -172,8 +172,8 @@ describe('HostStorage', () => {
     };
 
     expect.assertions(1);
-    return HostStorage.setAll(hostMaps).then(({key}) => {
-      expect(key).toEqual({
+    return HostStorage.setAll(hostMaps).then((keysO) => {
+      expect(keysO).toEqual({
         'map=example.com': {
           host: 'example.com',
           container: 'example',
@@ -195,10 +195,12 @@ describe('HostStorage', () => {
       enabled: true,
     };
 
-    expect.assertions(2);
-    return HostStorage.set(hostMap).then(({key, value}) => {
-      expect(key).toEqual('map=example.com');
-      expect(value).toEqual({
+    expect.assertions(3);
+    return HostStorage.set(hostMap).then((keysO) => {
+      const keys = Object.keys(keysO);
+      expect(keys.length).toEqual(1);
+      expect(keys[0]).toEqual('map=example.com');
+      expect(keysO[keys[0]]).toEqual({
         host: 'example.com',
         container: 'example',
         enabled: true,

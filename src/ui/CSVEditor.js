@@ -74,7 +74,7 @@ class CSVEditor {
     const maps = {};
     const missingContainers = new Map();
 
-    Promise.all(items.map((item) => {
+    await Promise.all(items.map((item) => {
       const hostMapParts = item.split(HOST_MAPS_SPLIT_KEY);
       const host = cleanHostInput(hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY));
       const containerName = hostMapParts[hostMapParts.length - 1];
@@ -97,14 +97,12 @@ class CSVEditor {
 
     await this.createMissingContainers(missingContainers, maps);
 
-    Promise.all([
-      Storage.clear(),
-      Storage.setAll(maps),
-    ]).then(() => {
-      hideLoader();
-      showToast('Saved!');
-      setTimeout(() => hideToast(), 3000);
-    });
+    await Storage.clear();
+    await Storage.setAll(maps);
+
+    hideLoader();
+    showToast('Saved!');
+    setTimeout(() => hideToast(), 3000);
   }
 
   showEditor() {

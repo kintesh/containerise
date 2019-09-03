@@ -1,9 +1,9 @@
 import Storage from './Storage/HostStorage';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
+import PreferenceStorage from './Storage/PreferenceStorage';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
-
   Tabs.get(currentTabId).then((currentTab) => {
     Tabs.create({
       url,
@@ -12,8 +12,14 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
       active: currentTab.active,
       openerTabId: openerTabId,
     });
+    PreferenceStorage.get('keepOldTabs').then(({value}) => {
+      if(!value){
+        Tabs.remove(currentTabId);
+      }
+    }).catch(() => {
+      Tabs.remove(currentTabId);
+    });
 
-    Tabs.remove(currentTabId);
   });
 
   return {

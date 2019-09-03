@@ -6,7 +6,8 @@ module.exports = {
 
   entry: {
     index: './src/index.js',
-    ui: ['./src/ui/index.js'],
+    'ui/index': ['./src/ui/index.js'],
+    'ui-preferences/index': ['./src/ui-preferences/index.js'],
   },
 
   output: {
@@ -26,13 +27,25 @@ module.exports = {
         },
       },
       {
-        test: /\.(json|html)$/,
+        test: /manifest\.(json)$/,
         type: 'javascript/auto',
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(html)$/,
+        type: 'javascript/auto',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[folder]/[name].[ext]',
             },
           },
         ],
@@ -55,7 +68,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: '[name].css',
     }),
   ],
 
