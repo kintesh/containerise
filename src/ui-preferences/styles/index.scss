@@ -1,0 +1,11 @@
+.pref-container{
+    border-width: 1px;
+    border-radius: 3px;
+    border-style: ridge;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.pref-container .pref-container__label {
+    font-weight: bold;
+}

@@ -5,6 +5,7 @@ class HostStorage extends PrefixStorage {
   constructor() {
     super();
     this.PREFIX = 'map=';
+    this.SET_KEY = 'host';
   }
 
   get(url) {
