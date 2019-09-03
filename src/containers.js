@@ -3,7 +3,6 @@ import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
-
   Tabs.get(currentTabId).then((currentTab) => {
     Tabs.create({
       url,
@@ -20,16 +19,11 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId) => {
   };
 };
 
-export const webRequestListener = (requestDetails) => {
-
-  if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
-    return {};
-  }
-
+function handle(url, tabId) {
   return Promise.all([
-    Storage.get(requestDetails.url),
+    Storage.get(url),
     ContextualIdentity.getAll(),
-    Tabs.get(requestDetails.tabId),
+    Tabs.get(tabId),
   ]).then(([hostMap, identities, currentTab]) => {
 
     if (currentTab.incognito || !hostMap) {
@@ -44,14 +38,29 @@ export const webRequestListener = (requestDetails) => {
     }
 
     if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id);
+      return createTab(url, currentTab.index + 1, currentTab.id);
     }
 
     if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId);
+      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId);
     }
 
     return {};
   });
+}
 
+export const webRequestListener = (requestDetails) => {
+
+  if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
+    return {};
+  }
+
+  return handle(requestDetails.url, requestDetails.tabId);
+};
+
+export const tabUpdatedListener = (tabId, changeInfo) => {
+  if (!changeInfo.url) {
+    return;
+  }
+  return handle(changeInfo.url, tabId);
 };

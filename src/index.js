@@ -1,5 +1,5 @@
 import './manifest.json';
-import {webRequestListener} from './webRequestListener';
+import {tabUpdatedListener, webRequestListener} from './containers';
 import {messageExternalListener} from './messageExternalListener';
 
 browser.webRequest.onBeforeRequest.addListener(
@@ -10,4 +10,8 @@ browser.webRequest.onBeforeRequest.addListener(
 
 browser.runtime.onMessageExternal.addListener(
   messageExternalListener
+);
+
+browser.tabs.onUpdated.addListener(
+    tabUpdatedListener
 );
