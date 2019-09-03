@@ -47,11 +47,11 @@ function handle(url, tabId) {
 
     const openerTabId = currentTab.openerTabId;
     if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, undefined , openerTabId);
+      return createTab(url, currentTab.index + 1, currentTab.id, undefined , openerTabId);
     }
 
     if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(requestDetails.url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
+      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
     }
 
     return {};
