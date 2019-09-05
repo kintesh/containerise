@@ -5,15 +5,26 @@ import PreferenceStorage from './Storage/PreferenceStorage';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
   Tabs.get(currentTabId).then((currentTab) => {
-    Tabs.create({
+    const createOptions = {
       url,
       index: newTabIndex,
       cookieStoreId,
       active: currentTab.active,
-      openerTabId: openerTabId,
+    };
+    // Passing the openerTabId without a cookieStoreId
+    // creates a tab in the same container as the opener
+    if (cookieStoreId && openerTabId) {
+      createOptions.openerTabId = openerTabId;
+    }
+    Tabs.create(createOptions).then((createdTab) => {
+      if (!cookieStoreId && openerTabId) {
+        Tabs.update(createdTab.id, {
+          openerTabId: openerTabId,
+        });
+      }
     });
     PreferenceStorage.get('keepOldTabs').then(({value}) => {
-      if(!value){
+      if (!value) {
         Tabs.remove(currentTabId);
       }
     }).catch(() => {
@@ -63,7 +74,6 @@ export const webRequestListener = (requestDetails) => {
   if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
     return {};
   }
-
   return handle(requestDetails.url, requestDetails.tabId);
 };
 
@@ -71,5 +81,6 @@ export const tabUpdatedListener = (tabId, changeInfo) => {
   if (!changeInfo.url) {
     return;
   }
+  console.log(tabId, 'url changed', changeInfo.url);
   return handle(changeInfo.url, tabId);
 };
