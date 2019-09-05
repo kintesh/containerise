@@ -3,7 +3,7 @@ import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
 import PreferenceStorage from './Storage/PreferenceStorage';
 
-const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
+const createTab = (url, newTabIndex, currentTabId, openerTabId, cookieStoreId) => {
   Tabs.get(currentTabId).then((currentTab) => {
     const createOptions = {
       url,
@@ -58,11 +58,11 @@ function handle(url, tabId) {
 
     const openerTabId = currentTab.openerTabId;
     if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(url, currentTab.index + 1, currentTab.id, undefined , openerTabId);
+      return createTab(url, currentTab.index + 1, currentTab.id, openerTabId);
     }
 
     if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
+      return createTab(url, currentTab.index + 1, currentTab.id, openerTabId, hostIdentity.cookieStoreId);
     }
 
     return {};
