@@ -1,24 +1,57 @@
 /**
  * Groups preferences together and displays them in a manner to reflect that fact.
  */
-export default class PreferenceGroup {
+import Preference from './Preference';
+import {createEl} from './utils';
+import template from '!!raw-loader!./PreferenceGroup.html';
+
+export default class PreferenceGroup extends Preference {
 
   /**
    *
-   * @param prefix {String} The prefix to be used for all keys of the preferences
+   * @param name {String} The name to be used as prefix for all keys of the preferences
    *                e.g windowOptions --> preferences will be windowOptions.optionX
-   * @param uiTitle {String} The title to be shown to the user
-   * @param uiDescription {String} The description to be shown to the user
+   * @param label {String} The title to be shown to the user
+   * @param description {String} The description to be shown to the user
    * @param preferences {Preference[]}
    * @param toggleable {boolean} Indicates whether the preferences
    *                    can be toggled together
    */
-  constructor(prefix, uiTitle, uiDescription, preferences, toggleable=false){
-    this.prefix = prefix;
-    this._uiTitle = uiTitle;
-    this._uiDescription = uiDescription;
+  constructor({name, label, description, preferences, toggleable = false}) {
+    super({name, label, description});
+    for (let preference of preferences) {
+      if (!preference.name.startsWith(`${name}.`)) {
+        throw `Preference names must start with ${name}`;
+      }
+    }
     this._preferences = preferences;
     this._toggleable = toggleable;
-    this._enabled = false;
+  }
+
+  _buildEl() {
+    return createEl(template);
+  }
+
+  get() {
+    return this._toggleable ?
+        this._getToggleEl().checked
+        : false;
+  }
+
+  _getToggleEl() {
+    return this.el.querySelector('.pref-group__toggle');
+  }
+
+  set({value}) {
+    if (this._toggleable) {
+      this._getToggleEl().checked = value;
+    }
+  }
+
+  async updateFromDb() {
+    super.updateFromDb();
+    return Promise.all(this._preferences.map((preference) => preference.updateFromDb()));
   }
 }
+
+PreferenceGroup.TYPE = 'group';

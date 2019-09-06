@@ -2,9 +2,10 @@ import PreferenceStorage from '../Storage/PreferenceStorage';
 
 export default class Preference {
 
-  constructor(name, uiName, description) {
+  // TODO: Add the notion of a default value
+  constructor({name, label, description}) {
     this.name = name;
-    this.ui_name = uiName;
+    this.label = label;
     this.description = description;
     this.el = this._buildEl();
   }

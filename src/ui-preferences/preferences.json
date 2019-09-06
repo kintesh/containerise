@@ -1,0 +1,48 @@
+[
+  {
+    "type": "bool",
+    "name": "keepOldTabs",
+    "label": "Keep old tabs",
+    "description": "After a contained tab has been created, the old won't be closed"
+  },
+  {
+    "type": "group",
+    "name": "defaultContainer",
+    "label": "Default container",
+    "description": "Which container unmatched URLs will end up in",
+    "toggleable": true,
+    "preferences": [
+      {
+        "type": "string",
+        "name": "containerName",
+        "label": "Container name",
+        "description": "What the name of the default container will be. It's possible to use variables here"
+      },
+      {
+        "type": "choice",
+        "name": "lifetime",
+        "label": "Lifetime",
+        "description": "How long a container will live",
+        "choices": [
+          {
+            "name": "forever",
+            "label": "Forever",
+            "description": "Container will always be present after creation"
+          },
+          {
+            "name": "untilLastTab",
+            "label": "Until last tab is closed",
+            "description": "Closing the last tab in the container will destroy the container"
+          }
+        ],
+        "defaultChoice": "forever"
+      },
+      {
+        "type": "string",
+        "name": "ruleAddition",
+        "label": "Rule addition",
+        "description": "The rule to be added to this container once a domain is matched (can be empty)"
+      }
+    ]
+  }
+]
