@@ -38,7 +38,10 @@ export default class Preference {
    * Updates the UI with the DB value
    */
   async updateFromDb() {
-    this.set(await this.retrieve());
+    const retrieved = await this.retrieve();
+    if(retrieved){
+      this.set(retrieved);
+    }
   }
 
   /**
