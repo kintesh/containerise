@@ -52,6 +52,13 @@ export default class PreferenceGroup extends Preference {
     super.updateFromDb();
     return Promise.all(this._preferences.map((preference) => preference.updateFromDb()));
   }
+
+  update() {
+    return Promise.all([super.update()].concat(
+        this._preferences.map((preference) => preference.update())
+    ));
+
+  }
 }
 
 PreferenceGroup.TYPE = 'group';
