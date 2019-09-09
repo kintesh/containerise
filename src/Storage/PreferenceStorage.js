@@ -10,7 +10,7 @@ class PreferenceStorage extends PrefixStorage {
     let preferences = await super.getAll();
     if (valuesOnly) {
       for (let preferenceKey in preferences) {
-        preferences[preferenceKey] = preferences[preferenceKey].value
+        preferences[preferenceKey] = preferences[preferenceKey].value;
       }
     }
     return preferences;
