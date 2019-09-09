@@ -2,8 +2,8 @@
  * Groups preferences together and displays them in a manner to reflect that fact.
  */
 import Preference from './Preference';
-import {createEl} from './utils';
-import template from '!!raw-loader!./PreferenceGroup.html';
+import {createEl, qs} from './utils';
+import template from '!!raw-loader!./templates/PreferenceGroup.html';
 
 export default class PreferenceGroup extends Preference {
 
@@ -28,23 +28,35 @@ export default class PreferenceGroup extends Preference {
     this._toggleable = toggleable;
   }
 
-  _buildEl() {
+  _buildContainerEl() {
     return createEl(template);
+  }
+
+  _buildEl() {
+    return this.$container.querySelector(`.${Preference.EL_CLASS}`);
+  }
+
+  fillContainer() {
+    qs('.pref-group__label', this.$container).innerHTML = this.label;
+    qs('.pref-group__description', this.$container).innerHTML = this.description;
+
+    const $preferences = this.$container.querySelector('.preferences');
+    for (let preference of this._preferences) {
+      preference.fillContainer();
+      $preferences.appendChild(preference.$container);
+    }
   }
 
   get() {
     return this._toggleable ?
-        this._getToggleEl().checked
+        this.el.checked
         : false;
   }
 
-  _getToggleEl() {
-    return this.el.querySelector('.pref-group__toggle');
-  }
 
   set({value}) {
     if (this._toggleable) {
-      this._getToggleEl().checked = value;
+      this.el.checked = value;
     }
   }
 

@@ -1,6 +1,4 @@
 import Preference from './Preference';
-import template from '!!raw-loader!./StringPreference.html';
-import {createEl} from './utils';
 
 export default class StringPreference extends Preference {
 
@@ -10,7 +8,9 @@ export default class StringPreference extends Preference {
   }
 
   _buildEl() {
-    return createEl(template);
+    let el = super._buildEl();
+    el.type = 'text';
+    return el;
   }
 
   get() {

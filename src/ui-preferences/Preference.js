@@ -1,4 +1,6 @@
 import PreferenceStorage from '../Storage/PreferenceStorage';
+import preferenceContainerTemplate from '!!raw-loader!./templates/Preference.html';
+import {createEl, qs} from './utils';
 
 export default class Preference {
 
@@ -7,14 +9,27 @@ export default class Preference {
     this.name = name;
     this.label = label;
     this.description = description;
+    this.$container = this._buildContainerEl();
     this.el = this._buildEl();
   }
 
+  _buildContainerEl() {
+    return createEl(preferenceContainerTemplate);
+  }
+
   _buildEl() {
-    const template = document.querySelector(`template#${this.constructor.TEMPLATE_PREFIX}${this.constructor.TYPE}`);
-    return template.content
-        .cloneNode(true)
-        .querySelector(this.constructor.EL_QS);
+    let el = document.createElement('input');
+    el.classList.add(Preference.EL_CLASS);
+    return el;
+  }
+
+  fillContainer() {
+    qs('.pref-container__label', this.$container).innerHTML = this.label;
+    qs('.pref-container__description', this.$container).innerHTML = this.description;
+
+    // Append the el
+    const elContainer = qs('.pref-el-container', this.$container);
+    elContainer.appendChild(this.el);
   }
 
 
@@ -39,7 +54,7 @@ export default class Preference {
    */
   async updateFromDb() {
     const retrieved = await this.retrieve();
-    if(retrieved){
+    if (retrieved) {
       this.set(retrieved);
     }
   }
@@ -67,6 +82,5 @@ export default class Preference {
 
 }
 
-Preference.TEMPLATE_PREFIX = 'preference-t-';
-Preference.EL_QS = '.pref-t-el';
+Preference.EL_CLASS = 'pref-container__el';
 Preference.TYPE = null; // Has to be set by subclass
