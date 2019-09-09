@@ -86,3 +86,23 @@ export const matchesSavedMap = (url, map) => {
 
     }
 };
+
+/**
+ * Replaces occurrences of {variable} in strings
+ *
+ * It handles camelCase, kebab-case and snake_case variable names
+ *
+ * @param string {String}
+ * @param context {Object}
+ * @throws Error when the variable doesn't exist in the context
+ * @return {String}
+ */
+export function formatString(string, context){
+  return string.replace(/(\{([\w_-]+)\})/g, (match, _, token) => {
+    const replacement = context[token];
+    if(replacement=== undefined){
+      throw `Cannot find variable '${token}' in context`;
+    }
+    return replacement;
+  });
+}
