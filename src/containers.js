@@ -31,6 +31,9 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
 
 
 async function handle(url, tabId) {
+  if (url.startsWith('about:')){
+    return {};
+  }
   let [hostMap, preferences, identities, currentTab] = await Promise.all([
     Storage.get(url),
     PreferenceStorage.getAll(true),
@@ -38,7 +41,7 @@ async function handle(url, tabId) {
     Tabs.get(tabId),
   ]);
 
-  if (currentTab.incognito || !hostMap || url.startsWith('about:')) {
+  if (currentTab.incognito || !hostMap){
     return {};
   }
 
