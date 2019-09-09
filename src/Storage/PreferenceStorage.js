@@ -6,7 +6,23 @@ class PreferenceStorage extends PrefixStorage {
     this.PREFIX = 'pref=';
   }
 
-  // TODO: Add `valuesOnly` param to getAll and get methods
+  async getAll(valuesOnly = false) {
+    let preferences = await super.getAll();
+    if (valuesOnly) {
+      for (let preferenceKey in preferences) {
+        preferences[preferenceKey] = preferences[preferenceKey].value
+      }
+    }
+    return preferences;
+  }
+
+  async get(key, valueOnly = false) {
+    let preference = await super.get(key);
+    if (valueOnly) {
+      preference = preference.value;
+    }
+    return preference;
+  }
 }
 
 export default new PreferenceStorage();

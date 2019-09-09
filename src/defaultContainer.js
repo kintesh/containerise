@@ -5,7 +5,7 @@ import ExtendedURL from './ExtendedURL';
 
 export async function buildDefaultContainer(preferences, url) {
   url = new ExtendedURL(url);
-  let name = preferences['defaultContainer.containerName'].value;
+  let name = preferences['defaultContainer.containerName'];
   name = formatString(name, {
     ms: Date.now(),
     domain: url.domain,
@@ -26,7 +26,7 @@ export async function buildDefaultContainer(preferences, url) {
   }
 
   // Add a rule if necessary
-  const ruleAddition = preferences['defaultContainer.ruleAddition'].value;
+  const ruleAddition = preferences['defaultContainer.ruleAddition'];
   if (ruleAddition) {
     await HostStorage.set({
       host: formatString(ruleAddition, {}),

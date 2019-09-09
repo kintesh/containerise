@@ -33,7 +33,7 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
 async function handle(url, tabId) {
   let [hostMap, preferences, identities, currentTab] = await Promise.all([
     Storage.get(url),
-    PreferenceStorage.getAll(),
+    PreferenceStorage.getAll(true),
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
   ]);
@@ -46,7 +46,7 @@ async function handle(url, tabId) {
   const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
 
   if (!hostIdentity) {
-    if (preferences.defaultContainer.value) {
+    if (preferences.defaultContainer) {
       const defaultCookieStoreId = await buildDefaultContainer(
           filterByKey(preferences, prefKey => prefKey.startsWith('defaultContainer')),
           url
