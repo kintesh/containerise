@@ -28,12 +28,22 @@ export async function buildDefaultContainer(preferences, url) {
   // Add a rule if necessary
   const ruleAddition = preferences['defaultContainer.ruleAddition'];
   if (ruleAddition) {
-    await HostStorage.set({
-      host: formatString(ruleAddition, {}),
-      cookieStoreId,
-      containerName: name,
-      enabled: true,
-    });
+    try {
+      const host = formatString(ruleAddition, {
+        domain: url.domain,
+        fqdn: url.host,
+        host: url.host,
+        tld: url.tld,
+      });
+      await HostStorage.set({
+        host: host,
+        cookieStoreId,
+        containerName: name,
+        enabled: true,
+      });
+    } catch (e) {
+      console.error('Couldn\'t add rule', ruleAddition, e);
+    }
   }
 
   return cookieStoreId;

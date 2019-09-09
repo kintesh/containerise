@@ -70,21 +70,26 @@ export const urlKeyFromUrl = (url) => {
  * @return {*}
  */
 export const matchesSavedMap = (url, map) => {
-    const savedHost = map.host;
-    if (savedHost[0] === PREFIX_REGEX) {
-        return new RegExp(savedHost.substr(1)).test(url);
-    } else if (savedHost[0] === PREFIX_GLOB) {
-        // turning glob into regex isn't the worst thing:
-        // 1. * becomes .*
-        // 2. ? becomes .?
-        return new RegExp(savedHost.substr(1).replace(/\*/g, '.*').replace(/\?/g, '.?')).test(url);
-    } else {
-        const key = urlKeyFromUrl(url);
-        const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
-        const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
-        return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
-
+  const savedHost = map.host;
+  if (savedHost[0] === PREFIX_REGEX) {
+    const regex = savedHost.substr(1);
+    try {
+      return new RegExp(regex).test(url);
+    } catch (e) {
+      console.error('couldn\'t test regex', regex, e);
     }
+  } else if (savedHost[0] === PREFIX_GLOB) {
+    // turning glob into regex isn't the worst thing:
+    // 1. * becomes .*
+    // 2. ? becomes .?
+    return new RegExp(savedHost.substr(1).replace(/\*/g, '.*').replace(/\?/g, '.?')).test(url);
+  } else {
+    const key = urlKeyFromUrl(url);
+    const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
+    const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
+    return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
+
+  }
 };
 
 
@@ -107,10 +112,10 @@ export const filterByKey = (dict, func) => {
  * @throws Error when the variable doesn't exist in the context
  * @return {String}
  */
-export function formatString(string, context){
+export function formatString(string, context) {
   return string.replace(/(\{([\w_-]+)\})/g, (match, _, token) => {
     const replacement = context[token];
-    if(replacement=== undefined){
+    if (replacement === undefined) {
       throw `Cannot find variable '${token}' in context`;
     }
     return replacement;
