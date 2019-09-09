@@ -6,11 +6,29 @@ export const NO_CONTAINER = {
   colorCode: '#999',
   cookieStoreId: 'no-container',
 };
+export const COLORS = [
+  'blue',
+  'green',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'turquoise',
+  'yellow',
+];
 
 class ContextualIdentities {
 
   constructor() {
     this.contextualIdentities = browser.contextualIdentities;
+  }
+
+  create(name) {
+    return this.contextualIdentities.create({
+      name: name,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      icon: 'circle',
+    });
   }
 
   getAll(details = {}) {

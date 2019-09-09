@@ -27,13 +27,13 @@ export const sortMaps = (maps) => maps.sort((map1, map2) => {
 export const domainMatch = (url, map) => {
   const url_host = getDomain(url);
   const map_host = getDomain(map);
-  if (map_host.slice(0,2) !== '*.') return url_host === map_host;
+  if (map_host.slice(0, 2) !== '*.') return url_host === map_host;
   // Check wildcard matches in reverse order (com.example.*)
   const wild_url = url_host.split('.').reverse();
   const wild_map = map_host.slice(2).split('.').reverse();
   if (wild_url.length < wild_map.length) return false;
 
-  for (let i = 0; i < wild_map.length ; ++i)
+  for (let i = 0; i < wild_map.length; ++i)
     if (wild_url[i] !== wild_map[i]) return false;
   return true;
 };
@@ -47,7 +47,7 @@ export const pathMatch = (url, map) => {
   const wild_map = map_path.replace('/*', '').split('/');
   if (wild_url.length < wild_map.length) return false;
 
-  for (let i = 0; i < wild_map.length ; ++i)
+  for (let i = 0; i < wild_map.length; ++i)
     if (wild_url[i] !== wild_map[i]) return false;
   return true;
 };
@@ -85,6 +85,16 @@ export const matchesSavedMap = (url, map) => {
         return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
 
     }
+};
+
+
+export const filterByKey = (dict, func) => {
+  return Object.keys(dict)
+      .filter(func)
+      .reduce((acc, curr) => {
+        acc[curr] = dict[curr];
+        return acc;
+      }, {});
 };
 
 /**

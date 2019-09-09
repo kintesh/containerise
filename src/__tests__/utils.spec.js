@@ -37,4 +37,30 @@ describe('utils', () => {
 
   });
 
+  describe('filterByKey', () => {
+    it('should create object with keys that don\'t start with a string', function () {
+      expect(utils.filterByKey({
+        removeThis: 'lol',
+        removeThat: 'rofl',
+        removeAnother: 'do eet!',
+        keepMe: 'kept',
+        keepThem: 'kept',
+      }, (key) => !key.startsWith('remove')))
+          .toEqual({
+            keepMe: 'kept',
+            keepThem: 'kept',
+          });
+    });
+
+    it('should fail without a filter function', function () {
+      expect(() => {
+        utils.filterByKey({
+          a: true,
+          b: true,
+        });
+      }).toThrow('undefined is not a function');
+    });
+
+  });
+
 });

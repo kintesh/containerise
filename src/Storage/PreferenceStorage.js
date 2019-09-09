@@ -6,6 +6,7 @@ class PreferenceStorage extends PrefixStorage {
     this.PREFIX = 'pref=';
   }
 
+  // TODO: Add `valuesOnly` param to getAll and get methods
 }
 
 export default new PreferenceStorage();

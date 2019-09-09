@@ -2,6 +2,8 @@ import Storage from './Storage/HostStorage';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
 import Tabs from './Tabs';
 import PreferenceStorage from './Storage/PreferenceStorage';
+import {filterByKey} from './utils';
+import {buildDefaultContainer} from './defaultContainer';
 
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
   Tabs.get(currentTabId).then((currentTab) => {
@@ -13,7 +15,7 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
       openerTabId: openerTabId,
     });
     PreferenceStorage.get('keepOldTabs').then(({value}) => {
-      if(!value){
+      if (!value) {
         Tabs.remove(currentTabId);
       }
     }).catch(() => {
@@ -27,35 +29,48 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
   };
 };
 
-function handle(url, tabId) {
-  return Promise.all([
+
+async function handle(url, tabId) {
+  let [hostMap, preferences, identities, currentTab] = await Promise.all([
     Storage.get(url),
+    PreferenceStorage.getAll(),
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
-  ]).then(([hostMap, identities, currentTab]) => {
+  ]);
 
-    if (currentTab.incognito || !hostMap) {
-      return {};
-    }
-
-    const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
-    const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
-
-    if (!hostIdentity) {
-      return {};
-    }
-
-    const openerTabId = currentTab.openerTabId;
-    if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(url, currentTab.index + 1, currentTab.id, undefined , openerTabId);
-    }
-
-    if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
-    }
-
+  if (currentTab.incognito || !hostMap || url.startsWith('about:')) {
     return {};
-  });
+  }
+
+  const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
+  const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
+
+  if (!hostIdentity) {
+    if (preferences.defaultContainer.value) {
+      const defaultCookieStoreId = await buildDefaultContainer(
+          filterByKey(preferences, prefKey => prefKey.startsWith('defaultContainer')),
+          url
+      );
+      if (currentTab.cookieStoreId !== defaultCookieStoreId) {
+        return createTab(url, currentTab.index + 1, currentTab.id, defaultCookieStoreId);
+      }
+    }
+    return {};
+
+  }
+
+  const openerTabId = currentTab.openerTabId;
+  if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
+    return createTab(url, currentTab.index + 1, currentTab.id, undefined, openerTabId);
+  }
+
+  if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
+    return createTab(url, currentTab.index + 1, currentTab.id, hostIdentity.cookieStoreId, openerTabId);
+  }
+
+
+  return {};
+
 }
 
 export const webRequestListener = (requestDetails) => {

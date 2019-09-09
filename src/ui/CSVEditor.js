@@ -1,12 +1,11 @@
+import ContextualIdentities from '../ContextualIdentity';
 import State from '../State';
 import Storage from '../Storage/HostStorage';
-import {qs} from '../utils';
-import {showLoader, hideLoader} from './loader';
-import {showToast, hideToast} from './toast';
-import {cleanHostInput} from '../utils';
+import {cleanHostInput, qs} from '../utils';
+import {hideLoader, showLoader} from './loader';
+import {hideToast, showToast} from './toast';
 
 const HOST_MAPS_SPLIT_KEY = ',';
-const COLORS = ['blue', 'turquoise', 'green', 'yellow', 'orange', 'red', 'pink', 'purple'];
 const csvEditor = qs('.csv-editor');
 const openButton = qs('.ce-open-button');
 const closeButton = qs('.ce-close-button');
@@ -32,7 +31,7 @@ class CSVEditor {
   render() {
     showLoader();
 
-    if(!this.state.urlMaps || !this.state.identities) {
+    if (!this.state.urlMaps || !this.state.identities) {
       return false;
     }
 
@@ -57,11 +56,7 @@ class CSVEditor {
 
   async createMissingContainers(missingContainers, maps) {
     for (const containerName of missingContainers.keys()) {
-      const identity = await browser.contextualIdentities.create({
-        name: containerName,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        icon: 'circle',
-      });
+      const identity = await ContextualIdentities.create(containerName);
       for (const host of missingContainers.get(containerName)) {
         this.addIdentity(identity, host, maps);
       }
