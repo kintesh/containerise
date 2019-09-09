@@ -55,6 +55,7 @@ async function handle(url, tabId) {
           url
       );
       if (currentTab.cookieStoreId !== defaultCookieStoreId) {
+        console.info('Opening', url, 'in default container');
         return createTab(url, currentTab.index + 1, currentTab.id, defaultCookieStoreId);
       }
     }
