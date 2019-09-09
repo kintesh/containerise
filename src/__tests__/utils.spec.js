@@ -3,6 +3,12 @@ describe('utils', () => {
   const utils = require('../utils');
 
   describe('formatString', () => {
+    it('should return same string without variables', function () {
+      const string = 'Farouq Nadeeb';
+      expect(utils.formatString(string, {}))
+          .toEqual(string);
+    });
+
     it('should replace alphanumeric variables', function () {
       const name = 'Farouq';
       const lastName = 'Nadeeb';
