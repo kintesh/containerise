@@ -2,6 +2,11 @@ import PreferenceStorage from '../Storage/PreferenceStorage';
 import preferenceContainerTemplate from '!!raw-loader!./templates/Preference.html';
 import {createEl, qs} from './utils';
 
+/**
+ * @var $container {HTMLElement} Should contain the label, description and other fields
+ *                 It's the element that should be added to the DOM
+ * @var el {HTMLElement} Is the element that will be used to get and set values.
+ */
 export default class Preference {
 
   constructor({name, label, description = '', defaultValue}) {
@@ -23,6 +28,9 @@ export default class Preference {
     return el;
   }
 
+  /**
+   * Should fill the fields in {@see $container} with initial preference attributes and add {@see el} to the container
+   */
   async fillContainer() {
     qs('.pref-container__label', this.$container).innerHTML = this.label;
     qs('.pref-container__description', this.$container).innerHTML = this.description;
