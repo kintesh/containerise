@@ -17,14 +17,14 @@ export async function buildDefaultContainer(preferences, url) {
 
   // Get cookieStoreId
   const containers = await ContextualIdentities.get(name);
-  let cookieStoreId;
+  let container;
   if (containers.length > 0) {
-    cookieStoreId = containers[0].cookieStoreId;
+    container = containers[0];
   } else {
     // Create a default container
-    const container = await ContextualIdentities.create(name);
-    cookieStoreId = container.cookieStoreId;
+    container = await ContextualIdentities.create(name);
   }
+  const cookieStoreId = container.cookieStoreId;
 
   // Add a rule if necessary
   const ruleAddition = preferences['defaultContainer.ruleAddition'];
@@ -55,5 +55,5 @@ export async function buildDefaultContainer(preferences, url) {
     });
   }
 
-  return cookieStoreId;
+  return container;
 }

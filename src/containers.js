@@ -50,12 +50,13 @@ async function handle(url, tabId) {
 
   if (!hostIdentity) {
     if (preferences.defaultContainer) {
-      const defaultCookieStoreId = await buildDefaultContainer(
+      const defaultContainer = await buildDefaultContainer(
           filterByKey(preferences, prefKey => prefKey.startsWith('defaultContainer')),
           url
       );
+      const defaultCookieStoreId = defaultContainer.cookieStoreId;
       if (currentTab.cookieStoreId !== defaultCookieStoreId) {
-        console.info('Opening', url, 'in default container');
+        console.debug('Opening', url, 'in default container', defaultCookieStoreId, defaultContainer.name);
         return createTab(url, currentTab.index + 1, currentTab.id, defaultCookieStoreId);
       }
     }
