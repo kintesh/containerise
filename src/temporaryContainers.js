@@ -1,6 +1,7 @@
 // Hoisted and adapted from https://gitlab.com/NamingThingsIsHard/firefox/click-to-contain
 
 import PreferenceStorage from './Storage/PreferenceStorage';
+import {filterByKey} from './utils';
 
 // Prefer tracking tabs and their contexts to
 // calling browser.tabs.query with the contextId
@@ -44,4 +45,21 @@ export async function onTabRemoved(tabId) {
     console.info('containerise: Removed temporary container ID:', tabContextId);
     browser.contextualIdentities.remove(tabContextId);
   }
+}
+
+
+export function cleanUpTemporaryContainers() {
+  Promise.all([
+    browser.contextualIdentities.query({}),
+    PreferenceStorage.getAll(true),
+  ]).then(([containers, preferences]) => {
+    preferences = filterByKey(preferences, key => key.startsWith('containers.'));
+
+    containers.filter((container) => {
+      return preferences[`containers.${container.cookieStoreId}.lifetime`] === 'untilLastTab';
+    }).forEach((container) => {
+      console.info('Removing leftover container: ', container.name);
+      browser.contextualIdentities.remove(container.cookieStoreId);
+    });
+  });
 }

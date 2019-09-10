@@ -1,7 +1,7 @@
 import './manifest.json';
 import {tabUpdatedListener, webRequestListener} from './containers';
 import {messageExternalListener} from './messageExternalListener';
-import {onTabCreated, onTabRemoved} from './temporaryContainers';
+import {cleanUpTemporaryContainers, onTabCreated, onTabRemoved} from './temporaryContainers';
 
 browser.webRequest.onBeforeRequest.addListener(
   webRequestListener,
@@ -19,3 +19,6 @@ browser.tabs.onUpdated.addListener(
 
 browser.tabs.onCreated.addListener(onTabCreated);
 browser.tabs.onRemoved.addListener(onTabRemoved);
+
+// Clean up left over containers at startup
+cleanUpTemporaryContainers();
