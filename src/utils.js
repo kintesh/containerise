@@ -62,7 +62,7 @@ export const urlKeyFromUrl = (url) => {
  *
  * Depending on the prefix in the hostmap it'll choose a match method:
  *  - regex
- *  - TODO: glob
+ *  - glob
  *  - standard
  *
  * @param url {URL}
