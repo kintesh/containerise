@@ -1,10 +1,10 @@
-/**
- * Groups preferences together and displays them in a manner to reflect that fact.
- */
 import Preference from './Preference';
 import {createEl, qs} from './utils';
 import template from '!!raw-loader!./templates/PreferenceGroup.html';
 
+/**
+ * Groups preferences together and displays them in a manner to reflect that fact.
+ */
 export default class PreferenceGroup extends Preference {
 
   /**
