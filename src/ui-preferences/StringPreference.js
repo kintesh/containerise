@@ -2,11 +2,6 @@ import Preference from './Preference';
 
 export default class StringPreference extends Preference {
 
-  constructor({name, label, description}){
-    super({name, label, description});
-
-  }
-
   _buildEl() {
     let el = super._buildEl();
     el.type = 'text';
