@@ -15,7 +15,7 @@ export default class PreferenceGroup extends Preference {
    * @param description {String} The description to be shown to the user
    * @param preferences {Preference[]}
    * @param toggleable {boolean} Indicates whether the preferences
-   *                    can be toggled together
+   *                    can be toggled on and off together
    */
   constructor({name, label, description, preferences, toggleable = false}) {
     super({name, label, description});
