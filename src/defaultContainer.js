@@ -2,6 +2,7 @@ import {formatString} from './utils';
 import HostStorage from './Storage/HostStorage';
 import ContextualIdentities from './ContextualIdentity';
 import ExtendedURL from './ExtendedURL';
+import PreferenceStorage from './Storage/PreferenceStorage';
 
 export async function buildDefaultContainer(preferences, url) {
   url = new ExtendedURL(url);
@@ -44,6 +45,14 @@ export async function buildDefaultContainer(preferences, url) {
     } catch (e) {
       console.error('Couldn\'t add rule', ruleAddition, e);
     }
+  }
+
+  const lifetime = preferences['defaultContainer.lifetime'];
+  if(lifetime !== 'forever'){
+    await PreferenceStorage.set({
+      key: `containers.${cookieStoreId}.lifetime`,
+      value: lifetime,
+    });
   }
 
   return cookieStoreId;
