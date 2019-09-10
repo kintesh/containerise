@@ -18,7 +18,7 @@ class PreferenceStorage extends PrefixStorage {
 
   async get(key, valueOnly = false) {
     let preference = await super.get(key);
-    if (valueOnly) {
+    if (valueOnly && preference !== undefined) {
       preference = preference.value;
     }
     return preference;
