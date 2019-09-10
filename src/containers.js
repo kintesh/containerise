@@ -5,6 +5,12 @@ import PreferenceStorage from './Storage/PreferenceStorage';
 import {filterByKey} from './utils';
 import {buildDefaultContainer} from './defaultContainer';
 
+/**
+ * Keep track of the tabs we're creating
+ * tabId: url
+ */
+const creatingTabs = {};
+
 const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) => {
   Tabs.get(currentTabId).then((currentTab) => {
     Tabs.create({
@@ -13,6 +19,8 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
       cookieStoreId,
       active: currentTab.active,
       openerTabId: openerTabId,
+    }).then((tab) => {
+      creatingTabs[tab.id] = url;
     });
     PreferenceStorage.get('keepOldTabs').then(({value}) => {
       if (!value) {
@@ -31,9 +39,13 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
 
 
 async function handle(url, tabId) {
-  if (url.startsWith('about:')){
-    return {};
+  const creatingUrl = creatingTabs[tabId];
+  if (url.startsWith('about:') || creatingUrl === url) {
+    return;
+  } else if (creatingUrl) {
+    delete creatingTabs[tabId];
   }
+
   let [hostMap, preferences, identities, currentTab] = await Promise.all([
     Storage.get(url),
     PreferenceStorage.getAll(true),
@@ -41,7 +53,7 @@ async function handle(url, tabId) {
     Tabs.get(tabId),
   ]);
 
-  if (currentTab.incognito || !hostMap){
+  if (currentTab.incognito || !hostMap) {
     return {};
   }
 
