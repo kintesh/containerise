@@ -5,7 +5,7 @@ import {createEl, qs} from './utils';
 export default class Preference {
 
   // TODO: Add the notion of a default value
-  constructor({name, label, description}) {
+  constructor({name, label, description=''}) {
     this.name = name;
     this.label = label;
     this.description = description;
@@ -23,7 +23,7 @@ export default class Preference {
     return el;
   }
 
-  fillContainer() {
+  async fillContainer() {
     qs('.pref-container__label', this.$container).innerHTML = this.label;
     qs('.pref-container__description', this.$container).innerHTML = this.description;
 

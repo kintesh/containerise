@@ -36,15 +36,15 @@ export default class PreferenceGroup extends Preference {
     return this.$container.querySelector(`.${Preference.EL_CLASS}`);
   }
 
-  fillContainer() {
+  async fillContainer() {
     qs('.pref-group__label', this.$container).innerHTML = this.label;
     qs('.pref-group__description', this.$container).innerHTML = this.description;
 
     const $preferences = this.$container.querySelector('.preferences');
-    for (let preference of this._preferences) {
-      preference.fillContainer();
+    return Promise.all(this._preferences.map((preference) => {
       $preferences.appendChild(preference.$container);
-    }
+      return preference.fillContainer();
+    }));
   }
 
   get() {

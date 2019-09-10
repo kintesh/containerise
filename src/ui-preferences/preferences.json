@@ -44,5 +44,11 @@
         "description": "The rule to be added to this container once a domain is matched (can be empty)"
       }
     ]
+  },
+  {
+    "name": "containers",
+    "type": "containers",
+    "label": "Container preferences",
+    "description": "Preferences for each existing container"
   }
 ]

@@ -3,11 +3,11 @@ import './index.html';
 import preferencesJson from './preferences.json';
 import BooleanPreference from './BooleanPreference';
 import ChoicePreference from './ChoicePreference';
+import ContainerPreferenceGroup from './ContainerPreferenceGroup';
 import PreferenceGroup from './PreferenceGroup';
 import StringPreference from './StringPreference';
 import {qs} from './utils';
 
-// TODO make this a class function
 function buildPreference(prefConf) {
   switch (prefConf.type) {
     case BooleanPreference.TYPE:
@@ -23,8 +23,10 @@ function buildPreference(prefConf) {
       return new PreferenceGroup(prefConf);
     case StringPreference.TYPE:
       return new StringPreference(prefConf);
+    case ContainerPreferenceGroup.TYPE:
+      return new ContainerPreferenceGroup(prefConf);
     default:
-      console.warn('unknown preference type', prefConf);
+      throw new TypeError(`unknown preference type ${prefConf.type}`);
   }
 
 }
@@ -34,12 +36,12 @@ let preferences = preferencesJson.map(buildPreference);
 
 const preferencesContainer = qs('.preferences-container');
 
-for (const preference of preferences) {
-  preference.fillContainer();
+preferences.map(async (preference) => {
   preferencesContainer.appendChild(preference.$container);
+  await preference.fillContainer();
   // noinspection JSIgnoredPromiseFromCall
-  preference.updateFromDb();
-}
+  await preference.updateFromDb();
+});
 
 const $saveButton = qs('#save-button');
 $saveButton.addEventListener('click', async () => {
