@@ -16,7 +16,7 @@ export default class ContainerPreferenceGroup extends PreferenceGroup {
     this._preferences = (await ContextualIdentities.get())
         .map((container) => {
           return new ContainerPreference({
-            name: container.cookieStoreId,
+            name: `${this.name}.${container.cookieStoreId}`,
             label: container.name,
           });
         });
