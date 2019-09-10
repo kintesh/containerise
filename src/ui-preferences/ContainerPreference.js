@@ -27,7 +27,7 @@ export default class ContainerPreference extends PreferenceGroup {
           'description': 'Closing the last tab in the container will destroy the container',
         },
       ],
-      defaultChoice: 'forever',
+      defaultValue: 'forever',
     }));
   }
 
