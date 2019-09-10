@@ -3,10 +3,12 @@ import {createEl} from './utils';
 
 export default class ChoicePreference extends Preference {
 
-  constructor({name, label, description, choices, defaultChoice}) {
-    super({name, label, description});
+  constructor({name, label, description, choices, defaultValue}) {
+    super({name, label, description, defaultValue});
     this.choices = choices;
-    this._defaultChoice = defaultChoice;
+    if(this._defaultValue === undefined && this.choices.length > 0){
+      this._defaultValue = this.choices[0].name;
+    }
     this._addChoices();
   }
 
@@ -17,7 +19,7 @@ export default class ChoicePreference extends Preference {
 
   _addChoices() {
     for (let choice of this.choices) {
-      const checkedAttr = this._defaultChoice === choice.name ? 'checked' : '';
+      const checkedAttr = this._defaultValue === choice.name ? 'checked' : '';
       this.el.appendChild(createEl(`<div class="radio-container">
         <input type="radio" name="${this.name}" value="${choice.name}" ${checkedAttr}>
         <label for="${this.name}">${choice.label}</label>

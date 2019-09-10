@@ -4,11 +4,11 @@ import {createEl, qs} from './utils';
 
 export default class Preference {
 
-  // TODO: Add the notion of a default value
-  constructor({name, label, description=''}) {
+  constructor({name, label, description = '', defaultValue}) {
     this.name = name;
     this.label = label;
     this.description = description;
+    this._defaultValue = defaultValue;
     this.$container = this._buildContainerEl();
     this.el = this._buildEl();
   }
@@ -56,6 +56,9 @@ export default class Preference {
     const retrieved = await this.retrieve();
     if (retrieved) {
       this.set(retrieved);
+    } else if (this._defaultValue !== undefined) {
+      // The db-object looks like {key, value}
+      this.set({value: this._defaultValue});
     }
   }
 

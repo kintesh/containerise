@@ -16,7 +16,8 @@
         "type": "string",
         "name": "containerName",
         "label": "Container name",
-        "description": "What the name of the default container will be. It's possible to use variables here"
+        "description": "What the name of the default container will be. It's possible to use variables here",
+        "defaultValue": "Default Container"
       },
       {
         "type": "choice",
@@ -35,7 +36,7 @@
             "description": "Closing the last tab in the container will destroy the container"
           }
         ],
-        "defaultChoice": "forever"
+        "defaultValue": "forever"
       },
       {
         "type": "string",
