@@ -14,8 +14,7 @@ export default class ChoicePreference extends Preference {
   }
 
   _buildEl() {
-    const el = document.createElement('form');
-    return el;
+    return document.createElement('form');
   }
 
   _addChoices() {
