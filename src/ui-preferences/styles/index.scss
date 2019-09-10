@@ -26,6 +26,11 @@
   display: none;
 }
 
+.pref-group__label {
+  font-weight: bolder;
+  font-size: large;
+}
+
 .pref-group_toggable .pref-group__toggle {
   display: unset;
 }
