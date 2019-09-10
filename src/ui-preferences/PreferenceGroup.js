@@ -36,7 +36,7 @@ export default class PreferenceGroup extends Preference {
   }
 
   _buildEl() {
-    return this.$container.querySelector(`.${Preference.EL_CLASS}`);
+    return this.$container.querySelector(`.${PreferenceGroup.EL_CLASS}`);
   }
 
   async fillContainer() {
@@ -77,3 +77,4 @@ export default class PreferenceGroup extends Preference {
 }
 
 PreferenceGroup.TYPE = 'group';
+PreferenceGroup.EL_CLASS = 'pref-group__toggle';
