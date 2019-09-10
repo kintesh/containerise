@@ -6,6 +6,7 @@ export default class ChoicePreference extends Preference {
   constructor({name, label, description, choices, defaultValue}) {
     super({name, label, description, defaultValue});
     this.choices = choices;
+    // Make sure we have default choice
     if(this._defaultValue === undefined && this.choices.length > 0){
       this._defaultValue = this.choices[0].name;
     }

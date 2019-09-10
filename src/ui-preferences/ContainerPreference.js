@@ -3,6 +3,9 @@ import ChoicePreference from './ChoicePreference';
 
 /**
  * Preferences for containers
+ *
+ * This will build all the preferences a container can possess e.g lifetime.
+ * Other preferences like icon, color and exit rules are conceivable
  */
 export default class ContainerPreference extends PreferenceGroup {
 
