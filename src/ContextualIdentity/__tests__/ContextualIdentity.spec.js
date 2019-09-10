@@ -35,6 +35,9 @@ describe('ContextualIdentities', () => {
           addListener: jest.fn(() => {}),
         },
       },
+      storage: {
+        local: {},
+      },
     };
 
     ContextualIdentities = require('../index').default;
