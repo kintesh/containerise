@@ -1,3 +1,5 @@
+import HostStorage from '../Storage/HostStorage';
+
 export const NO_CONTAINER = {
   name: 'No Container',
   icon: 'circle',
@@ -29,6 +31,17 @@ class ContextualIdentities {
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
       icon: 'circle',
     });
+  }
+
+  /**
+   * Gets rid of a container and all corresponding rules
+   */
+  async remove(cookieStoreId) {
+    const hostMaps = await HostStorage.getAll();
+    await HostStorage.remove(Object.keys(hostMaps)
+        .filter(host => hostMaps[host].cookieStoreId === cookieStoreId)
+    );
+    return this.contextualIdentities.remove(cookieStoreId);
   }
 
   getAll(details = {}) {

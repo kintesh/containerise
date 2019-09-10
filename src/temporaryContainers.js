@@ -1,5 +1,6 @@
 // Hoisted and adapted from https://gitlab.com/NamingThingsIsHard/firefox/click-to-contain
 
+import ContextualIdentities from './ContextualIdentity';
 import PreferenceStorage from './Storage/PreferenceStorage';
 import {filterByKey} from './utils';
 
@@ -43,7 +44,7 @@ export async function onTabRemoved(tabId) {
   );
   if (contextLifetime === 'untilLastTab') {
     console.info('containerise: Removed temporary container ID:', tabContextId);
-    browser.contextualIdentities.remove(tabContextId);
+    return ContextualIdentities.remove(tabContextId);
   }
 }
 
@@ -59,7 +60,7 @@ export function cleanUpTemporaryContainers() {
       return preferences[`containers.${container.cookieStoreId}.lifetime`] === 'untilLastTab';
     }).forEach((container) => {
       console.info('Removing leftover container: ', container.name);
-      browser.contextualIdentities.remove(container.cookieStoreId);
+      ContextualIdentities.remove(container.cookieStoreId);
     });
   });
 }
