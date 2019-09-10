@@ -26,6 +26,9 @@ export default class PreferenceGroup extends Preference {
     }
     this._preferences = preferences;
     this._toggleable = toggleable;
+    if(this._toggleable){
+      this.$container.classList.add('pref-group_toggable');
+    }
   }
 
   _buildContainerEl() {

@@ -1,23 +1,42 @@
 .pref-container {
   border-width: 1px;
   border-radius: 3px;
-  border-style: ridge;
+  border-style: dashed;
   margin-bottom: 5px;
   margin-top: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .pref-container .pref-container__label {
   font-weight: bold;
 }
 
+.pref-group {
+  border-width: 1px;
+  border-radius: 3px;
+  border-style: ridge;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.pref-group__toggle {
+  display: none;
+}
+
+.pref-group_toggable .pref-group__toggle {
+  display: unset;
+}
 
 // Groups that aren't activated yet
-.pref-group__toggle ~ .preferences {
+.pref-group_toggable .pref-group__toggle ~ .preferences {
   opacity: 0.5;
   pointer-events: none;
 }
 // Activated groups
-.pref-group__toggle:checked ~ .preferences {
+.pref-group_toggable .pref-group__toggle:checked ~ .preferences {
   opacity: unset;
   pointer-events: unset;
 }
