@@ -5,6 +5,8 @@ import PreferenceStorage from './Storage/PreferenceStorage';
 import {filterByKey} from './utils';
 import {buildDefaultContainer} from './defaultContainer';
 
+const IGNORED_URLS_REGEX = /^(about|moz-extension):/.compile();
+
 /**
  * Keep track of the tabs we're creating
  * tabId: url
@@ -40,7 +42,7 @@ const createTab = (url, newTabIndex, currentTabId, cookieStoreId, openerTabId) =
 
 async function handle(url, tabId) {
   const creatingUrl = creatingTabs[tabId];
-  if (url.startsWith('about:') || creatingUrl === url) {
+  if (IGNORED_URLS_REGEX.test(url) || creatingUrl === url) {
     return;
   } else if (creatingUrl) {
     delete creatingTabs[tabId];
