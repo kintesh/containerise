@@ -39,6 +39,18 @@ module.exports = {
         ],
       },
       {
+        test: /icons\/.*$/,
+        type: 'javascript/auto',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'icons/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.(html)$/,
         type: 'javascript/auto',
         use: [
