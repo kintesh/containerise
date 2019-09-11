@@ -5,7 +5,7 @@ import PreferenceStorage from './Storage/PreferenceStorage';
 import {filterByKey} from './utils';
 import {buildDefaultContainer} from './defaultContainer';
 
-const IGNORED_URLS_REGEX = /^(about|moz-extension):/.compile();
+const IGNORED_URLS_REGEX = /^(about|moz-extension):/;
 
 /**
  * Keep track of the tabs we're creating
