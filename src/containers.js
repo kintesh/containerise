@@ -88,14 +88,14 @@ async function handle(url, tabId) {
 
   }
 
-    const openerTabId = currentTab.openerTabId;
-    if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-      return createTab(url, currentTab.index + 1, currentTab.id, openerTabId);
-    }
+  const openerTabId = currentTab.openerTabId;
+  if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
+    return createTab(url, currentTab.index + 1, currentTab.id, openerTabId);
+  }
 
-    if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-      return createTab(url, currentTab.index + 1, currentTab.id, openerTabId, hostIdentity.cookieStoreId);
-    }
+  if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
+    return createTab(url, currentTab.index + 1, currentTab.id, openerTabId, hostIdentity.cookieStoreId);
+  }
 
 
   return {};
