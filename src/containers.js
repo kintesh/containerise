@@ -81,7 +81,7 @@ async function handle(url, tabId) {
       const defaultCookieStoreId = defaultContainer.cookieStoreId;
       if (currentTab.cookieStoreId !== defaultCookieStoreId) {
         console.debug('Opening', url, 'in default container', defaultCookieStoreId, defaultContainer.name);
-        return createTab(url, currentTab.index + 1, currentTab.id, defaultCookieStoreId);
+        return createTab(url, currentTab.index + 1, currentTab.id, currentTab.openerTabId, defaultCookieStoreId);
       }
     }
     return {};
