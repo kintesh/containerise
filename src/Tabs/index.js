@@ -12,6 +12,10 @@ class Tabs {
     return this.tabs.create(options);
   }
 
+  update(tabId, options = {}) {
+    return this.tabs.update(tabId, options);
+  }
+
   remove(tabId) {
     return this.tabs.remove(tabId);
   }

@@ -1,4 +1,5 @@
 import './manifest.json';
+import '../static/icons/icon.png';
 import {tabUpdatedListener, webRequestListener} from './containers';
 import {messageExternalListener} from './messageExternalListener';
 import {cleanUpTemporaryContainers, onTabCreated, onTabRemoved} from './temporaryContainers';
