@@ -119,6 +119,5 @@ export const tabUpdatedListener = (tabId, changeInfo) => {
   if (!changeInfo.url) {
     return;
   }
-  console.log(tabId, 'url changed', changeInfo.url);
   return handle(changeInfo.url, tabId);
 };
