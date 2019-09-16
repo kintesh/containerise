@@ -136,7 +136,9 @@ export default class Preference {
    */
   retrieve() {
     return PreferenceStorage.get(this.name).then((retrieved) => {
-      this._valueDb = retrieved.value;
+      if(retrieved){
+        this._valueDb = retrieved.value;
+      }
       return retrieved;
     });
   }
