@@ -58,7 +58,7 @@ describe('ContextualIdentities', () => {
         iconUrl: 'resource://usercontext-content/circle.svg',
         color: 'grey',
         colorCode: '#999',
-        cookieStoreId: 'no-container',
+        cookieStoreId: 'firefox-default',
       }]);
     });
   });
