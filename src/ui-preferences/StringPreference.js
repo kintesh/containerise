@@ -14,6 +14,7 @@ export default class StringPreference extends Preference {
 
   set({value}) {
     this.el.value = value;
+    super.set({value});
   }
 }
 

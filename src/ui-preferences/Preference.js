@@ -15,6 +15,8 @@ export default class Preference {
     this.description = description;
     this._defaultValue = defaultValue;
     this.$container = this._buildContainerEl();
+    this._valueDb = null;
+    this._listeners = {};
     this.el = this._buildEl();
   }
 
@@ -29,6 +31,56 @@ export default class Preference {
   }
 
   /**
+   * Registers the event listeners and decides when to trigger
+   * an onChange event for the preference
+   * @private
+   */
+  _createOnChange(event='input') {
+    const listener = (e) => {
+      e.stopPropagation();
+      this._onChange(this.get());
+    };
+    this.$container.addEventListener(event, listener);
+  }
+
+  /**
+   *
+   * @param newValue
+   * @private
+   */
+  _onChange(newValue) {
+    if (newValue === this._valueDb) {
+      return;
+    }
+    this._triggerEvent('change', newValue);
+  }
+
+  addListener(event, func) {
+    const listeners = this._listeners[event] || [];
+    listeners.push(func);
+    this._listeners[event] = listeners;
+  }
+
+  removeListener(func, event) {
+    for (let eventKey of this._listeners) {
+      if (event !== undefined && event !== eventKey) {
+        continue;
+      }
+      this._listeners[event] = this._listeners[event].filter(listener => listener === func);
+    }
+  }
+
+  _triggerEvent(event, ...args) {
+    const listeners = this._listeners[event];
+    if (!listeners) {
+      return;
+    }
+    for (let listener of listeners) {
+      listener.apply(this, args);
+    }
+  }
+
+  /**
    * Should fill the fields in {@see $container} with initial preference attributes and add {@see el} to the container
    */
   async fillContainer() {
@@ -38,6 +90,7 @@ export default class Preference {
     // Append the el
     const elContainer = qs('.pref-el-container', this.$container);
     elContainer.appendChild(this.el);
+    this._createOnChange();
   }
 
 
@@ -50,21 +103,27 @@ export default class Preference {
 
   /**
    * Update UI with the given value
-   * @abstract
    */
   // eslint-disable-next-line no-unused-vars
-  set(value) {
-    throw 'Not implemented';
+  set({value}) {
+    this._valueDb = this.get();
   }
 
   /**
    * Updates the UI with the DB value
    */
   async updateFromDb() {
-    const retrieved = await this.retrieve();
-    if (retrieved) {
-      this.set(retrieved);
-    } else if (this._defaultValue !== undefined) {
+    let retrieved = undefined;
+    try {
+      retrieved = await this.retrieve();
+      if (retrieved) {
+        this.set(retrieved);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+
+    if (retrieved === undefined && this._defaultValue !== undefined) {
       // The db-object looks like {key, value}
       this.set({value: this._defaultValue});
     }
@@ -76,7 +135,10 @@ export default class Preference {
    * @async
    */
   retrieve() {
-    return PreferenceStorage.get(this.name);
+    return PreferenceStorage.get(this.name).then((retrieved) => {
+      this._valueDb = retrieved.value;
+      return retrieved;
+    });
   }
 
   /**
@@ -85,9 +147,12 @@ export default class Preference {
    * @async
    */
   update() {
+    const newValue = this.get();
     return PreferenceStorage.set({
       key: this.name,
-      value: this.get(),
+      value: newValue,
+    }).then(() => {
+      this._valueDb = newValue;
     });
   }
 

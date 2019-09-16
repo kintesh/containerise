@@ -37,13 +37,15 @@ let preferences = preferencesJson.map(buildPreference);
 const preferencesContainer = qs('.preferences-container');
 
 preferences.map(async (preference) => {
+  // Save preference on UI change
+  preference.addListener('change', () => {
+    preference.update();
+  });
+  preference.addListener('childChange', (child) => {
+    child.update();
+  });
   preferencesContainer.appendChild(preference.$container);
   await preference.fillContainer();
-  // noinspection JSIgnoredPromiseFromCall
   await preference.updateFromDb();
 });
 
-const $saveButton = qs('#save-button');
-$saveButton.addEventListener('click', async () => {
-  await Promise.all(preferences.map(preference => preference.update()));
-});

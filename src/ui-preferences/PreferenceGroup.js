@@ -42,9 +42,15 @@ export default class PreferenceGroup extends Preference {
   async fillContainer() {
     qs('.pref-group__label', this.$container).innerHTML = this.label;
     qs('.pref-group__description', this.$container).innerHTML = this.description;
-
+    this._createOnChange('change');
     const $preferences = this.$container.querySelector('.preferences');
     return Promise.all(this._preferences.map((preference) => {
+      preference.addListener('change', (newValue) => {
+        this._triggerEvent('childChange', preference, newValue);
+      });
+      preference.addListener('childChange', (...args) => {
+        this._triggerEvent('childChange', ...args);
+      });
       $preferences.appendChild(preference.$container);
       return preference.fillContainer();
     }));
@@ -60,6 +66,7 @@ export default class PreferenceGroup extends Preference {
   set({value}) {
     if (this._toggleable) {
       this.el.checked = value;
+      super.set({value});
     }
   }
 

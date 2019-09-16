@@ -38,6 +38,7 @@ export default class ChoicePreference extends Preference {
     for (let $input of this.el.querySelectorAll('input')) {
       $input.checked = $input.value === value;
     }
+    super.set({value});
   }
 }
 
