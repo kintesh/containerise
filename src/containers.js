@@ -79,14 +79,17 @@ async function handle(url, tabId) {
           url
       );
       const defaultCookieStoreId = defaultContainer.cookieStoreId;
-      if (currentTab.cookieStoreId !== defaultCookieStoreId) {
+      const defaultIsNoContainer = defaultCookieStoreId === NO_CONTAINER.cookieStoreId;
+      const tabHasContainer = currentTab.cookieStoreId !== NO_CONTAINER.cookieStoreId;
+      const tabInDifferentContainer = currentTab.cookieStoreId !== defaultCookieStoreId;
+      const openInNoContainer = defaultIsNoContainer && tabHasContainer;
+      if ((tabInDifferentContainer && !openInNoContainer) || openInNoContainer) {
         console.debug('Opening', url, 'in default container', defaultCookieStoreId, defaultContainer.name);
         return createTab(
             url,
             currentTab.index + 1, currentTab.id,
             currentTab.openerTabId,
-            defaultCookieStoreId !== NO_CONTAINER.cookieStoreId ?
-                defaultCookieStoreId : undefined);
+            defaultCookieStoreId);
       }
     }
     return {};
