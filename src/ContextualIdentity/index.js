@@ -37,6 +37,9 @@ class ContextualIdentities {
    * Gets rid of a container and all corresponding rules
    */
   async remove(cookieStoreId) {
+    if(cookieStoreId === NO_CONTAINER.cookieStoreId){
+      return;
+    }
     const hostMaps = await HostStorage.getAll();
     await HostStorage.remove(Object.keys(hostMaps)
         .filter(host => hostMaps[host].cookieStoreId === cookieStoreId)
@@ -50,7 +53,7 @@ class ContextualIdentities {
 
   get(name) {
     if (name === NO_CONTAINER.name) {
-      return Promise.resolve(NO_CONTAINER);
+      return Promise.resolve([NO_CONTAINER]);
     }
     return this.contextualIdentities.query({name});
   }
