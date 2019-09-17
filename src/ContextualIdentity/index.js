@@ -23,6 +23,9 @@ class ContextualIdentities {
 
   constructor() {
     this.contextualIdentities = browser.contextualIdentities;
+    this.addOnRemoveListener((changeInfo) => {
+      return this.cleanPreferences(changeInfo.contextualIdentity.cookieStoreId);
+    });
   }
 
   create(name) {
@@ -37,14 +40,17 @@ class ContextualIdentities {
    * Gets rid of a container and all corresponding rules
    */
   async remove(cookieStoreId) {
-    if(cookieStoreId === NO_CONTAINER.cookieStoreId){
+    if (cookieStoreId === NO_CONTAINER.cookieStoreId) {
       return;
     }
+    return this.contextualIdentities.remove(cookieStoreId);
+  }
+
+  async cleanPreferences(cookieStoreId) {
     const hostMaps = await HostStorage.getAll();
-    await HostStorage.remove(Object.keys(hostMaps)
+    return HostStorage.remove(Object.keys(hostMaps)
         .filter(host => hostMaps[host].cookieStoreId === cookieStoreId)
     );
-    return this.contextualIdentities.remove(cookieStoreId);
   }
 
   getAll(details = {}) {
