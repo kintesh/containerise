@@ -12,6 +12,7 @@
     "build": "npm audit && npm run lint && npm run test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/ && web-ext build -s build/",
     "web-ext": "web-ext run -s build/ --start-url=about:debugging#addons",
+    "web-ext-perm": "mkdirp ./profile && web-ext run -s build/ --start-url=about:debugging#addons -p ./profile --keep-profile-changes",
     "lint": "eslint --ignore-path .gitignore ./",
     "test": "jest",
     "test:watch": "jest --watchAll"
