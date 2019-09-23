@@ -1,4 +1,5 @@
 import HostStorage from '../Storage/HostStorage';
+import PreferenceStorage from '../Storage/PreferenceStorage';
 
 export const NO_CONTAINER = {
   name: 'No Container',
@@ -24,7 +25,9 @@ class ContextualIdentities {
   constructor() {
     this.contextualIdentities = browser.contextualIdentities;
     this.addOnRemoveListener((changeInfo) => {
-      return this.cleanPreferences(changeInfo.contextualIdentity.cookieStoreId);
+      const cookieStoreId = changeInfo.contextualIdentity.cookieStoreId;
+      this.cleanPreferences(cookieStoreId);
+      this.cleanMaps(cookieStoreId);
     });
   }
 
@@ -46,10 +49,16 @@ class ContextualIdentities {
     return this.contextualIdentities.remove(cookieStoreId);
   }
 
-  async cleanPreferences(cookieStoreId) {
+  async cleanMaps(cookieStoreId) {
     const hostMaps = await HostStorage.getAll();
     return HostStorage.remove(Object.keys(hostMaps)
         .filter(host => hostMaps[host].cookieStoreId === cookieStoreId)
+    );
+  }
+  async cleanPreferences(cookieStoreId) {
+    const preferences = await PreferenceStorage.getAll();
+    return PreferenceStorage.remove(Object.keys(preferences)
+        .filter(prefName => prefName.startsWith(`containers.${cookieStoreId}`))
     );
   }
 
