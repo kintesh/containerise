@@ -52,15 +52,26 @@ export async function onTabRemoved(tabId) {
 export function cleanUpTemporaryContainers() {
   Promise.all([
     browser.contextualIdentities.query({}),
+    browser.tabs.query({}),
     PreferenceStorage.getAll(true),
-  ]).then(([containers, preferences]) => {
+  ]).then(([containers, tabs, preferences]) => {
     preferences = filterByKey(preferences, key => key.startsWith('containers.'));
 
     const cookieStoreIds = {};
+    // Containers with open tabs
+    const activeCookieStoreIds = tabs.reduce((acc, tab) => {
+      let cookieTabs = acc[tab.cookieStoreId] || [];
+      cookieTabs.push(tab);
+      acc[tab.cookieStoreId] = cookieTabs;
+      return acc;
+    }, {});
     // Get rid of existing leftover temporary containers
+    // Leftover means without open tabs
     let promises = containers.filter((container) => {
-      cookieStoreIds[container.cookieStoreId] = true;
-      return preferences[`containers.${container.cookieStoreId}.lifetime`] === 'untilLastTab';
+      const cookieStoreId = container.cookieStoreId;
+      cookieStoreIds[cookieStoreId] = true;
+      return activeCookieStoreIds[cookieStoreId] === undefined // inactive containers
+              && preferences[`containers.${cookieStoreId}.lifetime`] === 'untilLastTab';
     }).map((container) => {
       console.warn('Removing leftover container: ', container.name);
       return ContextualIdentities.remove(container.cookieStoreId);
@@ -80,7 +91,7 @@ export function cleanUpTemporaryContainers() {
       }).catch(console.error));
     }
     return Promise.all(promises).then(() => {
-      browser.storage.get().then(console.log);
+      browser.storage.local.get().then(console.debug);
     });
   });
 }
