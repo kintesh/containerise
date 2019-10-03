@@ -87,7 +87,7 @@ export function cleanUpTemporaryContainers() {
     if (leftoverPreferences.length > 0) {
       console.warn('Removing leftover preferences', leftoverPreferences);
       promises.push(PreferenceStorage.remove(leftoverPreferences).then(() => {
-        console.war('Removed leftover preferences');
+        console.warn('Removed leftover preferences');
       }).catch(console.error));
     }
     return Promise.all(promises).then(() => {
