@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [3.5.0] - 9 Aug 2019
+## [3.5.0] - 8 Oct 2019
 ### Added
 - Preferences center to customise the extension further.
 - Toggle to keep old tabs open.
