@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.5.0] - 9 Aug 2019
+### Added
+- Preferences center to customise the extension further.
+- Toggle to keep old tabs open.
+- Open unmapped domains in a dedicated container.
+- Choose container's lifetime, (Forever or Until the last tab is closed).
+
+
 ## [3.4.0] - 3 Sep 2019
 ### Added
 - Introduce preference to leave tabs behind instead of closing them.
@@ -102,6 +110,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.4.0]: https://github.com/kintesh/containerise/compare/3.4.0...3.5.0
 [3.4.0]: https://github.com/kintesh/containerise/compare/3.3.0...3.4.0
 [3.3.0]: https://github.com/kintesh/containerise/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/kintesh/containerise/compare/3.1.0...3.2.0
