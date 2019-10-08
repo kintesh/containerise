@@ -1,38 +1,51 @@
 import './styles/index.scss';
 import './index.html';
+import preferencesJson from './preferences.json';
 import BooleanPreference from './BooleanPreference';
+import ChoicePreference from './ChoicePreference';
+import ContainerPreferenceGroup from './ContainerPreferenceGroup';
+import PreferenceGroup from './PreferenceGroup';
+import StringPreference from './StringPreference';
+import {qs} from './utils';
 
-function qs(selector, el = document) {
-  return el.querySelector(selector);
+function buildPreference(prefConf) {
+  switch (prefConf.type) {
+    case BooleanPreference.TYPE:
+      return new BooleanPreference(prefConf);
+    case ChoicePreference.TYPE:
+      return new ChoicePreference(prefConf);
+    case PreferenceGroup.TYPE:
+      prefConf.preferences = prefConf.preferences.map((groupPrefConf) => {
+        return buildPreference(Object.assign({}, groupPrefConf, {
+          name: `${prefConf.name}.${groupPrefConf.name}`,
+        }));
+      });
+      return new PreferenceGroup(prefConf);
+    case StringPreference.TYPE:
+      return new StringPreference(prefConf);
+    case ContainerPreferenceGroup.TYPE:
+      return new ContainerPreferenceGroup(prefConf);
+    default:
+      throw new TypeError(`unknown preference type ${prefConf.type}`);
+  }
+
 }
 
 // Build the preferences
-const preferences = [
-  new BooleanPreference('keepOldTabs',
-      'Keep old tabs',
-      'After a contained tab has been created, the old won\'t be closed'),
-];
+let preferences = preferencesJson.map(buildPreference);
 
 const preferencesContainer = qs('.preferences-container');
-const preferenceTemplate = qs('template#preference-template').content;
-for (const preference of preferences) {
-  const prefContainer = preferenceTemplate.cloneNode(true);
 
-  // Set some attributes
-  qs('.pref-container__label', prefContainer).innerHTML = preference.ui_name;
-  qs('.pref-container__description', prefContainer).innerHTML = preference.description;
-
-  // Append the el
-  const prefTypeContainer = qs('.pref-type-container', prefContainer);
-  prefTypeContainer.appendChild(preference.el);
-
-
-  preferencesContainer.appendChild(prefContainer);
-
-  preference.updateFromDb();
-}
-
-const $saveButton = qs('#save-button');
-$saveButton.addEventListener('click', async () => {
-  await Promise.all(preferences.map(preference => preference.update()));
+preferences.map(async (preference) => {
+  // Save preference on UI change
+  preference.addListener('change', () => {
+    preference.update();
+  });
+  preference.addListener('childChange', (child) => {
+    child.update();
+  });
+  preferencesContainer.appendChild(preference.$container);
+  await preference.fillContainer();
+  await preference.updateFromDb();
 });
+

@@ -2,6 +2,7 @@ import './manifest.json';
 import '../static/icons/icon.png';
 import {tabUpdatedListener, webRequestListener} from './containers';
 import {messageExternalListener} from './messageExternalListener';
+import {cleanUpTemporaryContainers, onTabCreated, onTabRemoved} from './temporaryContainers';
 
 browser.webRequest.onBeforeRequest.addListener(
   webRequestListener,
@@ -16,3 +17,9 @@ browser.runtime.onMessageExternal.addListener(
 browser.tabs.onUpdated.addListener(
     tabUpdatedListener
 );
+
+browser.tabs.onCreated.addListener(onTabCreated);
+browser.tabs.onRemoved.addListener(onTabRemoved);
+
+// Clean up left over containers at startup
+cleanUpTemporaryContainers();
