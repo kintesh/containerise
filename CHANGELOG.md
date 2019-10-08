@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.5.0] - 8 Oct 2019
 ### Added
-- Preferences center to customise the extension further.
+- Preferences centre to customise the extension further.
 - Toggle to keep old tabs open.
 - Open unmapped domains in a dedicated container.
 - Choose container's lifetime, (Forever or Until the last tab is closed).
