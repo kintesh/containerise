@@ -70,7 +70,7 @@ async function handle(url, tabId) {
   }
 
   const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
-  const tabIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
+  let targetCookieStoreId;
 
   if (!hostIdentity) {
     if (preferences.defaultContainer) {
@@ -78,33 +78,26 @@ async function handle(url, tabId) {
           filterByKey(preferences, prefKey => prefKey.startsWith('defaultContainer')),
           url
       );
-      const defaultCookieStoreId = defaultContainer.cookieStoreId;
-      const defaultIsNoContainer = defaultCookieStoreId === NO_CONTAINER.cookieStoreId;
-      const tabHasContainer = currentTab.cookieStoreId !== NO_CONTAINER.cookieStoreId;
-      const tabInDifferentContainer = currentTab.cookieStoreId !== defaultCookieStoreId;
-      const openInNoContainer = defaultIsNoContainer && tabHasContainer;
-      if ((tabInDifferentContainer && !openInNoContainer) || openInNoContainer) {
-        console.debug('Opening', url, 'in default container', defaultCookieStoreId, defaultContainer.name);
-        return createTab(
-            url,
-            currentTab.index + 1, currentTab.id,
-            currentTab.openerTabId,
-            defaultCookieStoreId);
-      }
+      targetCookieStoreId = defaultContainer.cookieStoreId;
+      console.debug('Going to open', url, 'in default container', targetCookieStoreId, defaultContainer.name);
+    } else {
+      return {};
     }
-    return {};
-
+  } else {
+    targetCookieStoreId = hostIdentity.cookieStoreId;
   }
 
-  const openerTabId = currentTab.openerTabId;
-  if (hostIdentity.cookieStoreId === NO_CONTAINER.cookieStoreId && tabIdentity) {
-    return createTab(url, currentTab.index + 1, currentTab.id, openerTabId);
+  const targetIsNoContainer = targetCookieStoreId === NO_CONTAINER.cookieStoreId;
+  const tabHasContainer = currentTab.cookieStoreId !== NO_CONTAINER.cookieStoreId;
+  const tabInDifferentContainer = currentTab.cookieStoreId !== targetCookieStoreId;
+  const openInNoContainer = targetIsNoContainer && tabHasContainer;
+  if ((tabInDifferentContainer && !openInNoContainer) || openInNoContainer) {
+    return createTab(
+        url,
+        currentTab.index + 1, currentTab.id,
+        currentTab.openerTabId,
+        targetCookieStoreId);
   }
-
-  if (hostIdentity.cookieStoreId !== currentTab.cookieStoreId && hostIdentity.cookieStoreId !== NO_CONTAINER.cookieStoreId) {
-    return createTab(url, currentTab.index + 1, currentTab.id, openerTabId, hostIdentity.cookieStoreId);
-  }
-
 
   return {};
 
