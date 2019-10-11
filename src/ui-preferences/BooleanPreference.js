@@ -1,4 +1,6 @@
 import Preference from './Preference';
+import {createEl, qs} from './utils';
+import toggleTemplate from '!!raw-loader!./templates/toggle.html';
 
 export default class BooleanPreference extends Preference {
 
@@ -7,17 +9,18 @@ export default class BooleanPreference extends Preference {
   }
 
   _buildEl() {
-    let el = super._buildEl();
-    el.type = 'checkbox';
-    return el;
+    return createEl(toggleTemplate);
   }
 
+  _getCheckbox(){
+    return qs('.toggle_checkbox', this.el);
+  }
   get() {
-    return this.el.checked;
+    return this._getCheckbox().checked;
   }
 
   set({value}) {
-    this.el.checked = !!value;
+    this._getCheckbox().checked = !!value;
     super.set({value});
   }
 }
