@@ -20,6 +20,11 @@ body {
   font-weight: bold;
 }
 
+.pref-container .pref-el-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .pref-group {
   border-width: 1px;
   border-radius: 3px;
