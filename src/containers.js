@@ -79,7 +79,7 @@ async function handle(url, tabId) {
           url
       );
       targetCookieStoreId = defaultContainer.cookieStoreId;
-      console.debug('Going to open', url, 'in default container', targetCookieStoreId, defaultContainer.name);
+      // console.debug('Going to open', url, 'in default container', targetCookieStoreId, defaultContainer.name);
     } else {
       return {};
     }
