@@ -13,12 +13,13 @@ export default class PreferenceGroup extends Preference {
    *                e.g windowOptions --> preferences will be windowOptions.optionX
    * @param label {String} The title to be shown to the user
    * @param description {String} The description to be shown to the user
+   * @param docUrl {String} A URL to redirect the user too for documentation
    * @param preferences {Preference[]}
    * @param toggleable {boolean} Indicates whether the preferences
    *                    can be toggled on and off together
    */
-  constructor({name, label, description, preferences, toggleable = false}) {
-    super({name, label, description});
+  constructor({name, label, description, docUrl, preferences, toggleable = false}) {
+    super({name, label, description, docUrl});
     for (let preference of preferences) {
       if (!preference.name.startsWith(`${name}.`)) {
         throw `Preference names must start with ${name}`;
@@ -42,6 +43,7 @@ export default class PreferenceGroup extends Preference {
   async fillContainer() {
     qs('.pref-group__label', this.$container).innerHTML = this.label;
     qs('.pref-group__description', this.$container).innerHTML = this.description;
+    this._fillDocLink();
     this._createOnChange('change');
     const $preferences = this.$container.querySelector('.preferences');
     return Promise.all(this._preferences.map((preference) => {

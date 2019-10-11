@@ -9,11 +9,12 @@ import {createEl, qs} from './utils';
  */
 export default class Preference {
 
-  constructor({name, label, description = '', defaultValue}) {
+  constructor({name, label, description = '', defaultValue, docUrl}) {
     this.name = name;
     this.label = label;
     this.description = description;
     this._defaultValue = defaultValue;
+    this._docUrl = docUrl;
     this.$container = this._buildContainerEl();
     this._valueDb = null;
     this._listeners = {};
@@ -35,7 +36,7 @@ export default class Preference {
    * an onChange event for the preference
    * @private
    */
-  _createOnChange(event='input') {
+  _createOnChange(event = 'input') {
     const listener = (e) => {
       e.stopPropagation();
       this._onChange(this.get());
@@ -86,6 +87,7 @@ export default class Preference {
   async fillContainer() {
     qs('.pref-container__label', this.$container).innerHTML = this.label;
     qs('.pref-container__description', this.$container).innerHTML = this.description;
+    this._fillDocLink();
 
     // Append the el
     const elContainer = qs('.pref-el-container', this.$container);
@@ -93,6 +95,16 @@ export default class Preference {
     this._createOnChange();
   }
 
+
+  _fillDocLink() {
+    if (!this._docUrl) return;
+
+    const $doc = qs('.pref-doc', this.$container);
+    $doc.innerHTML = '?';
+    $doc.href = this._docUrl;
+    $doc.target = '_blank';
+    $doc.classList.add('pref-doc--visible');
+  }
 
   /**
    * Get value from UI element
@@ -136,7 +148,7 @@ export default class Preference {
    */
   retrieve() {
     return PreferenceStorage.get(this.name).then((retrieved) => {
-      if(retrieved){
+      if (retrieved) {
         this._valueDb = retrieved.value;
       }
       return retrieved;
