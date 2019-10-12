@@ -57,10 +57,9 @@ async function handle(url, tabId) {
   } else if (creatingUrl) {
     delete creatingTabs[tabId];
   }
-
-  let [hostMap, preferences, identities, currentTab] = await Promise.all([
-    Storage.get(url),
-    PreferenceStorage.getAll(true),
+  let preferences = await PreferenceStorage.getAll(true);
+  let [hostMap, identities, currentTab] = await Promise.all([
+    Storage.get(url, preferences.matchDomainOnly),
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
   ]);
