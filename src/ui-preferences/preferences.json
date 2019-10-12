@@ -11,6 +11,7 @@
     "label": "Default container",
     "description": "Which container unmatched URLs will end up in",
     "toggleable": true,
+    "docUrl": "/docs/ui-preferences/default_containers.html",
     "preferences": [
       {
         "type": "string",
