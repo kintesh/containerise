@@ -23,7 +23,7 @@ export default class ChoicePreference extends Preference {
       this.el.appendChild(createEl(`<div class="radio-container">
         <input type="radio" name="${this.name}" value="${choice.name}" ${checkedAttr}>
         <label for="${this.name}">${choice.label}</label>
-        <c-information class="radio-container__description">${choice.description}</c-information>
+        <info-tooltip class="radio-container__description">${choice.description}</info-tooltip>
     </div>
       `));
     }

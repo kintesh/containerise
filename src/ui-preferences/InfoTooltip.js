@@ -1,7 +1,7 @@
 import css from '!!raw-loader!./styles/InformationElement.css';
 import {createEl} from './utils';
 
-export default class InformationElement extends HTMLElement {
+class InfoTooltip extends HTMLElement {
   constructor() {
     super();
     let shadow = this.attachShadow({mode: 'open'});
@@ -16,4 +16,4 @@ export default class InformationElement extends HTMLElement {
 
 }
 
-customElements.define('c-information', InformationElement);
+customElements.define('info-tooltip', InfoTooltip);

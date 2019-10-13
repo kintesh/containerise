@@ -34,7 +34,7 @@ export default class Preference {
     if (!this.description) {
       return;
     }
-    $label.appendChild(createEl(`<c-information>${this.description}</c-information>`));
+    $label.appendChild(createEl(`<info-tooltip>${this.description}</info-tooltip>`));
   }
 
   /**

@@ -1,6 +1,6 @@
 import './styles/index.scss';
 import './index.html';
-import './InformationElement';
+import './InfoTooltip';
 import preferencesJson from './preferences.json';
 import BooleanPreference from './BooleanPreference';
 import ChoicePreference from './ChoicePreference';
