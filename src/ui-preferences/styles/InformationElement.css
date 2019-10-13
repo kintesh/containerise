@@ -1,0 +1,50 @@
+:host {
+    --size: 30px;
+    display: inline-flex;
+    text-shadow: blue 5px 2px 5px;
+
+}
+
+:host([text='']) {
+    display: none;
+}
+
+
+span::after {
+    opacity: 0;
+    text-shadow: none;
+    position: relative;
+    color: white;
+
+    background-color: black;
+    content: attr(text);
+    border-radius: 10px;
+    border-style: inset;
+    border-width: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    top: -10px;
+    transition: opacity 1s;
+    vertical-align: center;
+}
+
+span:hover::after {
+    opacity: 1;
+}
+
+span {
+    position: relative;
+    font-style: italic;
+    color: white;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
+    background: cadetblue;
+    border-radius: var(--size);
+    line-height: var(--size);
+    font-size: var(--size);
+    width: var(--size);
+    height: var(--size);
+    text-align: center;
+    padding: 1px;
+}

@@ -44,7 +44,7 @@ export default class PreferenceGroup extends Preference {
 
   async fillContainer() {
     qs('.pref-group__label', this.$container).innerHTML = this.label;
-    qs('.pref-group__description', this.$container).innerHTML = this.description;
+    qs('.pref-group__description', this.$container).setAttribute('text', this.description);
     this._createOnChange('change');
     const $preferences = this.$container.querySelector('.preferences');
     return Promise.all(this._preferences.map((preference) => {
