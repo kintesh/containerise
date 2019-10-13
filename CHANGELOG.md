@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.6.0] - 12 Oct 2019
+### Added
+- Preference to choose matching hostname or complete URL.
+- Help page for "Default containers" option in preference.
+
+### Changed
+- Ignore URLs not supported by tabs.create
+- Unify Unify container switching conditions. Fixes opening new tab for sites assigned to "No Container".
+
+
 ## [3.5.0] - 8 Oct 2019
 ### Added
 - Preferences centre to customise the extension further.
@@ -110,7 +120,8 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
-[3.4.0]: https://github.com/kintesh/containerise/compare/3.4.0...3.5.0
+[3.6.0]: https://github.com/kintesh/containerise/compare/3.5.0...3.6.0
+[3.5.0]: https://github.com/kintesh/containerise/compare/3.4.0...3.5.0
 [3.4.0]: https://github.com/kintesh/containerise/compare/3.3.0...3.4.0
 [3.3.0]: https://github.com/kintesh/containerise/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/kintesh/containerise/compare/3.1.0...3.2.0
