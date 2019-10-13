@@ -13,7 +13,7 @@ export default class BooleanPreference extends Preference {
   }
 
   _getCheckbox(){
-    return qs('.toggle_checkbox', this.el);
+    return qs('.toggle__checkbox', this.el);
   }
   get() {
     return this._getCheckbox().checked;

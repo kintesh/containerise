@@ -1,6 +1,7 @@
 import Preference from './Preference';
 import {createEl, qs} from './utils';
 import template from '!!raw-loader!./templates/PreferenceGroup.html';
+import toggleTemplate from '!!raw-loader!./templates/toggle.html';
 
 /**
  * Groups preferences together and displays them in a manner to reflect that fact.
@@ -26,7 +27,7 @@ export default class PreferenceGroup extends Preference {
     }
     this._preferences = preferences;
     this._toggleable = toggleable;
-    if(this._toggleable){
+    if (this._toggleable) {
       this.$container.classList.add('pref-group_toggable');
     }
   }
@@ -36,7 +37,9 @@ export default class PreferenceGroup extends Preference {
   }
 
   _buildEl() {
-    return this.$container.querySelector(`.${PreferenceGroup.EL_CLASS}`);
+    const $toggle = createEl(toggleTemplate);
+    qs('.pref-group__toggle', this.$container).appendChild($toggle);
+    return $toggle.querySelector('.toggle__checkbox');
   }
 
   async fillContainer() {
@@ -84,4 +87,3 @@ export default class PreferenceGroup extends Preference {
 }
 
 PreferenceGroup.TYPE = 'group';
-PreferenceGroup.EL_CLASS = 'pref-group__toggle';

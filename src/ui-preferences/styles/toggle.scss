@@ -7,7 +7,7 @@
   border-style: groove;
 }
 
-.toggle_checkbox {
+.toggle__checkbox {
   position: absolute;
   left: 0;
   top: 0;
@@ -18,7 +18,7 @@
   padding: 0;
 }
 
-.toggle_circle {
+.toggle__circle {
   height: 12px;
   width: 12px;
   border-radius: 12px;
@@ -32,7 +32,7 @@
   transition-duration: 1s;
 }
 
-.toggle .toggle_checkbox:checked ~ .toggle_circle {
+.toggle .toggle__checkbox:checked ~ .toggle__circle {
   background-color: blue;
   margin-left: 30px;
 }
