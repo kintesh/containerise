@@ -58,6 +58,7 @@ body {
   pointer-events: none;
 }
 // Activated groups
+// TODO fix this
 .pref-group_toggable .pref-group__toggle:checked ~ .preferences {
   opacity: unset;
   pointer-events: unset;
