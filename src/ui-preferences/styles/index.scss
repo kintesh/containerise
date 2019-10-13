@@ -4,7 +4,7 @@
 
 body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .pref-container {
@@ -55,8 +55,12 @@ body {
 // Groups that aren't activated yet
 .pref-group_toggable .pref-group__toggle ~ .preferences {
   opacity: 0.5;
+}
+
+.pref-group_toggable .pref-group__toggle ~ .preferences * {
   pointer-events: none;
 }
+
 // Activated groups
 // TODO fix this
 .pref-group_toggable .pref-group__toggle:checked ~ .preferences {

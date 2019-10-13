@@ -1,40 +1,22 @@
 :host {
-    --size: 30px;
-    display: inline-flex;
-    text-shadow: blue 5px 2px 5px;
-
+    --size: 15px;
+    all: initial;
 }
 
 :host([text='']) {
     display: none;
 }
 
-
-span::after {
-    opacity: 0;
-    text-shadow: none;
+.wrapper {
     position: relative;
-    color: white;
-
-    background-color: black;
-    content: attr(text);
-    border-radius: 10px;
-    border-style: inset;
-    border-width: 1px;
-    padding-left: 5px;
-    padding-right: 5px;
-    top: -10px;
-    transition: opacity 1s;
-    vertical-align: center;
+    display: inline-flex;
+    vertical-align: top;
 }
 
-span:hover::after {
-    opacity: 1;
-}
-
-span {
+.icon {
+    text-shadow: blue 5px 2px 5px;
     position: relative;
-    font-style: italic;
+    font-style: oblique;
     color: white;
     border-color: white;
     border-width: 1px;
@@ -47,4 +29,27 @@ span {
     height: var(--size);
     text-align: center;
     padding: 1px;
+}
+
+
+.info {
+    font-size: 0.8rem;
+    width: 200px;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
+    background: black;
+    color: beige;
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.6s all;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.icon:hover + .info, .icon:focus + .info {
+    opacity: 1;
 }

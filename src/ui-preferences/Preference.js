@@ -30,6 +30,13 @@ export default class Preference {
     return el;
   }
 
+  _addDescription($label) {
+    if (!this.description) {
+      return;
+    }
+    $label.appendChild(createEl(`<c-information>${this.description}</c-information>`));
+  }
+
   /**
    * Registers the event listeners and decides when to trigger
    * an onChange event for the preference
@@ -84,8 +91,9 @@ export default class Preference {
    * Should fill the fields in {@see $container} with initial preference attributes and add {@see el} to the container
    */
   async fillContainer() {
-    qs('.pref-container__label', this.$container).innerHTML = this.label;
-    qs('.pref-container__description', this.$container).innerHTML = this.description;
+    const $label = qs('.pref-container__label', this.$container);
+    $label.innerHTML = this.label;
+    this._addDescription($label);
 
     // Append the el
     const elContainer = qs('.pref-el-container', this.$container);
