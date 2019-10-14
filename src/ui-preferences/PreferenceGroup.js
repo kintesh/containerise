@@ -32,10 +32,6 @@ export default class PreferenceGroup extends Preference {
     }
   }
 
-  _buildContainerEl() {
-    return createEl(template);
-  }
-
   _buildEl() {
     const $toggle = createEl(toggleTemplate);
     qs('.pref-group__toggle', this.$container).appendChild($toggle);
@@ -93,4 +89,5 @@ export default class PreferenceGroup extends Preference {
   }
 }
 
+PreferenceGroup.TEMPLATE = template;
 PreferenceGroup.TYPE = 'group';

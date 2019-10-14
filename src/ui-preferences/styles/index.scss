@@ -1,13 +1,15 @@
 // BEM is used for classes
 // https://en.bem.info/methodology/quick-start/
 @import "toggle";
+@import "ContainerPreference";
+@import "ContainerPreferenceGroup";
 
 body {
   display: flex;
   flex-direction: column;
 }
 
-.pref-container {
+.preference {
   border-width: 1px;
   border-radius: 3px;
   border-style: dashed;
@@ -16,11 +18,11 @@ body {
   padding: 2px;
 }
 
-.pref-container .pref-container__label {
+.preference .preference__label {
   font-weight: bold;
 }
 
-.pref-container .pref-el-container {
+.preference .pref-el-container {
   display: flex;
   flex-direction: column;
 }

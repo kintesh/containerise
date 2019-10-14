@@ -1,5 +1,5 @@
 import PreferenceStorage from '../Storage/PreferenceStorage';
-import preferenceContainerTemplate from '!!raw-loader!./templates/Preference.html';
+import template from '!!raw-loader!./templates/Preference.html';
 import {createEl, qs} from './utils';
 
 /**
@@ -21,7 +21,7 @@ export default class Preference {
   }
 
   _buildContainerEl() {
-    const $el = createEl(preferenceContainerTemplate);
+    const $el = createEl(this.constructor.TEMPLATE);
     $el.classList.add(`pref-${this.constructor.TYPE}`);
     return $el;
   }
@@ -93,7 +93,7 @@ export default class Preference {
    * Should fill the fields in {@see $container} with initial preference attributes and add {@see el} to the container
    */
   async fillContainer() {
-    const $label = qs('.pref-container__label', this.$container);
+    const $label = qs('.preference__label', this.$container);
     $label.innerHTML = this.label;
     this._addDescription($label);
 
@@ -170,5 +170,6 @@ export default class Preference {
 
 }
 
-Preference.EL_CLASS = 'pref-container__el';
+Preference.TEMPLATE = template;
+Preference.EL_CLASS = 'preference__el';
 Preference.TYPE = null; // Has to be set by subclass
