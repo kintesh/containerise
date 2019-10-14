@@ -39,31 +39,34 @@ body {
   margin-left: 10px;
 }
 
-.pref-group__toggle {
-  display: none;
-}
 
 .pref-group__label {
   font-weight: bolder;
   font-size: large;
 }
 
-.pref-group_toggable .pref-group__toggle {
+.pref-group__toggle {
+  display: none;
+}
+
+.pref-group--toggable .pref-group__toggle {
   display: unset;
 }
 
 // Groups that aren't activated yet
-.pref-group_toggable .pref-group__toggle ~ .preferences {
+.pref-group--toggable .preferences {
   opacity: 0.5;
 }
 
-.pref-group_toggable .pref-group__toggle ~ .preferences * {
+.pref-group--toggable .preferences * {
   pointer-events: none;
 }
 
 // Activated groups
-// TODO fix this
-.pref-group_toggable .pref-group__toggle:checked ~ .preferences {
-  opacity: unset;
+.pref-group--toggable.pref-group--active .preferences * {
   pointer-events: unset;
+}
+
+.pref-group--toggable.pref-group--active .preferences {
+  opacity: unset;
 }

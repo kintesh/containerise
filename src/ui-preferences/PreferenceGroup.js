@@ -28,7 +28,7 @@ export default class PreferenceGroup extends Preference {
     this._preferences = preferences;
     this._toggleable = toggleable;
     if (this._toggleable) {
-      this.$container.classList.add('pref-group_toggable');
+      this.$container.classList.add('pref-group--toggable');
     }
   }
 
@@ -40,6 +40,11 @@ export default class PreferenceGroup extends Preference {
     const $toggle = createEl(toggleTemplate);
     qs('.pref-group__toggle', this.$container).appendChild($toggle);
     return $toggle.querySelector('.toggle__checkbox');
+  }
+
+  _onChange(newValue) {
+    this.$container.classList.toggle('pref-group--active', newValue);
+    super._onChange(newValue);
   }
 
   async fillContainer() {
@@ -70,6 +75,7 @@ export default class PreferenceGroup extends Preference {
   set({value}) {
     if (this._toggleable) {
       this.el.checked = value;
+      this.$container.classList.toggle('pref-group--active', value);
       super.set({value});
     }
   }
