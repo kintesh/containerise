@@ -21,7 +21,9 @@ export default class Preference {
   }
 
   _buildContainerEl() {
-    return createEl(preferenceContainerTemplate);
+    const $el = createEl(preferenceContainerTemplate);
+    $el.classList.add(`pref-${this.constructor.TYPE}`);
+    return $el;
   }
 
   _buildEl() {
