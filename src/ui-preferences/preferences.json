@@ -1,6 +1,12 @@
 [
   {
     "type": "bool",
+    "name": "matchDomainOnly",
+    "label": "Match domain only",
+    "description": "When matching rules to a URL, only use the domain as criteria"
+  },
+  {
+    "type": "bool",
     "name": "keepOldTabs",
     "label": "Keep old tabs",
     "description": "After a contained tab has been created, the old won't be closed"
@@ -11,6 +17,7 @@
     "label": "Default container",
     "description": "Which container unmatched URLs will end up in",
     "toggleable": true,
+    "docUrl": "/docs/ui-preferences/default_containers.html",
     "preferences": [
       {
         "type": "string",

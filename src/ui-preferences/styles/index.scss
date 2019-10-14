@@ -10,6 +10,7 @@ body {
 }
 
 .preference {
+  position: relative;
   border-width: 1px;
   border-radius: 3px;
   border-style: dashed;
@@ -27,7 +28,31 @@ body {
   flex-direction: column;
 }
 
+.pref-doc {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border-style: groove;
+  border-width: 2px;
+  border-radius: 20px;
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+  text-align: center;
+  border-color: black;
+  color: black;
+  stroke: azure;
+  text-decoration: none;
+  font-size: 20px;
+  display: none;
+}
+
+.pref-doc.pref-doc--visible {
+  display: unset;
+}
+
 .pref-group {
+  position: relative;
   border-width: 1px;
   border-radius: 3px;
   border-style: ridge;
@@ -72,3 +97,5 @@ body {
 .pref-group--toggable.pref-group--active .preferences {
   opacity: unset;
 }
+
+

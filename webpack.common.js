@@ -63,6 +63,25 @@ module.exports = {
         ],
       },
       {
+        test: /docs\/.+\.(md)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path]/[name].html',
+            },
+          }, {
+            loader: 'markdown-it-vanilla-loader',
+            options: {
+              plugins: [
+                'markdown-it-anchor',
+                'markdown-it-table-of-contents',
+              ],
+            },
+          },
+        ],
+      },
+      {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,

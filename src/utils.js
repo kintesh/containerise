@@ -65,16 +65,22 @@ export const urlKeyFromUrl = (url) => {
  *  - glob
  *  - standard
  *
- * @param url {URL}
+ * @param url {String}
+ * @param matchDomainOnly {Boolean=}
  * @param map
  * @return {*}
  */
-export const matchesSavedMap = (url, map) => {
+export const matchesSavedMap = (url, matchDomainOnly, map) => {
   const savedHost = map.host;
+  let toMatch = url;
+  if (matchDomainOnly) {
+    toMatch = new window.URL(url).host;
+  }
+
   if (savedHost[0] === PREFIX_REGEX) {
     const regex = savedHost.substr(1);
     try {
-      return new RegExp(regex).test(url);
+      return new RegExp(regex).test(toMatch);
     } catch (e) {
       console.error('couldn\'t test regex', regex, e);
     }
@@ -82,9 +88,12 @@ export const matchesSavedMap = (url, map) => {
     // turning glob into regex isn't the worst thing:
     // 1. * becomes .*
     // 2. ? becomes .?
-    return new RegExp(savedHost.substr(1).replace(/\*/g, '.*').replace(/\?/g, '.?')).test(url);
+    return new RegExp(savedHost.substr(1)
+        .replace(/\*/g, '.*')
+        .replace(/\?/g, '.?'))
+        .test(toMatch);
   } else {
-    const key = urlKeyFromUrl(url);
+    const key = urlKeyFromUrl(toMatch);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
     const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
     return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
