@@ -20,12 +20,19 @@ export default class ChoicePreference extends Preference {
   _addChoices() {
     for (let choice of this.choices) {
       const checkedAttr = this._defaultValue === choice.name ? 'checked' : '';
-      this.el.appendChild(createEl(`<div class="radio-container">
-        <input type="radio" name="${this.name}" value="${choice.name}" ${checkedAttr}>
-        <label for="${this.name}">${choice.label}</label>
-        <info-tooltip class="radio-container__description">${choice.description}</info-tooltip>
-    </div>
-      `));
+      const $radioContainer = createEl(`<div class="radio-container">
+          <input type="radio" name="${this.name}" value="${choice.name}" ${checkedAttr}>
+          <label for="${this.name}">${choice.label}</label>
+        </div>
+      `);
+      if (choice.description) {
+        $radioContainer.appendChild(createEl(`
+            <info-tooltip class="radio-container__description">
+                ${choice.description}
+            </info-tooltip>`
+        ));
+      }
+      this.el.appendChild($radioContainer);
     }
 
   }
