@@ -75,11 +75,22 @@ describe('utils', () => {
             ).toBe(true);
           });
         });
+        describe('with regex host prefix', () => {
+          it('should match url without path', () => {
+            expect(
+                utils.matchesSavedMap(
+                    'https://duckduckgo.com/?q=search+me+baby',
+                    matchDomainOnly, {
+                      host: '@duckduckgo.com',
+                    })
+            ).toBe(true);
+          });
+        });
       };
     }
 
     test();
-    describe('matchDomainOnly', test(true));
+    describe('with matchDomainOnly', test(true));
 
   });
 
