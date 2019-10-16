@@ -79,6 +79,15 @@ describe('utils', () => {
           it('should match url without path', () => {
             expect(
                 utils.matchesSavedMap(
+                    'https://duckduckgo.com',
+                    matchDomainOnly, {
+                      host: '@duckduckgo.com',
+                    })
+            ).toBe(true);
+          });
+          it('should match url with path', () => {
+            expect(
+                utils.matchesSavedMap(
                     'https://duckduckgo.com/?q=search+me+baby',
                     matchDomainOnly, {
                       host: '@duckduckgo.com',
