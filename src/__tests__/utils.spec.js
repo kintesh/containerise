@@ -64,28 +64,23 @@ describe('utils', () => {
   });
 
   describe('matchesSavedMap', () => {
-    describe('matchDomainOnly', () => {
-      describe('without host prefix', () => {
-        const url = 'https://duckduckgo.com';
-        const host = 'duckduckgo.com';
-        const matchDomainOnly = true;
-        it('should match url without path', () => {
-          expect(
-              utils.matchesSavedMap(url, matchDomainOnly, {host})
-          ).toBeTruthy();
+    function test(matchDomainOnly) {
+      return () => {
+        describe('without host prefix', () => {
+          it('should match url without path', () => {
+            expect(
+                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, {
+                  host: 'duckduckgo.com',
+                })
+            ).toBe(true);
+          });
         });
-      });
-    });
-    describe('without host prefix', () => {
-      it('should match url without path', () => {
-        const url = 'https://duckduckgo.com';
-        const host = 'duckduckgo.com';
-        const matchDomainOnly = false;
-        expect(
-            utils.matchesSavedMap(url, matchDomainOnly, {host})
-        ).toBeTruthy();
-      });
-    });
+      };
+    }
+
+    test();
+    describe('matchDomainOnly', test(true));
+
   });
 
 });
