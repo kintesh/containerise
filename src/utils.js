@@ -52,9 +52,13 @@ export const pathMatch = (url, map) => {
   return true;
 };
 
+/**
+ *
+ * @param url {URL}
+ * @return {string}
+ */
 export const urlKeyFromUrl = (url) => {
-  const parsedUrl = new window.URL(url);
-  return punycode.toUnicode(parsedUrl.hostname.replace('www.', '')) + parsedUrl.pathname;
+  return punycode.toUnicode(url.hostname.replace('www.', '')) + url.pathname;
 };
 
 /**
@@ -72,8 +76,10 @@ export const urlKeyFromUrl = (url) => {
  */
 export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
   let toMatch = url;
+  let urlO = new window.URL(url);
   if (matchDomainOnly) {
-    toMatch = new window.URL(url).host;
+    toMatch = urlO.host;
+    urlO = new window.URL(`${urlO.protocol}//${urlO.host}`);
   }
 
   if (host[0] === PREFIX_REGEX) {
@@ -92,7 +98,7 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
         .replace(/\?/g, '.?'))
         .test(toMatch);
   } else {
-    const key = urlKeyFromUrl(toMatch);
+    const key = urlKeyFromUrl(urlO);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
     const mapHost = ((host.indexOf('/') === -1) ? host.concat('/') : host).toLowerCase();
     return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
