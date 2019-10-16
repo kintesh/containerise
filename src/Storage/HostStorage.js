@@ -16,7 +16,7 @@ class HostStorage extends PrefixStorage {
         try{
           return matchesSavedMap( url, matchDomainOnly, map);
         } catch (e) {
-          console.error('Error matching maps', sorted, url, matchDomainOnly, e);
+          console.error('Error matching maps', map, url, matchDomainOnly, e);
           return false;
         }
       }) || {};
