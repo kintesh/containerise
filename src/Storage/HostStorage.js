@@ -12,7 +12,14 @@ class HostStorage extends PrefixStorage {
     return super.getAll().then(maps => {
       const sorted = sortMaps(Object.keys(maps).map(key => maps[key]));
       // Sorts by domain length, then by path length
-      return sorted.find(matchesSavedMap.bind(null, url, matchDomainOnly)) || {};
+      return sorted.find((map) => {
+        try{
+          return matchesSavedMap( url, matchDomainOnly, map);
+        } catch (e) {
+          console.error('Error matching maps', map, url, matchDomainOnly, e);
+          return false;
+        }
+      }) || {};
     });
   }
 

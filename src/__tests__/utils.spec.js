@@ -63,4 +63,65 @@ describe('utils', () => {
 
   });
 
+  describe('matchesSavedMap', () => {
+    function test(matchDomainOnly) {
+      matchDomainOnly = !!matchDomainOnly;
+      return () => {
+        describe('without host prefix', () => {
+          it('should match url without path', () => {
+            expect(
+                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, {
+                  host: 'duckduckgo.com',
+                })
+            ).toBe(true);
+          });
+        });
+
+        function testPrefixes(isRegex) {
+          isRegex = !!isRegex;
+          const simplePattern = isRegex?
+              '@duckduckgo\\.com' : '!duckduckgo.com';
+          return () => {
+            it('should match url without path', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://duckduckgo.com',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(true);
+            });
+            it('should match url with path', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://duckduckgo.com/?q=search+me+baby',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(true);
+            });
+            let prefix = matchDomainOnly ? 'should not' : 'should';
+            let description = `${prefix} match url with pattern only in path`;
+            it(description, () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://google.com/?q=duckduckgo',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(!matchDomainOnly);
+            });
+          };
+        }
+
+        describe('with regex host prefix', testPrefixes(true));
+        describe('with glob host prefix', testPrefixes());
+      };
+    }
+
+    test();
+    describe('with matchDomainOnly', test(true));
+
+  });
+
 });
