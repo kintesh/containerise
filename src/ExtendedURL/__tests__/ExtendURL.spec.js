@@ -8,5 +8,11 @@ describe('utils', () => {
     expect(eUrl.tld).toEqual('com');
   });
 
+  it('should resolve IP to IP domain', function () {
+    const eUrl = new ExtendedURL('https://192.168.7.1');
+    expect(eUrl.domain).toEqual('192.168.7.1');
+    expect(eUrl.tld).toEqual('192.168.7.1');
+  });
+
 
 });

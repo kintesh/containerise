@@ -130,3 +130,18 @@ export function formatString(string, context) {
     return replacement;
   });
 }
+
+const IPV4_REGEX = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
+
+/**
+ * Naive test if a string looks like an IPv4.
+ *
+ * Should be called after firefox has done the validity check for IPv4.
+ * We can then be sure that it's an IPv4 or not.
+ *
+ * @param string {String}
+ * @return {Boolean}
+ */
+export function looksLikeIPv4(string) {
+  return !!string.match(IPV4_REGEX);
+}
