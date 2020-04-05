@@ -77,13 +77,18 @@ export const urlKeyFromUrl = (url) => {
  *  - standard
  *
  * @param url {String}
- * @param matchDomainOnly {Boolean=}
+ * @param preferences {Object}
  * @param map
  * @return {*}
  */
-export const matchesSavedMap = (url, matchDomainOnly, map) => {
-  const savedHost = map.host;
+export const matchesSavedMap = (url, preferences, map) => {
+  let savedHost = map.host;
   let toMatch = url;
+  const{matchDomainOnly, caseSensitiveMatch} = preferences;
+  if(!caseSensitiveMatch){
+    savedHost = savedHost.toLowerCase();
+    toMatch = toMatch.toLowerCase();
+  }
   if (matchDomainOnly) {
     toMatch = new window.URL(url).host;
   }
