@@ -4,6 +4,7 @@ import Storage from '../Storage/HostStorage';
 import {cleanHostInput, qs} from '../utils';
 import {hideLoader, showLoader} from './loader';
 import {hideToast, showToast} from './toast';
+import PreferenceStorage from '../Storage/PreferenceStorage';
 
 const HOST_MAPS_SPLIT_KEY = ',';
 const csvEditor = qs('.csv-editor');
@@ -69,14 +70,22 @@ class CSVEditor {
     const maps = {};
     const missingContainers = new Map();
 
+    const caseSensitiveMatch = PreferenceStorage.get('caseSensitiveMatch', true);
+
     await Promise.all(items.map((item) => {
       const hostMapParts = item.split(HOST_MAPS_SPLIT_KEY);
-      const host = cleanHostInput(hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY));
+      const host = cleanHostInput(
+        hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY),
+        caseSensitiveMatch
+      );
       const containerName = hostMapParts[hostMapParts.length - 1];
       let identity;
 
       if (host && containerName) {
-        identity = this.state.identities.find((identity) => cleanHostInput(identity.name) === cleanHostInput(containerName));
+        identity = this.state.identities.find((identity) => {
+          return cleanHostInput(identity.name, caseSensitiveMatch)
+              === cleanHostInput(containerName, caseSensitiveMatch);
+        });
         if (!identity) {
           const trimmedContainer = containerName.trim();
           if (!missingContainers.has(trimmedContainer)) {

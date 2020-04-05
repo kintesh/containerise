@@ -1,6 +1,12 @@
 [
   {
     "type": "bool",
+    "name": "caseSensitiveMatch",
+    "label": "Case sensitive matching",
+    "description": "The upper and lower case will be important when matching rules"
+  },
+  {
+    "type": "bool",
     "name": "matchDomainOnly",
     "label": "Match domain only",
     "description": "When matching rules to a URL, only use the domain as criteria"

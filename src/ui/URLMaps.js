@@ -1,5 +1,6 @@
 import State from '../State';
 import HostStorage from '../Storage/HostStorage';
+import PreferenceStorage from '../Storage/PreferenceStorage';
 import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
@@ -73,14 +74,16 @@ class URLMaps {
     HostStorage.remove(host);
   }
 
-  saveUrlMaps() {
+  async saveUrlMaps() {
     showLoader();
     const items = qsAll('.url-map-item');
     const maps = {};
 
+    const caseSensitiveMatch = PreferenceStorage.get('caseSensitiveMatch', true);
+
     for (const item of items) {
       const urlInput = qs('.url-input', item);
-      const host = cleanHostInput(urlInput && urlInput.value);
+      const host = cleanHostInput(urlInput && urlInput.value, caseSensitiveMatch);
 
       if (host) {
         maps[host] = {
@@ -92,13 +95,10 @@ class URLMaps {
       }
     }
 
-    Promise.all([
-      HostStorage.setAll(maps),
-    ]).then(() => {
-      hideLoader();
-      showToast('Saved!');
-      setTimeout(() => hideToast(), 3000);
-    });
+    await HostStorage.setAll(maps);
+    hideLoader();
+    showToast('Saved!');
+    setTimeout(() => hideToast(), 3000);
   }
 
 }
