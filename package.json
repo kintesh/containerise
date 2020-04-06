@@ -26,7 +26,7 @@
     "css-loader": "^3.0.0",
     "eslint": "^6.0.1",
     "file-loader": "^4.0.0",
-    "jest": "^24.8.0",
+    "jest": "^25.2.7",
     "markdown-it-anchor": "^5.2.4",
     "markdown-it-table-of-contents": "^0.4.4",
     "markdown-it-vanilla-loader": "^1.0.10",
@@ -36,7 +36,7 @@
     "rimraf": "^3.0.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
-    "web-ext": "^3.1.0",
+    "web-ext": "^3.2.1",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-merge": "^4.2.1"
