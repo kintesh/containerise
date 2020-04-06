@@ -31,7 +31,7 @@
     "markdown-it-table-of-contents": "^0.4.4",
     "markdown-it-vanilla-loader": "^1.0.10",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "raw-loader": "^3.1.0",
     "rimraf": "^3.0.0",
     "sass-loader": "^8.0.0",
