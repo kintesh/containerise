@@ -1,22 +1,18 @@
 $actions-height: 80px;
-$top-height: 35px;
-$bottom-height: 35px;
+$top-height: 50px;
+$bottom-height: 30px;
 
 %container-action {
   height: $actions-height;
-  width: 100%;
 }
 
 .container-actions {
   @extend %container-action;
   position: relative;
 
-  button {
-
-  }
-
   .container-action {
     @extend %container-action;
+    width: 100%;
     position: absolute;
     opacity: 0;
     transition: opacity 1.5s;
@@ -29,18 +25,22 @@ $bottom-height: 35px;
       z-index: 10;
     }
 
-    .top {
+    %division {
       position: relative;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: space-between;
+    }
+
+    .top {
+      @extend %division;
       height: $top-height;
     }
 
     .bottom {
-      position: relative;
-      height: $top-height;
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      justify-content: space-around;
+      @extend %division;
+      height: $bottom-height;
     }
 
     &.action-select {

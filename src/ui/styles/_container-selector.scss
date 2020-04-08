@@ -1,9 +1,8 @@
 @import "variables";
 
-//.container-selector {
-//  margin: 0.6rem 1rem 0 1rem;
-//  position: relative;
-//}
+.container-selector {
+  flex-grow: 1;
+}
 
 .container-selector-item {
   padding: 0.3rem 0.6rem;
