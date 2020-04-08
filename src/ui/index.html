@@ -14,13 +14,41 @@
 
 <div class="toast hide"></div>
 
-
-<div class="container-selector">
-  <div class="container-selector-selected"></div>
-  <div class="container-selector-list collapsed"></div>
-  <div class="container-selector-item template">
-    <span class="icon"></span>
-    <span class="name"></span>
+<div class="container-actions">
+  <div class="container-action action-select active">
+    <div class="top container-selector">
+      <div class="container-selector-selected"></div>
+      <div class="container-selector-list collapsed"></div>
+      <div class="container-selector-item template">
+        <span class="icon"></span>
+        <span class="name"></span>
+      </div>
+    </div>
+    <div class="bottom">
+      <button class="add">Add</button>
+      <button class="edit">Edit</button>
+      <button class="remove">Remove</button>
+    </div>
+  </div>
+  <div class="container-action action-create-edit">
+    <div class="top">
+      <div class="color-selector"></div>
+      <div class="icon-selector"></div>
+      <div class="done"></div>
+      <div class="cancel"></div>
+    </div>
+    <div class="bottom">
+      <input type="text">
+    </div>
+  </div>
+  <div class="container-action action-delete">
+    <div class="top">
+      Sure ?
+    </div>
+    <div class="bottom">
+      <div class="done"></div>
+      <div class="cancel"></div>
+    </div>
   </div>
 </div>
 

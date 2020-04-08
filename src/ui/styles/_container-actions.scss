@@ -1,0 +1,55 @@
+$actions-height: 80px;
+$top-height: 35px;
+$bottom-height: 35px;
+
+%container-action {
+  height: $actions-height;
+  width: 100%;
+}
+
+.container-actions {
+  @extend %container-action;
+  position: relative;
+
+  button {
+
+  }
+
+  .container-action {
+    @extend %container-action;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1.5s;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+
+    &.active {
+      opacity: 1;
+      z-index: 10;
+    }
+
+    .top {
+      position: relative;
+      height: $top-height;
+    }
+
+    .bottom {
+      position: relative;
+      height: $top-height;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: space-around;
+    }
+
+    &.action-select {
+
+      button {
+        $height: 15px;
+        font-size: $height;
+        line-height: $height;
+      }
+    }
+  }
+}
