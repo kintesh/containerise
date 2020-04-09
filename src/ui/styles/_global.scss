@@ -23,8 +23,7 @@ html {
 body {
   font-size: 1rem;
   overflow-x: hidden;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: $common-margin;
   display: flex;
   flex-direction: column;
 }

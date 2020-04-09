@@ -1,6 +1,5 @@
 @import "variables";
 
-$my-margin: 1rem;
 
 .container-action {
   position: absolute;
@@ -8,7 +7,6 @@ $my-margin: 1rem;
   right: 0;
   left: 0;
   bottom: 0;
-  padding: $my-margin;
 
   background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
   z-index: 20;
