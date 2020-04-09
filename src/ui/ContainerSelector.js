@@ -13,6 +13,26 @@ class ContainerSelector {
     State.addListener(this.update.bind(this));
     csSelected.addEventListener('click', this.toggleOptions.bind(this));
     this.render();
+    this._connect();
+  }
+
+  _connect() {
+    const $container = document.querySelector('.action-select');
+    const $add = $container.querySelector('button.add');
+    const $edit = $container.querySelector('button.edit');
+    const $delete = $container.querySelector('button.delete');
+
+    function makeActionSelectedTrigger($el, newAction) {
+      $el.addEventListener('click', function () {
+        $el.dispatchEvent(new CustomEvent('action-selected', {
+          detail: {newAction},
+        }));
+      });
+    }
+
+    makeActionSelectedTrigger($add, 'create-edit');
+    makeActionSelectedTrigger($edit, 'create-edit');
+    makeActionSelectedTrigger($delete, 'delete');
   }
 
   update(newState) {
@@ -21,7 +41,7 @@ class ContainerSelector {
   }
 
   render() {
-    if(!this.state.identities || !this.state.selectedIdentity) {
+    if (!this.state.identities || !this.state.selectedIdentity) {
       return false;
     }
 
