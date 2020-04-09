@@ -1,18 +1,6 @@
 @import "variables";
 
 .csv-editor {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  left: 1rem;
-  bottom: 1rem;
-  background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
-  z-index: 1;
-  transition: transform 0.25s ease;
-
-  &.hide {
-    transform: translateX(110%);
-  }
 
   p {
     margin-bottom: 1rem;

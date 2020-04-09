@@ -1,55 +1,21 @@
-$actions-height: 80px;
-$top-height: 50px;
-$bottom-height: 30px;
+@import "variables";
 
-%container-action {
-  height: $actions-height;
-}
+$my-margin: 1rem;
 
-.container-actions {
-  @extend %container-action;
-  position: relative;
+.container-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: $my-margin;
 
-  .container-action {
-    @extend %container-action;
-    width: 100%;
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1.5s;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
+  background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
+  z-index: 20;
+  transition: transform 0.25s ease;
+  transform: translateX(110%);
 
-    &.active {
-      opacity: 1;
-      z-index: 10;
-    }
-
-    %division {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      justify-content: space-between;
-    }
-
-    .top {
-      @extend %division;
-      height: $top-height;
-    }
-
-    .bottom {
-      @extend %division;
-      height: $bottom-height;
-    }
-
-    &.action-select {
-
-      button {
-        $height: 15px;
-        font-size: $height;
-        line-height: $height;
-      }
-    }
+  &.active {
+    transform: unset;
   }
 }

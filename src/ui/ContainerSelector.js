@@ -1,6 +1,7 @@
 import State from '../State';
 import {NO_CONTAINER} from '../ContextualIdentity';
 import {qs} from '../utils';
+import {makeActionSelectedTrigger} from './actions/utils';
 
 const csSelected = qs('.container-selector-selected');
 const csList = qs('.container-selector-list');
@@ -17,18 +18,10 @@ class ContainerSelector {
   }
 
   _connect() {
-    const $container = document.querySelector('.action-select');
+    const $container = document.querySelector('.main-header');
     const $add = $container.querySelector('button.add');
     const $edit = $container.querySelector('button.edit');
     const $delete = $container.querySelector('button.delete');
-
-    function makeActionSelectedTrigger($el, newAction) {
-      $el.addEventListener('click', function () {
-        $el.dispatchEvent(new CustomEvent('action-selected', {
-          detail: {newAction},
-        }));
-      });
-    }
 
     makeActionSelectedTrigger($add, 'create-edit');
     makeActionSelectedTrigger($edit, 'create-edit');

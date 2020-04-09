@@ -1,6 +1,7 @@
 import ContextualIdentities from '../ContextualIdentity';
 import State from '../State';
 import Storage from '../Storage/HostStorage';
+import {makeActionSelectedTrigger} from './actions/utils';
 import {cleanHostInput, qs} from '../utils';
 import {hideLoader, showLoader} from './loader';
 import {hideToast, showToast} from './toast';
@@ -17,8 +18,9 @@ class CSVEditor {
   constructor(state) {
     this.state = state;
     State.addListener(this.update.bind(this));
-    openButton.addEventListener('click', this.showEditor.bind(this));
-    closeButton.addEventListener('click', this.hideEditor.bind(this));
+
+    makeActionSelectedTrigger(openButton, 'csv-editor');
+    makeActionSelectedTrigger(closeButton);
     saveButton.addEventListener('click', this.saveUrlMaps.bind(this));
     this.render();
   }
@@ -98,14 +100,6 @@ class CSVEditor {
     hideLoader();
     showToast('Saved!');
     setTimeout(() => hideToast(), 3000);
-  }
-
-  showEditor() {
-    csvEditor.classList.remove('hide');
-  }
-
-  hideEditor() {
-    csvEditor.classList.add('hide');
   }
 
 }

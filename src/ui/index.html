@@ -14,43 +14,21 @@
 
 <div class="toast hide"></div>
 
-<div class="container-actions">
-  <div class="container-action action-select active">
-    <div class="top">
-      <div class="container-selector">
-        <div class="container-selector-selected"></div>
-        <div class="container-selector-list collapsed"></div>
-        <div class="container-selector-item template">
-          <span class="icon"></span>
-          <span class="name"></span>
-        </div>
+<div class="main-header">
+  <div class="top">
+    <div class="container-selector">
+      <div class="container-selector-selected"></div>
+      <div class="container-selector-list collapsed"></div>
+      <div class="container-selector-item template">
+        <span class="icon"></span>
+        <span class="name"></span>
       </div>
     </div>
-    <div class="bottom">
-      <button class="action-button add">Add</button>
-      <button class="action-button edit">Edit</button>
-      <button class="action-button delete">Delete</button>
-    </div>
   </div>
-  <div class="container-action action-create-edit">
-    <div class="top">
-      <div class="color-selector"></div>
-      <div class="icon-selector"></div>
-      <button class="action-button done">Done</button>
-      <button class="action-button cancel">Cancel</button>
-    </div>
-    <div class="bottom">
-      <input type="text">
-    </div>
-  </div>
-  <div class="container-action action-delete">
-    <div class="top">
-      Sure ?
-    </div>
-    <div class="bottom">
-      <button class="action-button yes">Yes</button>
-      <button class="action-button no">No</button>
-    </div>
+  <div class="bottom">
+    <button class="action-button add">Add</button>
+    <button class="action-button edit">Edit</button>
+    <button class="action-button delete">Delete</button>
   </div>
 </div>
 
@@ -84,7 +62,7 @@
 </div>
 
 
-<div class="csv-editor hide">
+<div class="container-action action-csv-editor csv-editor">
   <p>Use this add/remove/backup multiple entries.</p>
   <code>
     e.g. host , container name
@@ -104,6 +82,28 @@
   </button>
 </div>
 
+
+<div class="container-action action-create-edit">
+    <div class="top">
+      <div class="color-selector"></div>
+      <div class="icon-selector"></div>
+      <button class="action-button done">Done</button>
+      <button class="action-button cancel">Cancel</button>
+    </div>
+    <div class="bottom">
+      <input type="text">
+    </div>
+  </div>
+
+<div class="container-action action-delete">
+    <div class="top">
+      Sure ?
+    </div>
+    <div class="bottom">
+      <button class="action-button yes">Yes</button>
+      <button class="action-button no">No</button>
+    </div>
+  </div>
 
 <script src="index.js"></script>
 </body>

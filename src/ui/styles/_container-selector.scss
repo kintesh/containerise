@@ -1,5 +1,38 @@
 @import "variables";
 
+$actions-height: 80px;
+$top-height: 50px;
+$bottom-height: 30px;
+
+.main-header {
+  height: $actions-height;
+  position: relative;
+
+  %division {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: space-between;
+    }
+
+    .top {
+      @extend %division;
+      height: $top-height;
+    }
+
+    .bottom {
+      @extend %division;
+      height: $bottom-height;
+      button {
+        $height: 15px;
+        font-size: $height;
+        line-height: $height;
+      }
+    }
+
+}
+
 .container-selector {
   flex-grow: 1;
 }
