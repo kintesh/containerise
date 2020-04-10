@@ -1,0 +1,35 @@
+@import "../variables";
+
+.container-action.action-create-edit {
+
+  .color-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    button {
+      position: relative;
+      min-width: 30%;
+      min-height: 20px;
+      margin-top: $common-margin;
+      border-radius: 1rem;
+      border-color: transparent;
+
+      &.selected {
+        box-shadow: #0a0a0a;
+      }
+    }
+  }
+
+  .icon-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: $common-margin;
+    padding-bottom: $common-margin;
+
+    img {
+      margin-left: 0.5em;
+    }
+  }
+}

@@ -3,10 +3,14 @@
 
 .container-action {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  top: $common-margin;
+  right: $common-margin;
+  left: $common-margin;
+  bottom: $common-margin;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
   z-index: 20;
@@ -16,4 +20,12 @@
   &.active {
     transform: unset;
   }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
+
+@import "actions/create_edit_action";
