@@ -47,21 +47,39 @@ class CreateEditAction {
   }
 
   _fillIcons() {
+    this._createIconColorStyles();
     let i=0;
     for (let icon of ICONS) {
+      // Icon container contains a background set in CSS
       let $iconContainer = document.createElement('div');
       $iconContainer.classList.add('icon-container');
+
       let $icon = document.createElement('div');
       $icon.classList.add('icon');
-
+      $icon.dataset.color = COLORS[i++ % COLORS.length];
       $icon.style = `
         background-image: url(resource://usercontext-content/${icon}.svg);
-        fill: ${COLORS[i++ % COLORS.length]};
       `;
       $iconContainer.appendChild($icon);
 
       $iconSelector.appendChild($iconContainer);
     }
+  }
+
+  /**
+   * Generate a style that allows using a data-attribute to set the icon color
+   * @private
+   */
+  _createIconColorStyles(){
+    let $style = document.createElement('style');
+    for (let color of COLORS) {
+      $style.innerHTML += `
+        .icon[data-color="${color}"]{
+          --color: ${color};
+        }
+      `;
+    }
+    $iconSelector.appendChild($style);
   }
 }
 
