@@ -2,16 +2,44 @@
 
 .container-action.action-create-edit {
 
-  .color-selector {
+  %selector {
     display: flex;
+    position: relative;
     flex-wrap: wrap;
     justify-content: space-between;
 
+    border: 1px solid $button-color;
+    margin-top: 1em;
+    padding: 3px;
+
+    &::before {
+      position: absolute;
+      content: 'Header';
+      font-size: $font-size + 3px;
+      top: -9px;
+      left: 9px;
+      text-emphasis: #0a0a0a;
+      background: linear-gradient($gradient-top, $gradient-bottom);
+    }
+    & > *{
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      margin-top: 0.5em;
+    }
+  }
+
+
+  .color-selector {
+    @extend %selector;
+
+    &::before {
+      content: 'Color';
+    }
+
     button {
       position: relative;
-      min-width: 30%;
+      min-width: 25%;
       min-height: 20px;
-      margin-top: $common-margin;
       border-radius: 1rem;
       border-color: transparent;
 
@@ -22,14 +50,16 @@
   }
 
   .icon-selector {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-top: $common-margin;
-    padding-bottom: $common-margin;
+    @extend %selector;
+
+    &::before {
+      content: 'Icon';
+    }
 
     img {
       margin-left: 0.5em;
+      margin-right: 0.5em;
+      margin-top: 0.5em;
     }
   }
 }
