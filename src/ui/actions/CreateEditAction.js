@@ -27,17 +27,34 @@ export const ICONS = [
 ];
 
 const $colorSelector = document.querySelector('.container-action.action-create-edit .color-selector');
-for (let color of COLORS) {
-  let $colorButton = document.createElement('button');
-  $colorButton.style.backgroundColor = color;
-
-  $colorSelector.appendChild($colorButton);
-}
-
 const $iconSelector = document.querySelector('.container-action.action-create-edit .icon-selector');
-for (let icon of ICONS) {
-  let $icon = document.createElement('img');
-  $icon.src = `resource://usercontext-content/${icon}.svg`;
 
-  $iconSelector.appendChild($icon);
+class CreateEditAction {
+
+  constructor() {
+    this._fillColors();
+    this._fillIcons();
+  }
+
+
+  _fillColors() {
+    for (let color of COLORS) {
+      let $colorButton = document.createElement('button');
+      $colorButton.style.backgroundColor = color;
+
+      $colorSelector.appendChild($colorButton);
+    }
+  }
+
+  _fillIcons() {
+    for (let icon of ICONS) {
+      let $icon = document.createElement('img');
+      $icon.src = `resource://usercontext-content/${icon}.svg`;
+
+      $iconSelector.appendChild($icon);
+    }
+  }
 }
+
+
+export default new CreateEditAction();
