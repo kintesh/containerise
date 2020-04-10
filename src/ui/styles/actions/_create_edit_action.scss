@@ -21,7 +21,8 @@
       text-emphasis: #0a0a0a;
       background: linear-gradient($gradient-top, $gradient-bottom);
     }
-    & > *{
+
+    & > * {
       margin-left: 0.5em;
       margin-right: 0.5em;
       margin-top: 0.5em;
@@ -55,11 +56,33 @@
     &::before {
       content: 'Icon';
     }
+    .icon[color] {
+      --color: attr(data-color);
+    }
+    /**
+      Provides the background for icon so that bright colors can still be seen.
+     */
+    .icon-container {
+      $icon-container-size: 35px;
+      position: relative;
+      min-height: $icon-container-size;
+      min-width: $icon-container-size;
+      border: transparent;
+      border-radius: 5px;
+      background-color: #b0aaaa;
 
-    img {
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      margin-top: 0.5em;
+      .icon {
+        $icon-inset: 5px;
+        position: absolute;
+        top: $icon-inset;
+        bottom: $icon-inset;
+        left: $icon-inset;
+        right: $icon-inset;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        filter: url(#fill);
+      }
     }
   }
 }

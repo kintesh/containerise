@@ -47,11 +47,20 @@ class CreateEditAction {
   }
 
   _fillIcons() {
+    let i=0;
     for (let icon of ICONS) {
-      let $icon = document.createElement('img');
-      $icon.src = `resource://usercontext-content/${icon}.svg`;
+      let $iconContainer = document.createElement('div');
+      $iconContainer.classList.add('icon-container');
+      let $icon = document.createElement('div');
+      $icon.classList.add('icon');
 
-      $iconSelector.appendChild($icon);
+      $icon.style = `
+        background-image: url(resource://usercontext-content/${icon}.svg);
+        fill: ${COLORS[i++ % COLORS.length]};
+      `;
+      $iconContainer.appendChild($icon);
+
+      $iconSelector.appendChild($iconContainer);
     }
   }
 }
