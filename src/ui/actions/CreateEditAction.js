@@ -1,4 +1,4 @@
-import {makeActionSelectedTrigger} from './utils';
+import {makeActionSelectedTrigger, setActiveAction} from './utils';
 
 export const COLORS = [
   'blue',
@@ -51,7 +51,7 @@ class CreateEditAction {
   }
 
   _initFieldGetters() {
-    this.fieldGetters['name'] = () => $input.value;
+    this.fieldGetters['name'] = () => $input.value.trim();
     this.fieldGetters['color'] = this._getSelected.bind(this,
         $colorSelector,
         'color'
