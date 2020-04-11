@@ -152,11 +152,11 @@ class CreateEditAction {
     $iconSelector.dataset.color = this.fieldGetters.color();
   }
 
-  create() {
+  async create() {
     console.log('creating', this.getObject());
   }
 
-  save() {
+  async save() {
     console.log('saving', this.getObject());
   }
 
@@ -186,11 +186,12 @@ class CreateEditAction {
     $buttonDone.disabled = !this.canSave();
   }
 
-  onDone() {
+  async onDone() {
     if (!this.canSave()) {
       return;
     }
-    this.oldValue ? this.save() : this.create();
+    await (this.oldValue ? this.save() : this.create());
+    setActiveAction();
   }
 
 }

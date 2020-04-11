@@ -5,3 +5,12 @@ export function makeActionSelectedTrigger($el, newAction) {
     }));
   });
 }
+
+export function setActiveAction(newAction) {
+  const $action = document.querySelector('.container-action.active');
+  $action && $action.classList.remove('active');
+  if (newAction) {
+    const $nextAction = document.querySelector(`.container-action.action-${newAction}`);
+    $nextAction.classList.add('active');
+  }
+}
