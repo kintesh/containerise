@@ -52,14 +52,20 @@ class CreateEditAction {
 
   _initFieldGetters() {
     this.fieldGetters['name'] = () => $input.value;
-    this.fieldGetters['color'] = this._getSelected.bind(this, $colorSelector);
-    this.fieldGetters['icon'] = this._getSelected.bind(this, $iconSelector);
+    this.fieldGetters['color'] = this._getSelected.bind(this,
+        $colorSelector,
+        'color'
+    );
+    this.fieldGetters['icon'] = this._getSelected.bind(this,
+        $iconSelector,
+        'icon'
+    );
   }
 
-  _getSelected($selector) {
-    let selected = $selector.querySelector('selected');
+  _getSelected($selector, dataAttribute) {
+    let selected = $selector.querySelector('.selected');
     if (selected) {
-      selected = selected.dataset.icon;
+      selected = selected.dataset[dataAttribute];
     }
     return selected;
   }
@@ -70,11 +76,39 @@ class CreateEditAction {
     });
     $buttonDone.addEventListener('click', this.onDone.bind(this));
     makeActionSelectedTrigger($buttonCancel);
+
+    // Handle events in the selectors
+    this._connectSelector($colorSelector, this._updateIconColor.bind(this));
+    this._connectSelector($iconSelector);
+  }
+
+  /**
+   * Marks an item in a selector as selected
+   *
+   * @param $selector {HTMLElement}
+   * @param finalAction {Function?} Optionally do something after events have been handled
+   * @private
+   */
+  _connectSelector($selector, finalAction) {
+    $selector.addEventListener('click', (event) => {
+      const $el = event.target;
+      if (!$el.classList.contains('item') || $el.classList.contains('selected')) {
+        return;
+      }
+      for (let $item of $el.parentElement.querySelectorAll('.item')) {
+        $item.classList.remove('selected');
+      }
+      $el.classList.add('selected');
+
+      finalAction && finalAction($el);
+    });
   }
 
   _fillColors() {
     for (let color of COLORS) {
       let $colorButton = document.createElement('button');
+      $colorButton.classList.add('item');
+      $colorButton.dataset.color = color;
       $colorButton.style.backgroundColor = color;
 
       $colorSelector.appendChild($colorButton);
@@ -83,15 +117,13 @@ class CreateEditAction {
 
   _fillIcons() {
     this._createIconColorStyles();
-    let i = 0;
     for (let icon of ICONS) {
       // Icon container contains a background set in CSS
       let $iconContainer = document.createElement('div');
-      $iconContainer.classList.add('icon-container');
+      $iconContainer.classList.add('item');
 
       let $icon = document.createElement('div');
       $icon.classList.add('icon');
-      $icon.dataset.color = COLORS[i++ % COLORS.length];
       $icon.style = `
         background-image: url(resource://usercontext-content/${icon}.svg);
       `;
@@ -109,12 +141,16 @@ class CreateEditAction {
     let $style = document.createElement('style');
     for (let color of COLORS) {
       $style.innerHTML += `
-        .icon[data-color="${color}"]{
-          --color: ${color};
+        .icon-selector[data-color="${color}"]{
+          --icon-color: ${color};
         }
       `;
     }
-    $iconSelector.appendChild($style);
+    $container.appendChild($style);
+  }
+
+  _updateIconColor(){
+    $iconSelector.dataset.color = this.fieldGetters.color();
   }
 
   create() {

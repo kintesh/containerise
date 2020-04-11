@@ -27,6 +27,19 @@
       margin-right: 0.5em;
       margin-top: 0.5em;
     }
+
+    .item {
+      &:hover {
+        box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+      }
+
+      &.selected {
+        box-shadow: -5px 5px 7px #131313;
+        border-style: ridge;
+        border-width: 4px;
+        border-color: #000000a6;
+      }
+    }
   }
 
 
@@ -44,9 +57,6 @@
       border-radius: 1rem;
       border-color: transparent;
 
-      &.selected {
-        box-shadow: #0a0a0a;
-      }
     }
   }
 
@@ -56,14 +66,15 @@
     &::before {
       content: 'Icon';
     }
+
     /**
       Provides the background for icon so that bright colors can still be seen.
      */
-    .icon-container {
-      $icon-container-size: 35px;
+    .item {
+      --item-size: 38px;
       position: relative;
-      min-height: $icon-container-size;
-      min-width: $icon-container-size;
+      min-height: var(--item-size);
+      min-width: var(--item-size);
       border: transparent;
       border-radius: 5px;
       background-color: #b0aaaa;
@@ -78,16 +89,22 @@
 
       .icon {
         $icon-inset: 5px;
+
         position: absolute;
         top: $icon-inset;
         bottom: $icon-inset;
         left: $icon-inset;
         right: $icon-inset;
+
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
+
         filter: url(#fill);
-        fill: var(--color);
+        fill: var(--icon-color);
+
+        // .item should get events in order to process them
+        pointer-events: none;
       }
     }
   }
