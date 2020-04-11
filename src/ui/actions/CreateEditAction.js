@@ -71,9 +71,7 @@ class CreateEditAction {
   }
 
   _connect() {
-    $input.addEventListener('change', () => {
-      $buttonDone.disabled = !$input.value.trim();
-    });
+    $input.addEventListener('keyup', this.onFieldChanged.bind(this));
     $buttonDone.addEventListener('click', this.onDone.bind(this));
     makeActionSelectedTrigger($buttonCancel);
 
@@ -99,7 +97,7 @@ class CreateEditAction {
         $item.classList.remove('selected');
       }
       $el.classList.add('selected');
-
+      this.onFieldChanged();
       finalAction && finalAction($el);
     });
   }
@@ -182,6 +180,10 @@ class CreateEditAction {
       acc[curr] = this.fieldGetters[curr]();
       return acc;
     }, {});
+  }
+
+  onFieldChanged(){
+    $buttonDone.disabled = !this.canSave();
   }
 
   onDone() {
