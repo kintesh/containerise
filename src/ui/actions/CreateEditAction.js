@@ -121,6 +121,7 @@ class CreateEditAction {
       // Icon container contains a background set in CSS
       let $iconContainer = document.createElement('div');
       $iconContainer.classList.add('item');
+      $iconContainer.dataset.icon = icon;
 
       let $icon = document.createElement('div');
       $icon.classList.add('icon');
@@ -149,7 +150,7 @@ class CreateEditAction {
     $container.appendChild($style);
   }
 
-  _updateIconColor(){
+  _updateIconColor() {
     $iconSelector.dataset.color = this.fieldGetters.color();
   }
 
