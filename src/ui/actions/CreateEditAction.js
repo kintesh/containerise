@@ -54,20 +54,14 @@ class CreateEditAction {
 
   _initFieldGetters() {
     this.fieldGetters['name'] = () => $input.value.trim();
-    this.fieldGetters['color'] = this._getSelected.bind(this,
-        $colorSelector,
-        'color'
-    );
-    this.fieldGetters['icon'] = this._getSelected.bind(this,
-        $iconSelector,
-        'icon'
-    );
+    this.fieldGetters['color'] = this._getSelected.bind(this, $colorSelector);
+    this.fieldGetters['icon'] = this._getSelected.bind(this, $iconSelector);
   }
 
-  _getSelected($selector, dataAttribute) {
+  _getSelected($selector) {
     let selected = $selector.querySelector('.selected');
     if (selected) {
-      selected = selected.dataset[dataAttribute];
+      selected = selected.dataset.value;
     }
     return selected;
   }
@@ -105,7 +99,7 @@ class CreateEditAction {
     for (let color of COLORS) {
       let $colorButton = document.createElement('button');
       $colorButton.classList.add('item');
-      $colorButton.dataset.color = color;
+      $colorButton.dataset.value = color;
       $colorButton.style.backgroundColor = color;
 
       $colorSelector.appendChild($colorButton);
@@ -118,7 +112,7 @@ class CreateEditAction {
       // Icon container contains a background set in CSS
       let $iconContainer = document.createElement('div');
       $iconContainer.classList.add('item');
-      $iconContainer.dataset.icon = icon;
+      $iconContainer.dataset.value = icon;
 
       let $icon = document.createElement('div');
       $icon.classList.add('icon');
