@@ -44,8 +44,11 @@ button {
   background-color: $button-color;
   line-height: 0;
 
-  &:hover {
+  &:not([disabled]):hover {
     background-color: $button-hover-color;
+  }
+  &[disabled]{
+    cursor: not-allowed;
   }
 
   // Removes dotted border around focused buttons
