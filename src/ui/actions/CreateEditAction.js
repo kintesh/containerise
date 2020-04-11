@@ -177,7 +177,7 @@ class CreateEditAction {
   }
 
   getObject() {
-    Object.keys(this.fieldGetters).reduce((acc, curr) => {
+    return Object.keys(this.fieldGetters).reduce((acc, curr) => {
       acc[curr] = this.fieldGetters[curr]();
       return acc;
     }, {});
