@@ -1,4 +1,5 @@
 import {makeActionSelectedTrigger, setActiveAction} from './utils';
+import State from '../../State';
 
 export const COLORS = [
   'blue',
@@ -38,9 +39,9 @@ const $buttonCancel = $container.querySelector('.action-button.cancel');
 
 class CreateEditAction {
 
-  constructor() {
-    this.adding = true;
-    this.oldValue = null;
+  constructor(state) {
+    this.state = state;
+    State.addListener(this.update.bind(this));
 
     this.fieldGetters = {};
 
@@ -48,6 +49,7 @@ class CreateEditAction {
     this._fillColors();
     this._fillIcons();
     this._connect();
+    this.render();
   }
 
   _initFieldGetters() {
@@ -93,10 +95,7 @@ class CreateEditAction {
       if (!$el.classList.contains('item') || $el.classList.contains('selected')) {
         return;
       }
-      for (let $item of $el.parentElement.querySelectorAll('.item')) {
-        $item.classList.remove('selected');
-      }
-      $el.classList.add('selected');
+      this._selectItem($el);
       this.onFieldChanged();
       finalAction && finalAction($el);
     });
@@ -148,6 +147,20 @@ class CreateEditAction {
     $container.appendChild($style);
   }
 
+  selectItem($selector, value){
+    const $toSelect = $selector.querySelector(`.item[data-value="${value}"]`);
+    if($toSelect){
+      this._selectItem($toSelect);
+    }
+  }
+
+  _selectItem($el) {
+    for (let $item of $el.parentElement.querySelectorAll('.item')) {
+      $item.classList.remove('selected');
+    }
+    $el.classList.add('selected');
+  }
+
   _updateIconColor() {
     $iconSelector.dataset.color = this.fieldGetters.color();
   }
@@ -161,16 +174,17 @@ class CreateEditAction {
   }
 
   canSave() {
-    let saveWorthy = true;
+    let saveWorthy = false;
     for (let fieldName of Object.keys(this.fieldGetters)) {
       let value = this.fieldGetters[fieldName]();
-      saveWorthy &= !!value && (this.oldValue ?
-              this.oldValue[fieldName] !== value :
-              true
-      );
-      if (!saveWorthy) {
+      if(value === undefined || value === ''){
+        saveWorthy = false;
         break;
       }
+      saveWorthy |= (this.state.selectedIdentity ?
+              this.state.selectedIdentity[fieldName] !== value :
+              true
+      );
     }
     return saveWorthy;
   }
@@ -182,7 +196,32 @@ class CreateEditAction {
     }, {});
   }
 
-  onFieldChanged(){
+  update(newState) {
+    this.state = newState;
+    this.render();
+  }
+
+  render() {
+    let name = '';
+    let color = COLORS[0];
+    let icon = ICONS[0];
+
+    if (this.state.selectedIdentity) {
+      let identity = this.state.selectedIdentity;
+      name = identity.name;
+      color = identity.color;
+      icon = identity.icon;
+    }
+    $input.value = name;
+
+    // The actual render update
+    this.selectItem($colorSelector, color);
+    this.selectItem($iconSelector, icon);
+    this._updateIconColor();
+    this.onFieldChanged();
+  }
+
+  onFieldChanged() {
     $buttonDone.disabled = !this.canSave();
   }
 
@@ -190,11 +229,14 @@ class CreateEditAction {
     if (!this.canSave()) {
       return;
     }
-    await (this.oldValue ? this.save() : this.create());
+    await (this.state.selectedIdentity ? this.save() : this.create());
     setActiveAction();
   }
 
 }
 
 
-export default new CreateEditAction();
+export default new CreateEditAction({
+  identities: State.get('identities'),
+  selectedIdentity: State.get('selectedIdentity'),
+});
