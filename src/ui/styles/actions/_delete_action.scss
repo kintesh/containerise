@@ -1,0 +1,17 @@
+@import "../variables";
+
+.container-action.action-delete {
+
+  .top {
+    align-items: center;
+  }
+  .bottom {
+    display: flex;
+    justify-content: space-around;
+
+    .action-button {
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+}

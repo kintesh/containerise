@@ -1,3 +1,5 @@
+import './CreateEditAction';
+import './DeleteAction';
 import {setActiveAction} from './utils';
 
 const $actions = document.querySelector('body');
