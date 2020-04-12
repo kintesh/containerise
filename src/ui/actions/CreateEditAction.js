@@ -200,7 +200,8 @@ class CreateEditAction {
     if (!this.canSave()) {
       return;
     }
-    await (this.state.actionItem ? this.save() : this.create());
+    const identity = await (this.state.actionItem ? this.save() : this.create());
+    State.set('selectedIdentity', identity);
     setActiveAction();
   }
 
