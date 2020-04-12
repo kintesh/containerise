@@ -26,9 +26,9 @@ class ContainerSelector {
     $add.addEventListener('click',
         this._setActiveAction.bind(this, 'create-edit', null));
     $edit.addEventListener('click',
-        this._setActiveAction.bind(this, 'create-edit'));
+        this._setActiveAction.bind(this, 'create-edit', undefined));
     $delete.addEventListener('click',
-        this._setActiveAction.bind(this, 'delete'));
+        this._setActiveAction.bind(this, 'delete', undefined));
   }
 
   _setActiveAction(actionName, actionItem) {
