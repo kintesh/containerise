@@ -175,8 +175,8 @@ class CreateEditAction {
         saveWorthy = false;
         break;
       }
-      saveWorthy |= (this.state.selectedIdentity ?
-              this.state.selectedIdentity[fieldName] !== value :
+      saveWorthy |= (this.state.actionItem ?
+              this.state.actionItem[fieldName] !== value :
               true
       );
     }
@@ -200,8 +200,8 @@ class CreateEditAction {
     let color = COLORS[0];
     let icon = ICONS[0];
 
-    if (this.state.selectedIdentity) {
-      let identity = this.state.selectedIdentity;
+    if (this.state.actionItem) {
+      let identity = this.state.actionItem;
       name = identity.name;
       color = identity.color;
       icon = identity.icon;
@@ -223,7 +223,7 @@ class CreateEditAction {
     if (!this.canSave()) {
       return;
     }
-    await (this.state.selectedIdentity ? this.save() : this.create());
+    await (this.state.actionItem ? this.save() : this.create());
     setActiveAction();
   }
 
@@ -231,6 +231,5 @@ class CreateEditAction {
 
 
 export default new CreateEditAction({
-  identities: State.get('identities'),
-  selectedIdentity: State.get('selectedIdentity'),
+  actionItem: State.get('actionItem'),
 });

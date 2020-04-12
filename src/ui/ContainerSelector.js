@@ -1,11 +1,16 @@
 import State from '../State';
 import {NO_CONTAINER} from '../ContextualIdentity';
 import {qs} from '../utils';
-import {makeActionSelectedTrigger} from './actions/utils';
+import {setActiveAction} from './actions/utils';
 
 const csSelected = qs('.container-selector-selected');
 const csList = qs('.container-selector-list');
 const csItem = qs('.container-selector-item');
+
+const $container = document.querySelector('.main-header');
+const $add = $container.querySelector('button.add');
+const $edit = $container.querySelector('button.edit');
+const $delete = $container.querySelector('button.delete');
 
 class ContainerSelector {
 
@@ -18,19 +23,40 @@ class ContainerSelector {
   }
 
   _connect() {
-    const $container = document.querySelector('.main-header');
-    const $add = $container.querySelector('button.add');
-    const $edit = $container.querySelector('button.edit');
-    const $delete = $container.querySelector('button.delete');
+    $add.addEventListener('click',
+        this._setActiveAction.bind(this, 'create-edit', null));
+    $edit.addEventListener('click',
+        this._setActiveAction.bind(this, 'create-edit'));
+    $delete.addEventListener('click',
+        this._setActiveAction.bind(this, 'delete'));
+  }
 
-    makeActionSelectedTrigger($add, 'create-edit');
-    makeActionSelectedTrigger($edit, 'create-edit');
-    makeActionSelectedTrigger($delete, 'delete');
+  _setActiveAction(actionName, actionItem) {
+    if (actionItem === undefined) {
+      actionItem = this.state.selectedIdentity;
+    }
+    State.set('actionItem', actionItem);
+    setActiveAction(actionName);
   }
 
   update(newState) {
     this.state = newState;
     this.render();
+    this.updateButtons();
+  }
+
+  updateButtons(){
+    let addEnabled = this.state.identities && this.state.identities.length > 0;
+    let editEnabled = false;
+    let deleteEnabled = false;
+    if(this.state.selectedIdentity
+        && this.state.selectedIdentity.name !== NO_CONTAINER.name){
+      editEnabled = true;
+      deleteEnabled = true;
+    }
+    $add.disabled = !addEnabled;
+    $edit.disabled = !editEnabled;
+    $delete.disabled = !deleteEnabled;
   }
 
   render() {
