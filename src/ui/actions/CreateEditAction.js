@@ -1,33 +1,7 @@
 import {makeActionSelectedTrigger, setActiveAction} from './utils';
 import State from '../../State';
-
-export const COLORS = [
-  'blue',
-  'turquoise',
-  'green',
-  'yellow',
-  'orange',
-  'red',
-  'pink',
-  'purple',
-  'toolbar',
-];
-
-export const ICONS = [
-  'fingerprint',
-  'briefcase',
-  'dollar',
-  'cart',
-  'circle',
-  'gift',
-  'vacation',
-  'food',
-  'fruit',
-  'pet',
-  'tree',
-  'chill',
-  'fence',
-];
+import ContextualIdentities from '../../ContextualIdentity';
+import {COLORS, ICONS} from '../../ContextualIdentity';
 
 const $container = document.querySelector('.container-action.action-create-edit');
 const $colorSelector = $container.querySelector('.color-selector');
@@ -160,11 +134,14 @@ class CreateEditAction {
   }
 
   async create() {
-    console.log('creating', this.getObject());
+    return ContextualIdentities.create(this.getObject());
   }
 
   async save() {
-    console.log('saving', this.getObject());
+    return ContextualIdentities.update(
+        this.state.actionItem.cookieStoreId,
+        this.getObject(),
+    );
   }
 
   canSave() {

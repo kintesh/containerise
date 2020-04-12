@@ -58,7 +58,9 @@ class CSVEditor {
 
   async createMissingContainers(missingContainers, maps) {
     for (const containerName of missingContainers.keys()) {
-      const identity = await ContextualIdentities.create(containerName);
+      const identity = await ContextualIdentities.create({
+        name: containerName,
+      });
       for (const host of missingContainers.get(containerName)) {
         this.addIdentity(identity, host, maps);
       }

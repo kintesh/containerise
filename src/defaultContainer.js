@@ -22,7 +22,7 @@ export async function buildDefaultContainer(preferences, url) {
     container = containers[0];
   } else {
     // Create a default container
-    container = await ContextualIdentities.create(name);
+    container = await ContextualIdentities.create({name});
   }
   const cookieStoreId = container.cookieStoreId;
 
