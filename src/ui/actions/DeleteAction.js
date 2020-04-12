@@ -1,6 +1,7 @@
 import {makeActionSelectedTrigger, setActiveAction} from './utils';
 import State from '../../State';
 import ContextualIdentities from '../../ContextualIdentity';
+import {showToast} from '../toast';
 
 const $container = document.querySelector('.container-action.action-delete');
 
@@ -26,6 +27,7 @@ class DeleteAction {
 
   async onYes() {
     await ContextualIdentities.remove(this.state.actionItem.cookieStoreId);
+    showToast('Deleted', 1000);
     setActiveAction();
   }
 

@@ -2,8 +2,9 @@
 
 .toast {
   position: fixed;
-  width: 100%;
   bottom: 0;
+  left: 0;
+  right: 0;
   overflow: hidden;
   padding: 0.6rem 1rem;
   transform: translate3d(0,0,0);

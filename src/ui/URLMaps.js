@@ -96,8 +96,7 @@ class URLMaps {
       HostStorage.setAll(maps),
     ]).then(() => {
       hideLoader();
-      showToast('Saved!');
-      setTimeout(() => hideToast(), 3000);
+      showToast('Saved!', 3000);
     });
   }
 

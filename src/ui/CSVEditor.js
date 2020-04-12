@@ -100,8 +100,7 @@ class CSVEditor {
     await Storage.setAll(maps);
 
     hideLoader();
-    showToast('Saved!');
-    setTimeout(() => hideToast(), 3000);
+    showToast('Saved!', 3000);
   }
 
 }
