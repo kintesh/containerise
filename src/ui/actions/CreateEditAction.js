@@ -2,6 +2,7 @@ import {makeActionSelectedTrigger, setActiveAction} from './utils';
 import State from '../../State';
 import ContextualIdentities, {COLOR_MAP} from '../../ContextualIdentity';
 import {COLORS, ICONS} from '../../ContextualIdentity';
+import {hideLoader, showLoader} from '../loader';
 
 const $container = document.querySelector('.container-action.action-create-edit');
 const $colorSelector = $container.querySelector('.color-selector');
@@ -197,12 +198,19 @@ class CreateEditAction {
   }
 
   async onDone() {
-    if (!this.canSave()) {
-      return;
+    showLoader();
+    try {
+      if (!this.canSave()) {
+        return;
+      }
+
+      const identity = await (this.state.actionItem ? this.save() : this.create());
+      State.set('selectedIdentity', identity);
+      setActiveAction();
+    } finally {
+      // TODO give visual feedback
+      hideLoader();
     }
-    const identity = await (this.state.actionItem ? this.save() : this.create());
-    State.set('selectedIdentity', identity);
-    setActiveAction();
   }
 
 }
