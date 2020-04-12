@@ -1,7 +1,6 @@
 import {makeActionSelectedTrigger, setActiveAction} from './utils';
 import State from '../../State';
-import ContextualIdentities, {COLOR_MAP} from '../../ContextualIdentity';
-import {COLORS, ICONS} from '../../ContextualIdentity';
+import ContextualIdentities, {COLOR_MAP, COLORS, ICONS} from '../../ContextualIdentity';
 import {hideLoader, showLoader} from '../loader';
 
 const $container = document.querySelector('.container-action.action-create-edit');
@@ -116,9 +115,9 @@ class CreateEditAction {
     $container.appendChild($style);
   }
 
-  selectItem($selector, value){
+  selectItem($selector, value) {
     const $toSelect = $selector.querySelector(`.item[data-value="${value}"]`);
-    if($toSelect){
+    if ($toSelect) {
       this._selectItem($toSelect);
     }
   }
@@ -146,12 +145,24 @@ class CreateEditAction {
   }
 
   canSave() {
+    // TODO rework this to update the error div
     let saveWorthy = false;
     for (let fieldName of Object.keys(this.fieldGetters)) {
       let value = this.fieldGetters[fieldName]();
-      if(value === undefined || value === ''){
+      if (value === undefined || value === '') {
         saveWorthy = false;
         break;
+      }
+      // Don't allow creation of containers with duplicate names
+      if (fieldName === 'name' && this.state.identities) {
+        if(this.state.identities.find((identity) => {
+          let isAnotherContainer = this.state.actionItem ?
+              this.state.actionItem.cookieStoreId !== identity.cookieStoreId : true;
+          return isAnotherContainer && value === identity.name;
+        })){
+          saveWorthy = false;
+          break;
+        }
       }
       saveWorthy |= (this.state.actionItem ?
               this.state.actionItem[fieldName] !== value :
