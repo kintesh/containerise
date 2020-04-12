@@ -26,6 +26,16 @@
     flex-direction: column;
   }
 
+  .bottom {
+    display: flex;
+    justify-content: space-around;
+
+    .action-button {
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+
 }
 
 @import "actions/create_edit_action";
