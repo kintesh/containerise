@@ -96,12 +96,8 @@
         left: $icon-inset;
         right: $icon-inset;
 
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
-
-        filter: url(#fill);
-        fill: var(--icon-color);
+        background-color: var(--icon-color);
+        mask-size: contain;
 
         // .item should get events in order to process them
         pointer-events: none;

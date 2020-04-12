@@ -91,7 +91,7 @@ class CreateEditAction {
       let $icon = document.createElement('div');
       $icon.classList.add('icon');
       $icon.style = `
-        background-image: url(resource://usercontext-content/${icon}.svg);
+        mask-image: url(resource://usercontext-content/${icon}.svg);
       `;
       $iconContainer.appendChild($icon);
 
