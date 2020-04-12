@@ -9,16 +9,17 @@ export const NO_CONTAINER = {
   colorCode: '#999',
   cookieStoreId: 'firefox-default',
 };
-export const COLORS = [
-  'blue',
-  'green',
-  'orange',
-  'pink',
-  'purple',
-  'red',
-  'turquoise',
-  'yellow',
-];
+export const COLOR_MAP = {
+  blue: '#37adff',
+  green: '#51cd00',
+  orange: '#ff9f00',
+  pink: '#ff4bda',
+  purple: '#af51f5',
+  red: '#ff613d',
+  turquoise: '#00c79a',
+  yellow: '#ffcb00',
+};
+export const COLORS = Object.keys(COLOR_MAP);
 export const ICONS = [
   'fingerprint',
   'briefcase',

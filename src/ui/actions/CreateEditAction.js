@@ -1,6 +1,6 @@
 import {makeActionSelectedTrigger, setActiveAction} from './utils';
 import State from '../../State';
-import ContextualIdentities from '../../ContextualIdentity';
+import ContextualIdentities, {COLOR_MAP} from '../../ContextualIdentity';
 import {COLORS, ICONS} from '../../ContextualIdentity';
 
 const $container = document.querySelector('.container-action.action-create-edit');
@@ -74,7 +74,7 @@ class CreateEditAction {
       let $colorButton = document.createElement('button');
       $colorButton.classList.add('item');
       $colorButton.dataset.value = color;
-      $colorButton.style.backgroundColor = color;
+      $colorButton.style.backgroundColor = COLOR_MAP[color];
 
       $colorSelector.appendChild($colorButton);
     }
@@ -108,7 +108,7 @@ class CreateEditAction {
     for (let color of COLORS) {
       $style.innerHTML += `
         .icon-selector[data-color="${color}"]{
-          --icon-color: ${color};
+          --icon-color: ${COLOR_MAP[color]};
         }
       `;
     }
