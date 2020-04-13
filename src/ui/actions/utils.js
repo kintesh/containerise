@@ -12,5 +12,8 @@ export function setActiveAction(newAction) {
   if (newAction) {
     const $nextAction = document.querySelector(`.container-action.action-${newAction}`);
     $nextAction.classList.add('active');
+    document.querySelector('body').classList.add('noscroll');
+  } else {
+    document.querySelector('body').classList.remove('noscroll');
   }
 }

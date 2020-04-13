@@ -33,6 +33,10 @@ body>hr {
   margin-bottom: 0.5em;
 }
 
+.noscroll {
+  overflow-y: hidden;
+}
+
 button {
   cursor: pointer;
   text-align: center;

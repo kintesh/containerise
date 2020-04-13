@@ -2,11 +2,13 @@
 
 
 .container-action {
-  position: absolute;
-  top: $common-margin;
-  right: $common-margin;
-  left: $common-margin;
-  bottom: $common-margin;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: $common-margin;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
