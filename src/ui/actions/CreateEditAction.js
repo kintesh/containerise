@@ -7,6 +7,7 @@ const $container = document.querySelector('.container-action.action-create-edit'
 const $colorSelector = $container.querySelector('.color-selector');
 const $iconSelector = $container.querySelector('.icon-selector');
 
+const $error = $container.querySelector('.error');
 const $input = $container.querySelector('input');
 const $buttonDone = $container.querySelector('.action-button.done');
 const $buttonCancel = $container.querySelector('.action-button.cancel');
@@ -129,6 +130,10 @@ class CreateEditAction {
     $el.classList.add('selected');
   }
 
+  _setError(e=''){
+    $error.innerText = e;
+  }
+
   _updateIconColor() {
     $iconSelector.dataset.color = this.fieldGetters.color();
   }
@@ -144,32 +149,32 @@ class CreateEditAction {
     );
   }
 
-  canSave() {
-    // TODO rework this to update the error div
-    let saveWorthy = false;
+  validate() {
+    let hasChanged = false;
     for (let fieldName of Object.keys(this.fieldGetters)) {
       let value = this.fieldGetters[fieldName]();
       if (value === undefined || value === '') {
-        saveWorthy = false;
-        break;
+        throw `${fieldName} is empty or undefined`;
       }
       // Don't allow creation of containers with duplicate names
       if (fieldName === 'name' && this.state.identities) {
-        if(this.state.identities.find((identity) => {
+        const dupeResult = this.state.identities.find((identity) => {
           let isAnotherContainer = this.state.actionItem ?
               this.state.actionItem.cookieStoreId !== identity.cookieStoreId : true;
           return isAnotherContainer && value === identity.name;
-        })){
-          saveWorthy = false;
-          break;
+        });
+        if(dupeResult){
+          throw 'Name already used by another container';
         }
       }
-      saveWorthy |= (this.state.actionItem ?
+      hasChanged |= (this.state.actionItem ?
               this.state.actionItem[fieldName] !== value :
               true
       );
     }
-    return saveWorthy;
+    if(!hasChanged){
+      throw 'Nothing has changed';
+    }
   }
 
   getObject() {
@@ -205,21 +210,27 @@ class CreateEditAction {
   }
 
   onFieldChanged() {
-    $buttonDone.disabled = !this.canSave();
+    try{
+      this.validate();
+      $buttonDone.disabled = false;
+      this._setError();
+    } catch(e){
+      this._setError(e);
+      $buttonDone.disabled = true;
+    }
   }
 
   async onDone() {
     showLoader();
     try {
-      if (!this.canSave()) {
-        return;
-      }
+      this.validate();
 
       const identity = await (this.state.actionItem ? this.save() : this.create());
       State.set('selectedIdentity', identity);
       setActiveAction();
+    } catch(e){
+      this._setError(e);
     } finally {
-      // TODO give visual feedback
       hideLoader();
     }
   }
