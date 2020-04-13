@@ -1,9 +1,5 @@
 export function makeActionSelectedTrigger($el, newAction) {
-  $el.addEventListener('click', function () {
-    $el.dispatchEvent(new CustomEvent('action-selected', {
-      detail: {newAction},
-    }));
-  });
+  $el.addEventListener('click', setActiveAction.bind(null, newAction));
 }
 
 export function setActiveAction(newAction) {

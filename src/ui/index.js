@@ -4,7 +4,7 @@ import State from '../State';
 import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity';
 import HostStorage from '../Storage/HostStorage';
 import Tabs from '../Tabs';
-import './actions/Actions';
+import './actions';
 import './ContainerSelector';
 import './URLMaps';
 import './CSVEditor';
