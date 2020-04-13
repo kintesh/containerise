@@ -1,5 +1,5 @@
 import PreferenceStorage from '../Storage/PreferenceStorage';
-import preferenceContainerTemplate from '!!raw-loader!./templates/Preference.html';
+import template from '!!raw-loader!./templates/Preference.html';
 import {createEl, qs} from './utils';
 
 /**
@@ -22,13 +22,22 @@ export default class Preference {
   }
 
   _buildContainerEl() {
-    return createEl(preferenceContainerTemplate);
+    const $el = createEl(this.constructor.TEMPLATE);
+    $el.classList.add(`pref-${this.constructor.TYPE}`);
+    return $el;
   }
 
   _buildEl() {
     let el = document.createElement('input');
     el.classList.add(Preference.EL_CLASS);
     return el;
+  }
+
+  _addDescription($label) {
+    if (!this.description) {
+      return;
+    }
+    $label.appendChild(createEl(`<info-tooltip>${this.description}</info-tooltip>`));
   }
 
   /**
@@ -85,8 +94,9 @@ export default class Preference {
    * Should fill the fields in {@see $container} with initial preference attributes and add {@see el} to the container
    */
   async fillContainer() {
-    qs('.pref-container__label', this.$container).innerHTML = this.label;
-    qs('.pref-container__description', this.$container).innerHTML = this.description;
+    const $label = qs('.preference__label', this.$container);
+    $label.innerHTML = this.label;
+    this._addDescription($label);
     this._fillDocLink();
 
     // Append the el
@@ -172,5 +182,6 @@ export default class Preference {
 
 }
 
-Preference.EL_CLASS = 'pref-container__el';
+Preference.TEMPLATE = template;
+Preference.EL_CLASS = 'preference__el';
 Preference.TYPE = null; // Has to be set by subclass

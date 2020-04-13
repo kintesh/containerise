@@ -1,24 +1,31 @@
 // BEM is used for classes
 // https://en.bem.info/methodology/quick-start/
+@import "toggle";
+@import "ContainerPreference";
+@import "ContainerPreferenceGroup";
 
 body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.pref-container {
+.preference {
   position: relative;
   border-width: 1px;
   border-radius: 3px;
   border-style: dashed;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding: 2px;
 }
 
-.pref-container .pref-container__label {
+.preference .preference__label {
   font-weight: bold;
+}
+
+.preference .pref-el-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .pref-doc {
@@ -55,26 +62,40 @@ body {
   padding-right: 2px;
 }
 
-.pref-group__toggle {
-  display: none;
+.pref-group .preferences {
+  margin-left: 10px;
 }
+
 
 .pref-group__label {
   font-weight: bolder;
   font-size: large;
 }
 
-.pref-group_toggable .pref-group__toggle {
+.pref-group__toggle {
+  display: none;
+}
+
+.pref-group--toggable .pref-group__toggle {
   display: unset;
 }
 
 // Groups that aren't activated yet
-.pref-group_toggable .pref-group__toggle ~ .preferences {
+.pref-group--toggable .preferences {
   opacity: 0.5;
+}
+
+.pref-group--toggable .preferences * {
   pointer-events: none;
 }
+
 // Activated groups
-.pref-group_toggable .pref-group__toggle:checked ~ .preferences {
-  opacity: unset;
+.pref-group--toggable.pref-group--active .preferences * {
   pointer-events: unset;
 }
+
+.pref-group--toggable.pref-group--active .preferences {
+  opacity: unset;
+}
+
+
