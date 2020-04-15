@@ -83,7 +83,11 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
   }
 
   if (host[0] === PREFIX_REGEX) {
-    const regex = host.substr(1);
+    let regex = host.substr(1);
+    if (matchDomainOnly) {
+      // This might generate double ^^ characters, but that works anyway
+      regex = "^" + regex + "$";
+    }
     try {
       return new RegExp(regex).test(toMatch);
     } catch (e) {
@@ -94,10 +98,13 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
     // 1. * becomes .*
     // 2. ? becomes .?
     // Because the string is regex escaped, you must match \* to instead of *
-    return new RegExp(escapeRegExp(host.substr(1))
-        .replace(/\\\*/g, '.*')
-        .replace(/\\\?/g, '.?'))
-        .test(toMatch);
+    let regex = escapeRegExp(host.substr(1))
+      .replace(/\\\*/g, '.*')
+      .replace(/\\\?/g, '.?')
+    if (matchDomainOnly) {
+      regex = "^" + regex + "$";
+    }
+    return new RegExp(regex).test(toMatch);
   } else {
     const key = urlKeyFromUrl(urlO);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
