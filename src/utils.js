@@ -93,9 +93,10 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
     // turning glob into regex isn't the worst thing:
     // 1. * becomes .*
     // 2. ? becomes .?
-    return new RegExp(host.substr(1)
-        .replace(/\*/g, '.*')
-        .replace(/\?/g, '.?'))
+    // Because the string is regex escaped, you must match \* to instead of *
+    return new RegExp(escapeRegExp(host.substr(1))
+        .replace(/\\\*/g, '.*')
+        .replace(/\\\?/g, '.?'))
         .test(toMatch);
   } else {
     const key = urlKeyFromUrl(urlO);
@@ -134,4 +135,14 @@ export function formatString(string, context) {
     }
     return replacement;
   });
+}
+
+/**
+ * Escape all regex metacharacters in a string
+ *
+ * @param string {String}
+ */
+function escapeRegExp(string) {
+  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
