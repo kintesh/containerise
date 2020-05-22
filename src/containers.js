@@ -20,6 +20,9 @@ const createTab = (url, newTabIndex, currentTabId, openerTabId, cookieStoreId) =
       index: newTabIndex,
       cookieStoreId,
       active: currentTab.active,
+      pinned: currentTab.pinned,
+      discarded: currentTab.discarded,
+      openInReaderMode: currentTab.isInReaderMode,
     };
     // Passing the openerTabId without a cookieStoreId
     // creates a tab in the same container as the opener
