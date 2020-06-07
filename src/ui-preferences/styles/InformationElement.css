@@ -1,0 +1,55 @@
+:host {
+    --size: 15px;
+    all: initial;
+}
+
+:host([text='']) {
+    display: none;
+}
+
+.wrapper {
+    position: relative;
+    display: inline-flex;
+    vertical-align: top;
+}
+
+.icon {
+    text-shadow: blue 5px 2px 5px;
+    position: relative;
+    font-style: oblique;
+    color: white;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
+    background: cadetblue;
+    border-radius: var(--size);
+    line-height: var(--size);
+    font-size: var(--size);
+    width: var(--size);
+    height: var(--size);
+    text-align: center;
+    padding: 1px;
+}
+
+
+.info {
+    font-size: 0.8rem;
+    width: 200px;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
+    background: black;
+    color: beige;
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.6s all;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.icon:hover + .info, .icon:focus + .info {
+    opacity: 1;
+}

@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.7.0] - 26 Oct 2019
+### Fixed 
+- Fix matchDomainOnly without host prefix.
+
+### Changed
+- Updated preference UI.
+
+
 ## [3.6.0] - 12 Oct 2019
 ### Added
 - Preference to choose matching hostname or complete URL.
@@ -120,6 +128,7 @@ Various changes to build system.
 - Get it for Firefox from https://addons.mozilla.org/en-US/firefox/addon/containerise
 
 
+[3.7.0]: https://github.com/kintesh/containerise/compare/3.6.0...3.7.0
 [3.6.0]: https://github.com/kintesh/containerise/compare/3.5.0...3.6.0
 [3.5.0]: https://github.com/kintesh/containerise/compare/3.4.0...3.5.0
 [3.4.0]: https://github.com/kintesh/containerise/compare/3.3.0...3.4.0

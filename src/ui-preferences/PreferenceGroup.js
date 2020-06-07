@@ -1,6 +1,7 @@
 import Preference from './Preference';
 import {createEl, qs} from './utils';
 import template from '!!raw-loader!./templates/PreferenceGroup.html';
+import toggleTemplate from '!!raw-loader!./templates/toggle.html';
 
 /**
  * Groups preferences together and displays them in a manner to reflect that fact.
@@ -27,22 +28,26 @@ export default class PreferenceGroup extends Preference {
     }
     this._preferences = preferences;
     this._toggleable = toggleable;
-    if(this._toggleable){
-      this.$container.classList.add('pref-group_toggable');
+    if (this._toggleable) {
+      this.$container.classList.add('pref-group--toggable');
     }
   }
 
-  _buildContainerEl() {
-    return createEl(template);
+  _buildEl() {
+    const $toggle = createEl(toggleTemplate);
+    qs('.pref-group__toggle', this.$container).appendChild($toggle);
+    return $toggle.querySelector('.toggle__checkbox');
   }
 
-  _buildEl() {
-    return this.$container.querySelector(`.${PreferenceGroup.EL_CLASS}`);
+  _onChange(newValue) {
+    this.$container.classList.toggle('pref-group--active', newValue);
+    super._onChange(newValue);
   }
 
   async fillContainer() {
-    qs('.pref-group__label', this.$container).innerHTML = this.label;
-    qs('.pref-group__description', this.$container).innerHTML = this.description;
+    const $label = qs('.pref-group__label', this.$container);
+    $label.innerHTML = this.label;
+    this._addDescription($label);
     this._fillDocLink();
     this._createOnChange('change');
     const $preferences = this.$container.querySelector('.preferences');
@@ -68,6 +73,7 @@ export default class PreferenceGroup extends Preference {
   set({value}) {
     if (this._toggleable) {
       this.el.checked = value;
+      this.$container.classList.toggle('pref-group--active', value);
       super.set({value});
     }
   }
@@ -85,5 +91,5 @@ export default class PreferenceGroup extends Preference {
   }
 }
 
+PreferenceGroup.TEMPLATE = template;
 PreferenceGroup.TYPE = 'group';
-PreferenceGroup.EL_CLASS = 'pref-group__toggle';

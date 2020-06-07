@@ -1,10 +1,13 @@
 {
-  "name": "containerise",
-  "version": "3.6.0",
+  "name": "bifulushi",
+  "version": "3.7.0",
   "description": "Firefox extension to automatically open websites in a container",
   "main": "index.js",
-  "repository": "https://kintesh@github.com/kintesh/containerise.git",
+  "repository": "https://gitlab.com/NamingThingsIsHard/firefox/bifulushi.git",
   "author": "Kintesh <i.am@kinte.sh>",
+  "contributors": [
+    "LoveIsGrief <loveisgrief@tuta.io"
+  ],
   "license": "MIT",
   "scripts": {
     "webpack": "webpack --config ./webpack.dev --watch",

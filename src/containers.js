@@ -59,7 +59,7 @@ async function handle(url, tabId) {
   }
   let preferences = await PreferenceStorage.getAll(true);
   let [hostMap, identities, currentTab] = await Promise.all([
-    Storage.get(url, preferences.matchDomainOnly),
+    Storage.get(url, preferences),
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
   ]);

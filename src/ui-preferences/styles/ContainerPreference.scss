@@ -1,0 +1,9 @@
+.pref-container {
+  margin: 5px;
+  flex-grow: 1;
+}
+
+.pref-container > .preferences {
+  display: flex;
+  flex-direction: column;
+}
