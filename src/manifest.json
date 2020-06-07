@@ -27,7 +27,7 @@
   },
   "applications": {
     "gecko": {
-      "id": "containerise@kinte.sh",
+      "id": "bifulushi@namingthingsishard",
       "strict_min_version": "53.0"
     }
   },

@@ -1,6 +1,6 @@
 # IntelliJ project files
 .idea
-containerise.iml
+bifulushi.iml
 
 # dependencies
 /node_modules

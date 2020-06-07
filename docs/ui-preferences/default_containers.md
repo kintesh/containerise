@@ -26,11 +26,11 @@ Other variables can be requested (most likely in feature requests).
 
 Examples:
 
-|  URL                       | containerise_{ms}          | {domain} |  {fqdn}            | default container  |
+|  URL                       | bifulushi_{ms}          | {domain} |  {fqdn}            | default container  |
 |----------------------------|----------------------------|----------|--------------------|--------------------|
-|  https://example.com       | containerise_1567718601836 |  example |  example.com       | default container  |
-| https://old.example.com    | containerise_1567718628706 |  example | old.example.com    |  default container |
-| https://an.old.example.com | containerise_1567718738989 | example  | an.old.example.com | default container  |
+|  https://example.com       | bifulushi_1567718601836 |  example |  example.com       | default container  |
+| https://old.example.com    | bifulushi_1567718628706 |  example | old.example.com    |  default container |
+| https://an.old.example.com | bifulushi_1567718738989 | example  | an.old.example.com | default container  |
 
 **Lifetime** (choice list)
 
