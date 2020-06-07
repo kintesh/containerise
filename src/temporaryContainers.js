@@ -43,7 +43,7 @@ export async function onTabRemoved(tabId) {
       true
   );
   if (contextLifetime === 'untilLastTab') {
-    console.info('containerise: Removed temporary container ID:', tabContextId);
+    console.info('bifulushi: Removed temporary container ID:', tabContextId);
     return ContextualIdentities.remove(tabContextId);
   }
 }
