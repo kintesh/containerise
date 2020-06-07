@@ -7,7 +7,18 @@ export const qs = (selector, node) => (node || document).querySelector(selector)
 export const qsAll = (selector, node) => (node || document).querySelectorAll(selector);
 export const ce = (tagName) => document.createElement(tagName);
 
-export const cleanHostInput = (value = '') => value.trim().toLowerCase();
+/**
+ * Makes sure the host coming from user input can be used elsewhere
+ *
+ * @param host {String}
+ * @param caseSensitive {Boolean} Whether the host is case sensitive.
+ *                      Insensitive means it should be lowercased
+ * @return {String}
+ */
+export function cleanHostInput(host = '', caseSensitive=true){
+  host = host.trim();
+  return caseSensitive ? host : host.tolowerCase();
+}
 
 const getDomain = (src = '') => src.split('/')[0];
 const getPath = (src = '') => src.replace(/^.+?\//, '');
@@ -70,13 +81,18 @@ export const urlKeyFromUrl = (url) => {
  *  - standard
  *
  * @param url {String}
- * @param matchDomainOnly {Boolean=}
+ * @param preferences {Object}
  * @param map
  * @return {*}
  */
-export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
+export const matchesSavedMap = (url, preferences, {host}) => {
   let toMatch = url;
   let urlO = new window.URL(url);
+  const{matchDomainOnly, caseSensitiveMatch} = preferences;
+  if(!caseSensitiveMatch){
+    host = host.toLowerCase();
+    toMatch = toMatch.toLowerCase();
+  }
   if (matchDomainOnly) {
     toMatch = urlO.host;
     urlO = new window.URL(`${urlO.protocol}//${urlO.host}`);
