@@ -1,6 +1,6 @@
 {
   "name": "containerise",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "Firefox extension to automatically open websites in a container",
   "main": "index.js",
   "repository": "https://kintesh@github.com/kintesh/containerise.git",
@@ -9,7 +9,7 @@
   "scripts": {
     "webpack": "webpack --config ./webpack.dev --watch",
     "prebuild": "rimraf build && rimraf web-ext-artifacts",
-    "build": "npm audit && npm run lint && npm run test && webpack --config ./webpack.prod",
+    "build": "npm run lint && npm run test && webpack --config ./webpack.prod",
     "postbuild": "cp -a static/ build/ && web-ext build -s build/",
     "web-ext": "web-ext run -s build/ --start-url=about:debugging#addons",
     "web-ext-perm": "mkdirp ./profile && web-ext run -s build/ --start-url=about:debugging#addons -p ./profile --keep-profile-changes",
@@ -36,7 +36,7 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
-    "web-ext": "^3.1.0",
+    "web-ext": "^5.3.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-merge": "^4.2.1"

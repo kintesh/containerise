@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.8.0] - 26 Oct 2019
+### Added 
+- Add "pinned", "discarded", and "isInReaderMode" properties when opening new tabs.
+
+
 ## [3.7.0] - 26 Oct 2019
 ### Fixed 
 - Fix matchDomainOnly without host prefix.
