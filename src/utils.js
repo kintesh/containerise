@@ -58,7 +58,7 @@ export const pathMatch = (url, map) => {
  * @return {string}
  */
 export const urlKeyFromUrl = (url) => {
-  return punycode.toUnicode(url.hostname.replace('www.', '')) + url.pathname;
+  return punycode.toUnicode(url.hostname) + url.pathname;
 };
 
 /**
