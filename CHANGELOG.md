@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [3.8.0] - 26 Oct 2019
+## [3.8.0] - 07 Nov 2020
 ### Added 
 - Add "pinned", "discarded", and "isInReaderMode" properties when opening new tabs.
 
