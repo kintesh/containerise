@@ -38,7 +38,14 @@ const createTab = (url, newTabIndex, currentTabId, openerTabId, cookieStoreId) =
       }
     });
     PreferenceStorage.get('keepOldTabs').then(({value}) => {
-      if (!value) {
+      // if keepOldTabs is false, remove the 'old' tab
+      // -or-
+      // if the current tab is about:blank or about:newtab
+      // or some custom moz-extension pages
+      // we should still close the current tab even though
+      // keepOldTabs is true, because these are just
+      // interstitial tabs that are no longer used
+      if (!value || /^(about:)|(moz-extension:)/.test(currentTab.url)) {
         Tabs.remove(currentTabId);
       }
     }).catch(() => {
