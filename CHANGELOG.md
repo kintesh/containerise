@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.9.0] - 10 Feb 2021
+### Added
+- Remove temporary tabs if keepOldTabs is true. Fixes #93
+
+### Fixed
+- Fix issue where www.* hostnames don't work
+
+
 ## [3.8.1] - 07 Nov 2020
 ### Added 
 - Add "pinned", "discarded", and "isInReaderMode" properties when opening new tabs.
