@@ -77,45 +77,69 @@ describe('utils', () => {
           });
         });
 
-        function testPrefixes(isRegex) {
-          isRegex = !!isRegex;
-          const simplePattern = isRegex?
-              '@duckduckgo\\.com' : '!duckduckgo.com';
+        function testPrefixes(pattern, expectedUrl, evilUrl) {
           return () => {
             it('should match url without path', () => {
               expect(
                   utils.matchesSavedMap(
-                      'https://duckduckgo.com',
+                      expectedUrl,
                       matchDomainOnly, {
-                        host: simplePattern,
+                        host: pattern,
                       })
               ).toBe(true);
             });
             it('should match url with path', () => {
               expect(
                   utils.matchesSavedMap(
-                      'https://duckduckgo.com/?q=search+me+baby',
+                    expectedUrl + '/?q=search+me+baby',
                       matchDomainOnly, {
-                        host: simplePattern,
+                        host: pattern,
                       })
               ).toBe(true);
             });
             let prefix = matchDomainOnly ? 'should not' : 'should';
-            let description = `${prefix} match url with pattern only in path`;
+            let description = `${pattern} ${prefix} match ${evilUrl}`;
             it(description, () => {
               expect(
                   utils.matchesSavedMap(
-                      'https://google.com/?q=duckduckgo',
+                      evilUrl,
                       matchDomainOnly, {
-                        host: simplePattern,
+                        host: pattern,
                       })
               ).toBe(!matchDomainOnly);
             });
           };
         }
 
-        describe('with regex host prefix', testPrefixes(true));
-        describe('with glob host prefix', testPrefixes());
+        describe('with regex host prefix', testPrefixes(
+            '@duckduckgo\\.com',
+            'https://duckduckgo.com',
+            'https://google.com/?q=duckduckgo'));
+
+        describe('with glob host prefix', testPrefixes(
+            '!duckduckgo.com',
+            'https://duckduckgo.com',
+            'https://google.com/?q=duckduckgo'));
+
+        describe('with regex host prefix', testPrefixes(
+            '@duckduckgo\\.com',
+            'https://duckduckgo.com',
+            'https://evil.duckduckgo.com.evil.com'));
+
+        describe('with glob host prefix', testPrefixes(
+            '!duckduckgo.com',
+            'https://duckduckgo.com',
+            'https://evil.duckduckgo.com.evil.com'));
+
+        describe('with glob subdomain prefix', testPrefixes(
+            '!*.duckduckgo.com',
+            'https://example.duckduckgo.com',
+            'https://notduckduckgo.com'));
+
+        describe('with regex subdomain prefix', testPrefixes(
+            '@(.+)\\.duckduckgo\\.com',
+            'https://example.duckduckgo.com',
+            'https://notduckduckgo.com'));
       };
     }
 
