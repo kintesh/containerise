@@ -11,6 +11,13 @@
     "label": "Keep old tabs",
     "description": "After a contained tab has been created, the old won't be closed"
   },
+  { 
+    "type": "string",
+    "name": "openInCurrentContainer",
+    "label": "Open in current container",
+    "description": "A list of domains separated by a pipe (|) which will *always* open in the current container that opened them",
+    "defaultValue": ""
+  },
   {
     "type": "group",
     "name": "defaultContainer",
