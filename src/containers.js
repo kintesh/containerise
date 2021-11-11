@@ -68,11 +68,18 @@ async function handle(url, tabId) {
     delete creatingTabs[tabId];
   }
   let preferences = await PreferenceStorage.getAll(true);
-  const OPEN_IN_CURRENT_CONTAINER = '(' + preferences.openInCurrentContainer + ')/';
-  let OPEN_IN_CURRENT_CONTAINER_REGEX = new RegExp(OPEN_IN_CURRENT_CONTAINER);
-  if (OPEN_IN_CURRENT_CONTAINER_REGEX.test(url)) {
-    //console.debug('URL was left in current container due to Regex--> ', url);
-    return;
+  let OPEN_IN_CURRENT_CONTAINER_RAW = preferences.openInCurrentContainer;
+  //console.debug('Raw configuration variable --> ', OPEN_IN_CURRENT_CONTAINER_RAW);
+  if (typeof OPEN_IN_CURRENT_CONTAINER_RAW !== 'undefined') {
+    const OPEN_IN_CURRENT_CONTAINER = '(' + preferences.openInCurrentContainer.replace(/ /g, '') + ')/';
+    //console.debug('Formatted configuration variable --> ', OPEN_IN_CURRENT_CONTAINER);
+    if (OPEN_IN_CURRENT_CONTAINER !== '') {
+      let OPEN_IN_CURRENT_CONTAINER_REGEX = new RegExp(OPEN_IN_CURRENT_CONTAINER);
+      if (OPEN_IN_CURRENT_CONTAINER_REGEX.test(url)) {
+        //console.debug('URL was left in current container due to Regex--> ', url);
+        return;
+      }
+    }
   }
   let [hostMap, identities, currentTab] = await Promise.all([
     Storage.get(url, preferences.matchDomainOnly),
