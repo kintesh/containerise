@@ -76,6 +76,15 @@ describe('utils', () => {
             ).toBe(true);
           });
         });
+        describe('without host prefix case insensitively', () => {
+          it('should match url without path', () => {
+            expect(
+                utils.matchesSavedMap('https://Duckduckgo.com', matchDomainOnly, {
+                  host: 'duckduckgo.com',
+                })
+            ).toBe(true);
+          });
+        });
 
         function testPrefixes(isRegex) {
           isRegex = !!isRegex;
@@ -91,10 +100,28 @@ describe('utils', () => {
                       })
               ).toBe(true);
             });
+            it('should match url without path case insensitively', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://DuckDuckGo.com',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(true);
+            });
             it('should match url with path', () => {
               expect(
                   utils.matchesSavedMap(
                       'https://duckduckgo.com/?q=search+me+baby',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(true);
+            });
+            it('should match url case insensitively', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://duckduckgo.com/UpperCase',
                       matchDomainOnly, {
                         host: simplePattern,
                       })
@@ -106,6 +133,16 @@ describe('utils', () => {
               expect(
                   utils.matchesSavedMap(
                       'https://google.com/?q=duckduckgo',
+                      matchDomainOnly, {
+                        host: simplePattern,
+                      })
+              ).toBe(!matchDomainOnly);
+            });
+            description = `${description} case insensitively`;
+            it(description, () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://Google.com/UpperCase/?q=duckduckgo',
                       matchDomainOnly, {
                         host: simplePattern,
                       })
