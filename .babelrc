@@ -1,8 +1,8 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
-        "browsers": ["firefox >= 57"]
+        "firefox": "57"
       }
     }]
   ]

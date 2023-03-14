@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -96,8 +95,12 @@ module.exports = {
     ],
   },
 
+  optimization: {
+    chunkIds: 'total-size',
+    moduleIds: 'size',
+  },
+
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),

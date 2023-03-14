@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 describe('utils', () => {
 
   const utils = require('../utils');

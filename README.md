@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/kintesh/containerise/master/static/icons/icon.png" alt="Drawing" width="42" align="top"/> containerise [![Build Status](https://travis-ci.org/kintesh/containerise.svg?branch=master)](https://travis-ci.org/kintesh/containerise)
+# <img src="https://raw.githubusercontent.com/kintesh/containerise/master/static/icons/icon.png" alt="Drawing" width="42" align="top"/> containerise
 
 Firefox extension to automatically open websites in a container
 
