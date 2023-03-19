@@ -23,7 +23,7 @@ Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-
 
 ## Regex
 
-`@.+\.amazon\.co\.uk$, Shopping` will be treat as `.+\.amazon\.co\.uk$` regex. (suitable to subdomains and complex paths)
+`@.+\.amazon\.co\.uk, Shopping` will be treated as `.+\.amazon\.co\.uk` regex. (suitable to subdomains and complex paths)
 
 
 
