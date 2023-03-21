@@ -83,7 +83,11 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
   }
 
   if (host[0] === PREFIX_REGEX) {
-    const regex = host.substr(1);
+    let regex = host.substr(1);
+    if (matchDomainOnly) {
+      // This might generate double ^^ characters, but that works anyway
+      regex = "^" + regex + "$";
+    }
     try {
       return new RegExp(regex).test(toMatch);
     } catch (e) {
@@ -93,10 +97,14 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
     // turning glob into regex isn't the worst thing:
     // 1. * becomes .*
     // 2. ? becomes .?
-    return new RegExp(host.substr(1)
-        .replace(/\*/g, '.*')
-        .replace(/\?/g, '.?'))
-        .test(toMatch);
+    // Because the string is regex escaped, you must match \* to instead of *
+    let regex = escapeRegExp(host.substr(1))
+      .replace(/\\\*/g, '.*')
+      .replace(/\\\?/g, '.?')
+    if (matchDomainOnly) {
+      regex = "^" + regex + "$";
+    }
+    return new RegExp(regex).test(toMatch);
   } else {
     const key = urlKeyFromUrl(urlO);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
@@ -134,4 +142,14 @@ export function formatString(string, context) {
     }
     return replacement;
   });
+}
+
+/**
+ * Escape all regex metacharacters in a string
+ *
+ * @param string {String}
+ */
+function escapeRegExp(string) {
+  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
