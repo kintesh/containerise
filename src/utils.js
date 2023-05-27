@@ -74,12 +74,15 @@ export const urlKeyFromUrl = (url) => {
  * @param map
  * @return {*}
  */
-export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
+export const matchesSavedMap = (url, matchDomainOnly, currentContainerName, {host}) => {
   let toMatch = url;
   let urlO = new window.URL(url);
   if (matchDomainOnly) {
     toMatch = urlO.host;
     urlO = new window.URL(`${urlO.protocol}//${urlO.host}`);
+  }
+  if (currentContainerName !== undefined) {
+    toMatch = `<${currentContainerName}>${toMatch}`;
   }
 
   if (host[0] === PREFIX_REGEX) {
@@ -101,8 +104,16 @@ export const matchesSavedMap = (url, matchDomainOnly, {host}) => {
     const key = urlKeyFromUrl(urlO);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
     const mapHost = ((host.indexOf('/') === -1) ? host.concat('/') : host).toLowerCase();
-    return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
-
+    
+    let mapContainer = undefined;
+    let mapUrl = mapHost;
+    if (currentContainerName !== undefined) {
+      // Extract the container name from the map host
+      [, mapContainer, mapUrl] = mapHost.match(/(?:<([^>]*)>)?(.+)/);
+    }
+    
+    return (mapContainer === undefined || mapContainer === currentContainerName) &&
+      domainMatch(_url, mapUrl) && pathMatch(_url, mapUrl);
   }
 };
 

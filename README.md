@@ -25,7 +25,14 @@ Install the latest release for Firefox from [AMO](https://addons.mozilla.org/en-
 
 `@.+\.amazon\.co\.uk$, Shopping` will be treat as `.+\.amazon\.co\.uk$` regex. (suitable to subdomains and complex paths)
 
+## Matching with existing container name
+With the option "Match current container name" turned on:
 
+`<>amazon.co.uk, Shopping` will open all amazon.co.uk (not subdomains) links in Shopping container, but only if not already in a container
+
+`@<shopping>(?!.+\.amazon\.co\.uk).*, No Container` will open all links from inside the Shopping continer that are _not_ to .amazon.co.uk subdomains in the default No Container
+
+`@<(?!profile \d).*>.+\.facebook.com$, Profile 1` will open all links to facebook.com in Profile 1 container, unless they are already in Profile 1, Profile 2, Profile 3 etc.
 
 # Development
 

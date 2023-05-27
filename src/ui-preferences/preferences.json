@@ -7,6 +7,12 @@
   },
   {
     "type": "bool",
+    "name": "matchContainerName",
+    "label": "Match current container name",
+    "description": "When matching rules to a URL, prefix the url with the current container name enclosed in angle brackets, eg. \"&amp;lt;Container 1&amp;gt;https://example.com\""
+  },
+  {
+    "type": "bool",
     "name": "keepOldTabs",
     "label": "Keep old tabs",
     "description": "After a contained tab has been created, the old won't be closed"
