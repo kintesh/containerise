@@ -68,11 +68,22 @@ async function handle(url, tabId) {
     delete creatingTabs[tabId];
   }
   let preferences = await PreferenceStorage.getAll(true);
-  let [hostMap, identities, currentTab] = await Promise.all([
-    Storage.get(url, preferences.matchDomainOnly),
+  let [identities, currentTab] = await Promise.all([
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
   ]);
+  
+  let currentTabContainerName = undefined;
+  if (preferences.matchContainerName) {
+    if (currentTab.cookieStoreId === NO_CONTAINER.cookieStoreId) {
+      currentTabContainerName = '';
+    } else {
+      const currentTabContainerIdentity = identities.find((identity) => identity.cookieStoreId === currentTab.cookieStoreId);
+      currentTabContainerName = currentTabContainerIdentity?.name?.toLowerCase();
+    }
+  }
+  
+  const hostMap = await Storage.get(url, preferences.matchDomainOnly, currentTabContainerName);
 
   if (currentTab.incognito || !hostMap) {
     return {};

@@ -74,10 +74,34 @@ describe('utils', () => {
         describe('without host prefix', () => {
           it('should match url without path', () => {
             expect(
-                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, {
+                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, undefined, {
                   host: 'duckduckgo.com',
                 })
             ).toBe(true);
+          });
+          it('should match url with container', () => {
+            expect(utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, 'some container', {
+                  host: '<some container>duckduckgo.com',
+                })
+            ).toBe(true);
+          });
+          it('should match url with no container', () => {
+            expect(utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, '', {
+                  host: '<>duckduckgo.com',
+                })
+            ).toBe(true);
+          });
+          it('should match url with any container when unspecified', () => {
+            expect(utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, 'some container', {
+                  host: 'duckduckgo.com',
+                })
+            ).toBe(true);
+          });
+          it('should not match url with mismatched container', () => {
+            expect(utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, 'some container', {
+                  host: '<other container>duckduckgo.com',
+                })
+            ).toBe(false);
           });
         });
 
@@ -85,12 +109,15 @@ describe('utils', () => {
           isRegex = !!isRegex;
           const simplePattern = isRegex?
               '@duckduckgo\\.com' : '!duckduckgo.com';
+          const containerNamePattern = isRegex?
+              '@<some container>duckduckgo\\.com' : '!<some container>duckduckgo.com';
+          
           return () => {
             it('should match url without path', () => {
               expect(
                   utils.matchesSavedMap(
                       'https://duckduckgo.com',
-                      matchDomainOnly, {
+                      matchDomainOnly, undefined, {
                         host: simplePattern,
                       })
               ).toBe(true);
@@ -99,7 +126,7 @@ describe('utils', () => {
               expect(
                   utils.matchesSavedMap(
                       'https://duckduckgo.com/?q=search+me+baby',
-                      matchDomainOnly, {
+                      matchDomainOnly, undefined, {
                         host: simplePattern,
                       })
               ).toBe(true);
@@ -110,10 +137,28 @@ describe('utils', () => {
               expect(
                   utils.matchesSavedMap(
                       'https://google.com/?q=duckduckgo',
-                      matchDomainOnly, {
+                      matchDomainOnly, undefined, {
                         host: simplePattern,
                       })
               ).toBe(!matchDomainOnly);
+            });
+            it('should match url without path and container', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://duckduckgo.com',
+                      matchDomainOnly, 'some container', {
+                        host: containerNamePattern,
+                      })
+              ).toBe(true);
+            });
+            it('should match url with path and container', () => {
+              expect(
+                  utils.matchesSavedMap(
+                      'https://duckduckgo.com/?q=search+me+baby',
+                      matchDomainOnly, 'some container', {
+                        host: containerNamePattern,
+                      })
+              ).toBe(true);
             });
           };
         }

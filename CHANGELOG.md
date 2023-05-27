@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [??] - ??
+### Added
+- Add option to match including current container name
+
 ## [3.9.0] - 10 Feb 2021
 ### Added
 - Remove temporary tabs if keepOldTabs is true. Fixes #93
